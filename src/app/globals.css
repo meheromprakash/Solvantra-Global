@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+@theme {
+  /* Solvantra Brand Colors - Design DNA */
+  --color-primary: #7e5713;
+  --color-primary-container: #b88a43;
+  --color-primary-fixed: #ffddb1;
+  --color-primary-fixed-dim: #f2be71;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #3d2700;
+
+  /* Primary Accent & Champagne Gold Tokens */
+  --color-champagne-gold: #c79a52;
+  --color-champagne-gold-rich: #c9a05a;
+  --color-antique-bronze: #b88a43;
+
+  /* Metallic Gold Palette */
+  --color-metallic-gold-light: #f0d9a3;
+  --color-metallic-gold-bright: #e7c98a;
+  --color-metallic-gold: #d7b36a;
+  --color-metallic-gold-dark: #b98a45;
+
+  /* Dark Espresso Text & Dark Section Palette */
+  --color-espresso-dark: #241a12;
+  --color-espresso-deep: #2b2118;
+  --color-espresso-ground: #33251a;
+  --color-secondary: #6a5c51;
+  --color-secondary-container: #f0dccf;
+  --color-secondary-fixed: #f3dfd2;
+  --color-secondary-fixed-dim: #d6c3b6;
+  --color-on-secondary-fixed: #241a12;
+  --color-on-secondary-fixed-variant: #51443b;
+  --color-on-secondary-container: #6e6055;
+
+  /* Tertiary Champagne Accents */
+  --color-tertiary: #7c5815;
+  --color-tertiary-container: #b68b45;
+  --color-tertiary-fixed: #ffddae;
+  --color-tertiary-fixed-dim: #efbe73;
+
+  /* Warm Ivory / Cream Background Palette */
+  --color-surface: #f8f3e8;
+  --color-surface-ivory: #f8f3e8;
+  --color-surface-cream: #f5efe2;
+  --color-surface-luminous: #fbf8f1;
+  --color-surface-dim: #dedacf;
+  --color-surface-bright: #fef9ee;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f8f3e8;
+  --color-surface-container: #f2ede3;
+  --color-surface-container-high: #ede8dd;
+  --color-surface-container-highest: #e7e2d7;
+
+  --color-on-surface: #241a12;
+  --color-on-surface-variant: #51443b;
+
+  --color-inverse-surface: #241a12;
+  --color-inverse-on-surface: #f5f0e5;
+  --color-inverse-primary: #f2be71;
+
+  --color-outline: #817567;
+  --color-outline-variant: #d3c4b3;
+
+  --color-background: #f8f3e8;
+  --color-on-background: #241a12;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #f8f3e8;
+    color: #241a12;
+  }
+  body {
+    background-color: #f8f3e8;
+    color: #241a12;
+    font-family: var(--font-manrope), system-ui, sans-serif;
+    min-height: 100vh;
+  }
+}
+
+/* Metallic Gold Gradient Classes */
+.bg-gradient-metallic-gold {
+  background: linear-gradient(135deg, #f0d9a3 0%, #e7c98a 35%, #d7b36a 70%, #b98a45 100%);
+}
+
+.bg-gradient-champagne {
+  background: linear-gradient(135deg, #c79a52 0%, #b88a43 100%);
+}
+
+.bg-gradient-bronze-cta {
+  background: linear-gradient(135deg, #b88a43 0%, #b68b45 100%);
+}
+
+/* Dark Ground Section Utility */
+.bg-dark-espresso {
+  background-color: #241a12;
+}
+
+/* Typography Classes */
+.font-display-hero {
+  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-size: 3.75rem;
+  line-height: 4.25rem;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .font-display-hero {
+    font-size: 2.5rem;
+    line-height: 3rem;
+    letter-spacing: -0.01em;
+  }
+}
+
+.font-headline-lg {
+  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-size: 2.75rem;
+  line-height: 3.25rem;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .font-headline-lg {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    letter-spacing: 0;
+  }
+}
+
+.font-headline-md {
+  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  font-weight: 500;
+}
+
+.font-headline-sm {
+  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+
+.font-stat-numeral {
+  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-size: 3.5rem;
+  line-height: 3.75rem;
+  font-weight: 500;
+}
+
+.font-eyebrow {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.font-body-lg {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.875rem;
+  font-weight: 400;
+}
+
+.font-body-md {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.6rem;
+  font-weight: 400;
+}
+
+.font-body-sm {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.35rem;
+  font-weight: 400;
+}
+
+.font-label-md {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
