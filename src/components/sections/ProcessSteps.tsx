@@ -8,7 +8,7 @@ export default function ProcessSteps() {
       number: "01",
       icon: Search,
       title: "Discovery & Workflow Audit",
-      timeline: "Days 1 – 3",
+      timeline: "Days 1 \u2013 3",
       summary: "Our solutions architects analyze your existing operational volume, software stack, peak pain points, and target SLA metrics.",
       activities: [
         "In-depth workflow mapping & baseline metric capture",
@@ -20,7 +20,7 @@ export default function ProcessSteps() {
       number: "02",
       icon: FileCode2,
       title: "SOP & SLA Blueprint Mapping",
-      timeline: "Days 4 – 7",*
+      timeline: "Days 4 \u2013 7",
       summary: "We codify your operational standards into explicit, step-by-step Standard Operating Procedures (SOPs) and establish real-time quality scorecards.",
       activities: [
         "Interactive SOP documentation & version lock",
@@ -32,7 +32,7 @@ export default function ProcessSteps() {
       number: "03",
       icon: UserCheck2,
       title: "Talent Selection & Intensive Onboarding",
-      timeline: "Days 8 – 12",
+      timeline: "Days 8 \u2013 12",
       summary: "We assign dedicated specialists from our pre-vetted talent pool, conducting intensive training tailored to your brand voice and workflows.",
       activities: [
         "Domain-specific candidate selection & approval",
