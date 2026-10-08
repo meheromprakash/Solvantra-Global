@@ -27,15 +27,17 @@ export default function Header() {
       <header className="fixed top-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(36,26,18,0.04)]">
         <div className="h-20 max-w-[1240px] mx-auto px-5 md:px-12 flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold shadow-sm group-hover:scale-105 transition-transform">
-              <Shield className="w-4 h-4 fill-current" />
-            </div>
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
+            <img
+              src="/images/logo-mark.png"
+              alt="Solvantra Global Logo"
+              className="h-9 md:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+            />
             <div className="flex flex-col">
-              <span className="font-headline-sm text-lg tracking-wide text-on-surface uppercase leading-none">
+              <span className="font-headline-sm text-lg font-bold tracking-wider text-on-surface uppercase leading-none">
                 Solvantra
               </span>
-              <span className="font-eyebrow text-[10px] text-primary tracking-[0.2em] uppercase leading-none mt-1">
+              <span className="font-eyebrow text-[10px] text-primary tracking-[0.22em] uppercase leading-none mt-1 font-semibold">
                 Global
               </span>
             </div>

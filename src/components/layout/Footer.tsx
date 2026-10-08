@@ -17,19 +17,21 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-20">
             {/* Col 1-4: Brand Statement */}
             <div className="lg:col-span-4 flex flex-col items-start">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
-                  <Shield className="w-4 h-4 fill-current" />
-                </div>
+              <Link href="/" className="flex items-center gap-3 mb-4 group">
+                <img
+                  src="/images/logo-mark.png"
+                  alt="Solvantra Global Logo"
+                  className="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                />
                 <div className="flex flex-col">
-                  <span className="font-headline-sm text-lg tracking-wide text-surface-bright uppercase">
+                  <span className="font-headline-sm text-lg font-bold tracking-wider text-surface-bright uppercase leading-none">
                     Solvantra
                   </span>
-                  <span className="font-eyebrow text-[10px] text-primary-fixed tracking-[0.2em] uppercase">
+                  <span className="font-eyebrow text-[10px] text-primary-fixed tracking-[0.22em] uppercase leading-none mt-1 font-semibold">
                     Global
                   </span>
                 </div>
-              </div>
+              </Link>
               <p className="font-body-md text-sm text-secondary-fixed-dim max-w-sm mb-6 leading-relaxed">
                 People. Processes. Technology. Built Around Your Business.
               </p>
