@@ -54,59 +54,44 @@ export default function Hero() {
 
             {/* Hero Visual Imagery */}
             <div className="lg:col-span-5 relative mt-8 lg:mt-0">
-              <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden shadow-2xl bg-surface-container border border-outline-variant/30">
-                <div className="w-full h-full bg-gradient-to-br from-surface-container-high via-surface-container to-surface-dim flex flex-col justify-between p-6 relative">
+              <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden shadow-2xl bg-surface-container border border-outline-variant/30 group">
+                <img
+                  src="/images/hero_operations_team.jpg"
+                  alt="Solvantra Global Operations Team"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/90 via-secondary-ink/30 to-transparent p-6 flex flex-col justify-between">
                   <div className="flex items-center justify-between z-10">
-                    <span className="px-3 py-1 rounded bg-on-secondary-fixed/80 text-surface-bright text-xs font-eyebrow">
-                      Tier-1 Operations
+                    <span className="px-3 py-1.5 rounded-md bg-on-secondary-fixed/90 backdrop-blur-md text-surface-bright text-xs font-eyebrow tracking-wider border border-primary-container/40">
+                      Tier-1 Global Operations
                     </span>
-                    <Activity className="w-5 h-5 text-primary" />
+                    <Activity className="w-5 h-5 text-primary-fixed" />
                   </div>
 
-                  <div className="space-y-4 my-auto relative z-10">
-                    <div className="p-4 rounded-lg bg-surface-container-lowest/90 backdrop-blur-md shadow-md border border-outline-variant/20">
-                      <div className="flex items-center gap-3 mb-2">
-                        <CheckCircle2 className="w-5 h-5 text-primary" />
-                        <span className="font-headline-sm text-sm font-bold text-on-surface">
-                          99.4% SLA Adherence
+                  <div className="space-y-3 z-10">
+                    <div className="p-3.5 rounded-lg bg-surface-container-lowest/95 backdrop-blur-md shadow-lg border border-outline-variant/30 flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
+                      <div>
+                        <span className="font-headline-sm text-xs font-bold text-on-surface block">
+                          99.4% SLA Workflow Precision
                         </span>
+                        <p className="font-body-sm text-[11px] text-secondary">
+                          Real-time QA auditing &amp; active metric monitoring.
+                        </p>
                       </div>
-                      <p className="font-body-sm text-xs text-secondary">
-                        Real-time QA auditing and active metric monitoring.
-                      </p>
                     </div>
 
-                    <div className="p-4 rounded-lg bg-on-secondary-fixed text-surface-bright shadow-lg border border-primary-container/30">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-eyebrow text-[10px] text-primary-fixed">
+                    <div className="p-3.5 rounded-lg bg-on-secondary-fixed/95 backdrop-blur-md text-surface-bright shadow-lg border border-primary-container/40 flex items-center justify-between">
+                      <div>
+                        <span className="font-eyebrow text-[10px] text-primary-fixed block uppercase tracking-wider">
                           Continuous Continuity
                         </span>
-                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                      </div>
-                      <span className="font-headline-sm text-base text-surface-bright block">
-                        Follow-The-Sun 24/7 Pods
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Floating Metric Badge */}
-                  <div className="p-4 rounded-lg bg-surface/95 backdrop-blur-md shadow-lg border border-outline-variant/30 flex items-center justify-between z-10">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-                        <Layers className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <span className="block font-headline-sm text-xs font-bold text-on-surface">
-                          Integrated Network
-                        </span>
-                        <span className="block font-body-sm text-[11px] text-secondary">
-                          Global operations active
+                        <span className="font-headline-sm text-sm text-surface-bright font-bold">
+                          Follow-The-Sun 24/7 Pods
                         </span>
                       </div>
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
                     </div>
-                    <span className="font-eyebrow text-[10px] tracking-wider text-primary font-bold">
-                      24/7 ACTIVE
-                    </span>
                   </div>
                 </div>
               </div>

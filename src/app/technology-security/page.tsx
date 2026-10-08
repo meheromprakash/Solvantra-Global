@@ -57,19 +57,39 @@ export default function TechnologySecurityPage() {
       <div className="flex flex-col w-full bg-surface">
         {/* HERO */}
         <section className="w-full bg-surface-bright py-16 lg:py-24 border-b border-outline-variant/20">
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
-              <ShieldCheck className="w-4 h-4 text-primary" />
-              <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
-                Enterprise Security &amp; Technology Stack
-              </span>
+          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 flex flex-col items-start">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
+                  <ShieldCheck className="w-4 h-4 text-primary" />
+                  <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
+                    Technology &amp; Security
+                  </span>
+                </div>
+                <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
+                  Technology-Enabled. <br />
+                  <span className="italic text-primary-container font-normal">Security-Conscious. Human-Led.</span>
+                </h1>
+                <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed max-w-xl mb-6">
+                  Solvantra integrates technology and AI into operational workflows while maintaining human oversight wherever accuracy, judgment, and accountability are essential.
+                </p>
+              </div>
+
+              <div className="lg:col-span-5 relative">
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-surface-container border border-outline-variant/30 group">
+                  <img
+                    src="/images/service_compliance.jpg"
+                    alt="Technology and Security Shield"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/80 via-transparent to-transparent p-4 flex items-end">
+                    <span className="px-3 py-1.5 rounded bg-surface-container-lowest/90 backdrop-blur-md text-xs font-eyebrow text-primary font-bold shadow">
+                      SOC-2 &amp; HIPAA Compliant Security Enclosure
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
-              Institutional Security Meets AI-Powered Operations
-            </h1>
-            <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed">
-              We uphold the highest international compliance standards while deploying intelligent workflow automation directly into your existing CRM, ERP, and helpdesk ecosystem.
-            </p>
           </div>
         </section>
 

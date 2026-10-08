@@ -56,19 +56,39 @@ export default function WhySolvantraPage() {
       <div className="flex flex-col w-full bg-surface">
         {/* HERO */}
         <section className="w-full bg-surface-bright py-16 lg:py-24 border-b border-outline-variant/20">
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
-                The Solvantra Advantage
-              </span>
+          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 flex flex-col items-start">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
+                    The Solvantra Advantage
+                  </span>
+                </div>
+                <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
+                  More Than Outsourcing. <br />
+                  <span className="italic text-primary-container font-normal">An Extension of Your Business.</span>
+                </h1>
+                <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed max-w-xl mb-6">
+                  We combine people, processes and technology to deliver reliable, scalable and future-ready operational support for global organizations.
+                </p>
+              </div>
+
+              <div className="lg:col-span-5 relative">
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-surface-container border border-outline-variant/30 group">
+                  <img
+                    src="/images/service_virtual_teams.jpg"
+                    alt="Why Solvantra Operational Extension"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/80 via-transparent to-transparent p-4 flex items-end">
+                    <span className="px-3 py-1.5 rounded bg-surface-container-lowest/90 backdrop-blur-md text-xs font-eyebrow text-primary font-bold shadow">
+                      A true partnership for long-term success.
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
-              Why Global Enterprises Partner With Solvantra
-            </h1>
-            <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed">
-              We bridge the gap between traditional BPO cost efficiency and high-end management consultancy precision. Here is how we deliver uncompromised operational excellence.
-            </p>
           </div>
         </section>
 

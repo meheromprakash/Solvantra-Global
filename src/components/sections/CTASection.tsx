@@ -21,12 +21,19 @@ export default function CTASection({
       <section className="w-full bg-surface-container-low py-16">
         <div className="max-w-[1240px] mx-auto px-5 md:px-12">
           <div className="bg-on-secondary-fixed rounded-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-xl border border-primary-container/20">
-            {/* Ambient Gold Halo */}
-            <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-primary-container/20 blur-3xl pointer-events-none" />
+            {/* Background Globe Image Overlay Matching Mockup */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+              <img
+                src="/images/hero_operations_team.jpg"
+                alt="Global Network"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-on-secondary-fixed via-on-secondary-fixed/90 to-transparent" />
+            </div>
 
             <div className="flex flex-col max-w-xl relative z-10 text-center md:text-left">
               <span className="font-eyebrow text-xs text-primary-fixed uppercase tracking-[0.14em] mb-2">
-                Next Steps
+                Whatever your industry
               </span>
               <h3 className="font-headline-md text-2xl md:text-3xl text-surface-bright mb-2">
                 {title}

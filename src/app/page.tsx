@@ -23,37 +23,19 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Visual Column */}
             <div className="lg:col-span-6 relative">
-              <div className="relative w-full aspect-[16/11] rounded-xl overflow-hidden shadow-xl bg-surface-container-high border border-outline-variant/30 p-6 flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <span className="font-eyebrow text-xs text-primary">Operational Intelligence</span>
-                  <span className="px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-semibold">
-                    Live Telemetry
-                  </span>
-                </div>
-
-                <div className="space-y-3 my-auto">
-                  <div className="p-4 rounded-lg bg-surface-container-lowest shadow-sm border border-outline-variant/20 flex items-center justify-between">
-                    <div>
-                      <span className="block font-eyebrow text-[10px] text-secondary">Inbound Communication</span>
-                      <span className="font-headline-sm text-sm text-on-surface">&lt; 15s Average Response Time</span>
-                    </div>
-                    <span className="text-xs font-bold text-primary bg-primary-fixed/40 px-2 py-1 rounded">Active</span>
+              <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-surface-container border border-outline-variant/30 group">
+                <img
+                  src="/images/who_we_help_team.jpg"
+                  alt="Helping Businesses Run Better"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/80 via-transparent to-transparent p-6 flex flex-col justify-end">
+                  <div className="p-3.5 rounded-lg bg-surface-container-lowest/95 backdrop-blur-md border border-outline-variant/30 flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
+                    <p className="font-body-sm text-xs text-on-surface font-medium leading-snug">
+                      99.4% Workflow Precision SLA Delivered Across Global Accounts
+                    </p>
                   </div>
-
-                  <div className="p-4 rounded-lg bg-surface-container-lowest shadow-sm border border-outline-variant/20 flex items-center justify-between">
-                    <div>
-                      <span className="block font-eyebrow text-[10px] text-secondary">Claims Processing</span>
-                      <span className="font-headline-sm text-sm text-on-surface">99.8% First-Pass Approval</span>
-                    </div>
-                    <span className="text-xs font-bold text-primary bg-primary-fixed/40 px-2 py-1 rounded">Verified</span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-lg bg-surface-container-lowest/90 border border-outline-variant/30 flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
-                  <p className="font-body-sm text-xs text-on-surface font-medium leading-snug">
-                    99.4% Workflow Precision SLA Delivered Across Global Accounts
-                  </p>
                 </div>
               </div>
             </div>

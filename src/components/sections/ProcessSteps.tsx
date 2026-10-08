@@ -64,7 +64,7 @@ export default function ProcessSteps() {
           align="center"
         />
 
-        <div className="space-y-12">
+        <div className="space-y-8">
           {steps.map((step, idx) => {
             const IconComp = step.icon;
             return (
@@ -105,6 +105,26 @@ export default function ProcessSteps() {
               </div>
             );
           })}
+        </div>
+
+        {/* Process Visual Banner Matching Mockup Column 7 */}
+        <div className="mt-12 rounded-xl overflow-hidden shadow-xl border border-outline-variant/30 relative aspect-[21/9] bg-surface-container group">
+          <img
+            src="/images/who_we_help_team.jpg"
+            alt="Solvantra Process Collaboration"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-secondary-ink/90 via-secondary-ink/60 to-transparent p-8 md:p-12 flex flex-col justify-center items-start">
+            <span className="font-eyebrow text-xs text-primary-fixed uppercase tracking-[0.14em] mb-2 block">
+              Continuous Operation &amp; QA
+            </span>
+            <h3 className="font-headline-lg text-2xl md:text-3xl text-surface-bright mb-3 max-w-lg">
+              Ready to Build Your Support Team?
+            </h3>
+            <p className="font-body-md text-sm text-secondary-fixed-dim max-w-md mb-6 leading-relaxed">
+              Let's discuss your operational requirements and create a solution that works for your business.
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -89,16 +89,25 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Right Column: Visual Composition with Institutional Plaque */}
+              {/* Right Column: Visual Composition with Image */}
               <div className="lg:col-span-6 relative mt-8 lg:mt-0">
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-surface-container-high border border-outline-variant/30 p-6 flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <span className="font-eyebrow text-xs text-primary uppercase tracking-wider">Executive Suite</span>
-                    <span className="px-3 py-1 rounded bg-primary-fixed text-on-primary-fixed text-xs font-bold">Global Hub</span>
-                  </div>
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-surface-container border border-outline-variant/30 group">
+                  <img
+                    src="/images/hero_operations_team.jpg"
+                    alt="Solvantra Global Executive HQ"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/90 via-secondary-ink/20 to-transparent p-6 flex flex-col justify-between">
+                    <div className="flex items-center justify-between">
+                      <span className="font-eyebrow text-xs text-primary-fixed uppercase tracking-wider px-3 py-1 bg-secondary-ink/80 rounded backdrop-blur-md border border-primary-container/30">
+                        Executive Suite
+                      </span>
+                      <span className="px-3 py-1 rounded bg-primary-container text-on-primary text-xs font-bold shadow">
+                        Global Operations Hub
+                      </span>
+                    </div>
 
-                  <div className="my-auto space-y-4">
-                    <div className="p-4 rounded-lg bg-surface-container-lowest shadow-md border border-outline-variant/20 flex items-center gap-4">
+                    <div className="p-4 rounded-lg bg-surface-container-lowest/95 backdrop-blur-md shadow-lg border border-outline-variant/30 flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0">
                         <Building className="w-6 h-6" />
                       </div>
@@ -111,11 +120,6 @@ export default function AboutPage() {
                         </span>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="p-3 rounded-lg bg-on-secondary-fixed text-surface-bright flex items-center justify-between">
-                    <span className="font-eyebrow text-xs text-primary-fixed">Active Governance</span>
-                    <span className="font-body-sm text-xs text-secondary-fixed-dim">SOC-2 &amp; ISO 27001 Certified</span>
                   </div>
                 </div>
               </div>
