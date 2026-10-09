@@ -27,17 +27,17 @@ export default function Header() {
       <header className="fixed top-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(36,26,18,0.04)]">
         <div className="h-16 sm:h-20 max-w-[1240px] mx-auto px-3 sm:px-5 md:px-12 flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group shrink min-w-0">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0">
             <img
               src="/images/logo-mark.png"
               alt="Solvantra Global Logo"
-              className="h-7 sm:h-9 md:h-10 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform duration-300"
+              className="h-6 sm:h-8 md:h-9 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform duration-300"
             />
-            <div className="flex flex-col shrink min-w-0">
-              <span className="font-headline-sm text-base sm:text-lg font-bold tracking-wider text-on-surface uppercase leading-none truncate">
+            <div className="flex flex-col shrink-0">
+              <span className="font-headline-sm text-sm sm:text-base md:text-lg font-bold tracking-wider text-on-surface uppercase leading-none whitespace-nowrap">
                 Solvantra
               </span>
-              <span className="font-eyebrow text-[9px] sm:text-[10px] text-primary tracking-[0.18em] sm:tracking-[0.22em] uppercase leading-none mt-1 font-semibold truncate">
+              <span className="font-eyebrow text-[8px] sm:text-[9px] md:text-[10px] text-primary tracking-[0.18em] sm:tracking-[0.22em] uppercase leading-none mt-1 font-semibold whitespace-nowrap">
                 Global
               </span>
             </div>

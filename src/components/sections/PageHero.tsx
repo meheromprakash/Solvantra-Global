@@ -97,26 +97,25 @@ export default function PageHero({
           } as React.CSSProperties
         }
       >
-        {/* Preload hero background image on desktop/tablet only (min-width: 768px) */}
+        {/* Preload hero background image */}
         {bgImage && (
           <link
             rel="preload"
             as="image"
             href={bgImage}
-            media="(min-width: 768px)"
           />
         )}
 
-        {/* Background image layer (hidden on mobile up to 767px) */}
-        <div className="hidden md:block hero-bg-layer" />
+        {/* Background image layer */}
+        <div className="hero-bg-layer" />
 
-        {/* Soft Vignette top and bottom edges (hidden on mobile) */}
-        <div className="hidden md:block hero-vignette" />
+        {/* Soft Vignette top and bottom edges */}
+        <div className="hero-vignette" />
 
-        {/* Left-to-right gradient overlay (hidden on mobile) */}
-        <div className="hidden md:block hero-gradient-overlay" />
+        {/* Gradient overlay */}
+        <div className="hero-gradient-overlay" />
 
-        {/* Faint golden glow / light-ray effect on the right side (hidden on mobile) */}
+        {/* Faint golden glow / light-ray effect on the right side */}
         <div className="hidden md:block hero-glow-effect" />
 
         {/* Hero Content Container */}
@@ -134,19 +133,6 @@ export default function PageHero({
                 {headingGold}
               </span>
             </h1>
-
-            {/* Mobile Hero Visual Card (Hidden on desktop/tablet md:hidden) */}
-            {bgImage && (
-              <div className="md:hidden w-full aspect-[16/9] max-h-[220px] rounded-xl overflow-hidden shadow-md border border-outline-variant/30 my-4 relative">
-                <img
-                  src={bgImage}
-                  alt={bgAlt || eyebrow}
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#241a12]/30 via-transparent to-transparent pointer-events-none" />
-              </div>
-            )}
 
             {/* Paragraph */}
             <p className="font-body-lg text-[15px] sm:text-base md:text-lg text-secondary max-w-full md:max-w-[520px] mb-6 md:mb-8 leading-relaxed">
