@@ -135,6 +135,19 @@ export default function PageHero({
               </span>
             </h1>
 
+            {/* Mobile Hero Visual Card (Hidden on desktop/tablet md:hidden) */}
+            {bgImage && (
+              <div className="md:hidden w-full aspect-[16/9] max-h-[220px] rounded-xl overflow-hidden shadow-md border border-outline-variant/30 my-4 relative">
+                <img
+                  src={bgImage}
+                  alt={bgAlt || eyebrow}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#241a12]/30 via-transparent to-transparent pointer-events-none" />
+              </div>
+            )}
+
             {/* Paragraph */}
             <p className="font-body-lg text-[15px] sm:text-base md:text-lg text-secondary max-w-full md:max-w-[520px] mb-6 md:mb-8 leading-relaxed">
               {paragraph}
