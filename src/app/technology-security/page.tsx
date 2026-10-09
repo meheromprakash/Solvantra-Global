@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import ConsultationBanner from "@/components/ConsultationBanner";
 import ConsultationModal from "@/components/ConsultationModal";
+import PageHero from "@/components/sections/PageHero";
 
 export default function TechnologySecurityPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,42 +57,22 @@ export default function TechnologySecurityPage() {
     <>
       <div className="flex flex-col w-full bg-surface">
         {/* HERO */}
-        <section className="w-full bg-surface-bright py-16 lg:py-24 border-b border-outline-variant/20">
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7 flex flex-col items-start">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
-                  <ShieldCheck className="w-4 h-4 text-primary" />
-                  <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
-                    Technology &amp; Security
-                  </span>
-                </div>
-                <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
-                  Technology-Enabled. <br />
-                  <span className="italic text-primary-container font-normal">Security-Conscious. Human-Led.</span>
-                </h1>
-                <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed max-w-xl mb-6">
-                  Solvantra integrates technology and AI into operational workflows while maintaining human oversight wherever accuracy, judgment, and accountability are essential.
-                </p>
-              </div>
-
-              <div className="lg:col-span-5 relative">
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-surface-container border border-outline-variant/30 group">
-                  <img
-                    src="/images/service_compliance.jpg"
-                    alt="Technology and Security Shield"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/80 via-transparent to-transparent p-4 flex items-end">
-                    <span className="px-3 py-1.5 rounded bg-surface-container-lowest/90 backdrop-blur-md text-xs font-eyebrow text-primary font-bold shadow">
-                      SOC-2 &amp; HIPAA Compliant Security Enclosure
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          bgImage="/images/service_compliance.jpg"
+          bgAlt="Solvantra Security & Technology Architecture"
+          eyebrow="TECHNOLOGY & SECURITY"
+          headingMain="Technology-Enabled. Security-Conscious."
+          headingGold="Human-Led."
+          paragraph="Solvantra integrates technology and AI into operational workflows while maintaining human oversight wherever accuracy, judgment, and accountability are essential."
+          primaryButton={{
+            label: "Book a Consultation",
+            isModalTrigger: true,
+          }}
+          secondaryButton={{
+            label: "Our Framework",
+            href: "/how-it-works",
+          }}
+        />
 
         {/* SECURITY PILLARS GRID */}
         <section className="w-full bg-surface py-20">
@@ -111,10 +92,10 @@ export default function TechnologySecurityPage() {
                 return (
                   <div
                     key={idx}
-                    className="p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                    className="p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col justify-between group transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:border-primary-container/40"
                   >
                     <div>
-                      <div className="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-6 shadow-sm">
+                      <div className="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary mb-6 shadow-sm transition-all duration-300 ease-in-out group-hover:bg-primary-container group-hover:text-on-primary group-hover:scale-105">
                         <IconComp className="w-6 h-6" />
                       </div>
                       <h3 className="font-headline-sm text-xl text-on-surface mb-3">
@@ -137,8 +118,18 @@ export default function TechnologySecurityPage() {
         {/* AI & CRM INTEGRATION SHOWCASE */}
         <section className="w-full bg-surface-container-low py-20 border-t border-outline-variant/20">
           <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="bg-on-secondary-fixed text-surface-bright rounded-xl p-8 md:p-12 border border-primary-container/30 shadow-xl">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div
+              className="dark-bg-section text-surface-bright rounded-xl p-8 md:p-12 border border-primary-container/30 shadow-xl relative overflow-hidden"
+              style={
+                {
+                  "--dark-bg-image": "url('/images/dark_bg_cta.webp')",
+                } as React.CSSProperties
+              }
+            >
+              <div className="hidden md:block dark-bg-layer" />
+              <div className="hidden md:block dark-bg-overlay" />
+
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-6 space-y-4">
                   <span className="font-eyebrow text-xs text-primary-fixed uppercase tracking-[0.14em] block">
                     Seamless Stack Integration

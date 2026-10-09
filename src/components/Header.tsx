@@ -67,19 +67,20 @@ export default function Header() {
           </nav>
 
           {/* Header Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-5 py-2.5 bg-primary-container text-on-primary font-label-md text-xs rounded-lg shadow-[0_4px_20px_-2px_rgba(36,26,18,0.05),0_12px_32px_-4px_rgba(184,138,67,0.08)] hover:bg-primary transition-all duration-200 group"
+              className="inline-flex items-center justify-center px-3.5 sm:px-5 py-2 sm:py-2.5 bg-primary-container text-on-primary font-label-md text-xs rounded-lg shadow-[0_4px_20px_-2px_rgba(36,26,18,0.05),0_12px_32px_-4px_rgba(184,138,67,0.08)] hover:bg-primary transition-all duration-200 group cursor-pointer"
             >
-              <span>Book a Consultation</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
+              <span className="hidden xs:inline">Book a Consultation</span>
+              <span className="xs:hidden">Consultation</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1 sm:ml-1.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
 
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2 text-on-surface hover:text-primary transition-colors"
+              className="xl:hidden p-2 text-on-surface hover:text-primary transition-colors cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

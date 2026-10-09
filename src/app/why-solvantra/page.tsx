@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import ConsultationBanner from "@/components/ConsultationBanner";
 import ConsultationModal from "@/components/ConsultationModal";
+import PageHero from "@/components/sections/PageHero";
 
 export default function WhySolvantraPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,42 +56,22 @@ export default function WhySolvantraPage() {
     <>
       <div className="flex flex-col w-full bg-surface">
         {/* HERO */}
-        <section className="w-full bg-surface-bright py-16 lg:py-24 border-b border-outline-variant/20">
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7 flex flex-col items-start">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
-                    The Solvantra Advantage
-                  </span>
-                </div>
-                <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
-                  More Than Outsourcing. <br />
-                  <span className="italic text-primary-container font-normal">An Extension of Your Business.</span>
-                </h1>
-                <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed max-w-xl mb-6">
-                  We combine people, processes and technology to deliver reliable, scalable and future-ready operational support for global organizations.
-                </p>
-              </div>
-
-              <div className="lg:col-span-5 relative">
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-surface-container border border-outline-variant/30 group">
-                  <img
-                    src="/images/service_virtual_teams.jpg"
-                    alt="Why Solvantra Operational Extension"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/80 via-transparent to-transparent p-4 flex items-end">
-                    <span className="px-3 py-1.5 rounded bg-surface-container-lowest/90 backdrop-blur-md text-xs font-eyebrow text-primary font-bold shadow">
-                      A true partnership for long-term success.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          bgImage="/images/service_virtual_teams.jpg"
+          bgAlt="Why Solvantra Operational Extension"
+          eyebrow="THE SOLVANTRA ADVANTAGE"
+          headingMain="More Than Outsourcing."
+          headingGold="An Extension of Your Business."
+          paragraph="We combine people, processes and technology to deliver reliable, scalable and future-ready operational support for global organizations."
+          primaryButton={{
+            label: "Book a Consultation",
+            isModalTrigger: true,
+          }}
+          secondaryButton={{
+            label: "View Services",
+            href: "/services",
+          }}
+        />
 
         {/* 6 KEY DIFFERENTIATORS GRID */}
         <section className="w-full bg-surface py-20">
@@ -101,10 +82,10 @@ export default function WhySolvantraPage() {
                 return (
                   <div
                     key={index}
-                    className="p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                    className="p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col justify-between group transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:border-primary-container/40"
                   >
                     <div>
-                      <div className="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-6 shadow-sm">
+                      <div className="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary mb-6 shadow-sm transition-all duration-300 ease-in-out group-hover:bg-primary-container group-hover:text-on-primary group-hover:scale-105">
                         <IconComp className="w-6 h-6" />
                       </div>
                       <h3 className="font-headline-sm text-xl text-on-surface mb-3">

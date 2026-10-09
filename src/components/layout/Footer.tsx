@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Shield, Verified, ArrowRight } from "lucide-react";
+import { Verified, ArrowRight } from "lucide-react";
 import { NAVIGATION_ITEMS, CORE_SERVICES } from "@/lib/constants";
 import ConsultationModal from "../ConsultationModal";
 
@@ -11,8 +11,21 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="w-full bg-on-secondary-fixed text-surface-container-high border-t border-outline-variant/20 pt-24 pb-10">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-12">
+      <footer
+        className="dark-bg-section w-full border-t border-outline-variant/20 pt-24 pb-10 text-surface-container-high"
+        style={
+          {
+            "--dark-bg-image": "url('/images/dark_bg_footer.webp')",
+          } as React.CSSProperties
+        }
+      >
+        {/* Background image layer (Desktop/Tablet >= 768px only) */}
+        <div className="hidden md:block dark-bg-layer" />
+
+        {/* Stronger ~90% dark overlay layer */}
+        <div className="hidden md:block dark-bg-overlay-footer" />
+
+        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-12">
           {/* Main 12-Column Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-20">
             {/* Col 1-4: Brand Statement */}
@@ -35,7 +48,7 @@ export default function Footer() {
               <p className="font-body-md text-sm text-secondary-fixed-dim max-w-sm mb-6 leading-relaxed">
                 People. Processes. Technology. Built Around Your Business.
               </p>
-              <div className="flex items-center gap-2 text-secondary-fixed-dim bg-inverse-surface/40 px-3 py-1.5 rounded-md border border-primary-container/20">
+              <div className="flex items-center gap-2 text-secondary-fixed-dim bg-[#2b2118]/80 backdrop-blur-md px-3 py-1.5 rounded-md border border-primary-container/20">
                 <Verified className="w-4 h-4 text-primary-fixed" />
                 <span className="font-body-sm text-xs text-surface-bright">
                   Tier-One Global Business Operations
@@ -80,8 +93,8 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Col 10-12: High-Contrast Consultation Callout */}
-            <div className="lg:col-span-3 flex flex-col justify-between bg-inverse-surface/40 p-6 rounded-xl border border-primary-container/30 shadow-lg">
+            {/* Col 10-12: High-Contrast Consultation Callout Box */}
+            <div className="lg:col-span-3 flex flex-col justify-between bg-[#2b2118]/80 backdrop-blur-md p-6 rounded-xl border border-primary-container/30 shadow-xl">
               <div>
                 <p className="font-headline-sm text-base text-surface-bright mb-2 leading-snug">
                   Ready to streamline your operations?
@@ -92,7 +105,7 @@ export default function Footer() {
               </div>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center justify-between px-4 py-2.5 bg-primary-container text-on-primary font-label-md text-xs rounded-lg hover:bg-primary transition-colors group w-full"
+                className="inline-flex items-center justify-between px-4 py-2.5 bg-primary-container text-on-primary font-label-md text-xs rounded-lg hover:bg-primary transition-colors group w-full cursor-pointer"
               >
                 <span>Book a Consultation</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

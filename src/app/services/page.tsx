@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import ConsultationBanner from "@/components/ConsultationBanner";
 import ConsultationModal from "@/components/ConsultationModal";
+import PageHero from "@/components/sections/PageHero";
 
 export default function ServicesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -143,22 +144,22 @@ export default function ServicesPage() {
     <>
       <div className="flex flex-col w-full bg-surface">
         {/* HERO */}
-        <section className="w-full bg-surface-bright py-16 lg:py-24 border-b border-outline-variant/20">
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
-                Enterprise Operations Catalog
-              </span>
-            </div>
-            <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
-              Core Services &amp; Operational Pods
-            </h1>
-            <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed">
-              Tailored operational capabilities managed by vetted teams, precision SOPs, and AI-enabled infrastructure designed to integrate directly into your workflow.
-            </p>
-          </div>
-        </section>
+        <PageHero
+          bgImage="/images/service_call_support.jpg"
+          bgAlt="Solvantra Core Services Catalog"
+          eyebrow="ENTERPRISE OPERATIONS CATALOG"
+          headingMain="Core Services &"
+          headingGold="Operational Pods."
+          paragraph="Tailored operational capabilities managed by vetted teams, precision SOPs, and AI-enabled infrastructure designed to integrate directly into your workflow."
+          primaryButton={{
+            label: "Book a Consultation",
+            isModalTrigger: true,
+          }}
+          secondaryButton={{
+            label: "Get a Custom Solution",
+            href: "/why-solvantra",
+          }}
+        />
 
         {/* 8 DETAILED SERVICE CARDS */}
         <section className="w-full bg-surface py-20">

@@ -12,6 +12,8 @@ import {
   Globe2,
 } from "lucide-react";
 
+import PageHero from "@/components/sections/PageHero";
+
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,25 +32,25 @@ export default function ContactPage() {
   return (
     <div className="flex flex-col w-full bg-surface">
       {/* HERO */}
-      <section className="w-full bg-surface-bright py-16 lg:py-20 border-b border-outline-variant/20">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-12 text-center max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
-              Global Operations Desk
-            </span>
-          </div>
-          <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-4">
-            Connect With Our Operational Leadership
-          </h1>
-          <p className="font-body-lg text-base text-secondary leading-relaxed">
-            Have questions about staffing, SLA guarantees, security compliance, or custom workflows? We are ready to assist.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        bgImage="/images/hero_operations_team.jpg"
+        bgAlt="Solvantra Global Operations Desk"
+        eyebrow="GLOBAL OPERATIONS DESK"
+        headingMain="Connect With Our"
+        headingGold="Operational Leadership."
+        paragraph="Have questions about staffing, SLA guarantees, security compliance, or custom workflows? We are ready to assist."
+        primaryButton={{
+          label: "Book a Consultation",
+          isModalTrigger: true,
+        }}
+        secondaryButton={{
+          label: "Request Custom Proposal",
+          href: "#contact-form",
+        }}
+      />
 
       {/* FORM & GLOBAL NODES GRID */}
-      <section className="w-full bg-surface py-20">
+      <section id="contact-form" className="w-full bg-surface py-20 scroll-mt-20">
         <div className="max-w-[1240px] mx-auto px-5 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Form Column */}
@@ -157,13 +159,13 @@ export default function ContactPage() {
                     ></textarea>
                   </div>
 
-                  <div className="pt-2 flex items-center justify-between">
+                  <div className="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-outline-variant/20 mt-4">
                     <span className="font-eyebrow text-[10px] text-primary flex items-center gap-1">
                       <ShieldCheck className="w-3.5 h-3.5" /> NDA Protected Inquiry
                     </span>
                     <button
                       type="submit"
-                      className="px-6 py-3 bg-gradient-to-r from-primary-container to-tertiary-container text-on-primary font-label-md text-xs rounded shadow hover:opacity-95 transition-all inline-flex items-center gap-2"
+                      className="px-6 py-3 bg-gradient-to-r from-primary-container to-tertiary-container text-on-primary font-label-md text-xs rounded shadow hover:opacity-95 transition-all inline-flex items-center gap-2 cursor-pointer w-full sm:w-auto justify-center"
                     >
                       <span>Submit Proposal Request</span>
                       <Send className="w-4 h-4" />

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import ConsultationBanner from "@/components/ConsultationBanner";
 import ConsultationModal from "@/components/ConsultationModal";
+import PageHero from "@/components/sections/PageHero";
 
 export default function HowItWorksPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,22 +73,22 @@ export default function HowItWorksPage() {
     <>
       <div className="flex flex-col w-full bg-surface">
         {/* HERO */}
-        <section className="w-full bg-surface-bright py-16 lg:py-24 border-b border-outline-variant/20">
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded mb-4 border border-outline-variant/30">
-              <Clock className="w-4 h-4 text-primary" />
-              <span className="font-eyebrow text-xs text-primary uppercase tracking-[0.14em]">
-                Deployment Framework
-              </span>
-            </div>
-            <h1 className="font-headline-lg text-4xl sm:text-5xl text-on-surface mb-6">
-              From Initial Audit to Live Pod in 14 Days
-            </h1>
-            <p className="font-body-lg text-base sm:text-lg text-secondary leading-relaxed">
-              Our structured 4-step onboarding framework guarantees zero operational disruption, strict SLA compliance, and rapid integration with your team.
-            </p>
-          </div>
-        </section>
+        <PageHero
+          bgImage="/images/who_we_help_team.jpg"
+          bgAlt="Solvantra Deployment Framework"
+          eyebrow="DEPLOYMENT FRAMEWORK"
+          headingMain="From Initial Audit to"
+          headingGold="Live Pod in 14 Days."
+          paragraph="Our structured 4-step onboarding framework guarantees zero operational disruption, strict SLA compliance, and rapid integration with your team."
+          primaryButton={{
+            label: "Book a Consultation",
+            isModalTrigger: true,
+          }}
+          secondaryButton={{
+            label: "Explore Services",
+            href: "/services",
+          }}
+        />
 
         {/* 4-STEP TIMELINE */}
         <section className="w-full bg-surface py-20">

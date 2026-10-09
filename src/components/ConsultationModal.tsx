@@ -212,21 +212,21 @@ export default function ConsultationModal({
                 ></textarea>
               </div>
 
-              <div className="pt-2 flex items-center justify-between border-t border-outline-variant/20 mt-4">
+              <div className="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-outline-variant/20 mt-4">
                 <span className="font-eyebrow text-[10px] text-primary flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" /> SOC-2 & HIPAA Protocol Ready
                 </span>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 text-xs font-label-md text-secondary hover:text-on-surface transition-colors"
+                    className="px-4 py-2 text-xs font-label-md text-secondary hover:text-on-surface transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 bg-gradient-to-r from-primary-container to-tertiary-container text-on-primary font-label-md text-sm rounded shadow hover:opacity-95 transition-all inline-flex items-center gap-2"
+                    className="px-6 py-2.5 bg-gradient-to-r from-primary-container to-tertiary-container text-on-primary font-label-md text-sm rounded shadow hover:opacity-95 transition-all inline-flex items-center gap-2 cursor-pointer"
                   >
                     <span>Request Consultation</span>
                     <ArrowRight className="w-4 h-4" />

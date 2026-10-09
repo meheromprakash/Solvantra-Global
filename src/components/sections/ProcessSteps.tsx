@@ -70,20 +70,20 @@ export default function ProcessSteps() {
             return (
               <div
                 key={idx}
-                className="p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                className="p-6 md:p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center group transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:border-primary-container/40"
               >
-                <div className="lg:col-span-4 flex items-center gap-6">
-                  <span className="font-stat-numeral text-5xl text-primary-container font-normal">
+                <div className="lg:col-span-4 flex items-center gap-4 sm:gap-6">
+                  <span className="font-stat-numeral text-4xl sm:text-5xl text-primary-container font-normal shrink-0">
                     {step.number}
                   </span>
-                  <div className="w-14 h-14 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0 shadow-sm">
-                    <IconComp className="w-7 h-7" />
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-sm transition-all duration-300 ease-in-out group-hover:bg-primary-container group-hover:text-on-primary group-hover:scale-105">
+                    <IconComp className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
                   <div>
                     <span className="font-eyebrow text-[10px] text-primary uppercase tracking-wider block">
                       {step.timeline}
                     </span>
-                    <h3 className="font-headline-sm text-xl text-on-surface">
+                    <h3 className="font-headline-sm text-lg sm:text-xl text-on-surface">
                       {step.title}
                     </h3>
                   </div>
@@ -107,14 +107,19 @@ export default function ProcessSteps() {
           })}
         </div>
 
-        {/* Process Visual Banner Matching Mockup Column 7 */}
-        <div className="mt-12 rounded-xl overflow-hidden shadow-xl border border-outline-variant/30 relative aspect-[21/9] bg-surface-container group">
-          <img
-            src="/images/who_we_help_team.jpg"
-            alt="Solvantra Process Collaboration"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary-ink/90 via-secondary-ink/60 to-transparent p-8 md:p-12 flex flex-col justify-center items-start">
+        {/* Process Visual Banner */}
+        <div
+          className="dark-bg-section mt-12 rounded-xl overflow-hidden shadow-xl border border-primary-container/30 relative aspect-auto md:aspect-[21/9] min-h-[220px] md:min-h-[260px] group"
+          style={
+            {
+              "--dark-bg-image": "url('/images/dark_bg_cta.webp')",
+            } as React.CSSProperties
+          }
+        >
+          <div className="hidden md:block dark-bg-layer" />
+          <div className="hidden md:block dark-bg-overlay" />
+
+          <div className="relative z-10 w-full h-full p-8 md:p-12 flex flex-col justify-center items-start">
             <span className="font-eyebrow text-xs text-primary-fixed uppercase tracking-[0.14em] mb-2 block">
               Continuous Operation &amp; QA
             </span>

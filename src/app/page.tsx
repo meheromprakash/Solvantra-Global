@@ -4,7 +4,6 @@ import TrustStrip from "@/components/sections/TrustStrip";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import IndustriesGrid from "@/components/sections/IndustriesGrid";
 import GlobalOperations from "@/components/sections/GlobalOperations";
-import CTASection from "@/components/sections/CTASection";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -72,11 +71,8 @@ export default function HomePage() {
       {/* 5. Industries Overview */}
       <IndustriesGrid />
 
-      {/* 6. Global Operations Dark Panel */}
+      {/* 6. Global Operations Dark Panel with Schedule Consultation Button */}
       <GlobalOperations />
-
-      {/* 7. Consultation Banner */}
-      <CTASection />
     </div>
   );
 }

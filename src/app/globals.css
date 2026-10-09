@@ -188,3 +188,201 @@
   letter-spacing: 0.02em;
   font-weight: 600;
 }
+
+/* ==========================================================================
+   HERO BACKGROUND & EDITORIAL LAYOUT UTILITIES
+   ========================================================================== */
+
+.hero-bg-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f7f3e8;
+  background-image: linear-gradient(180deg, #fef9ee 0%, #f7f3e8 100%);
+}
+
+@media (min-width: 768px) {
+  .hero-bg-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--hero-bg-image);
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(247, 243, 232, 0.85) 0%,
+      rgba(247, 243, 232, 0) 18%,
+      rgba(247, 243, 232, 0) 82%,
+      rgba(247, 243, 232, 0.95) 100%
+    );
+  }
+
+  .hero-gradient-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero-gradient-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(247, 243, 232, 0.97) 0%,
+      rgba(247, 243, 232, 0.92) 40%,
+      rgba(247, 243, 232, 0.55) 60%,
+      rgba(247, 243, 232, 0) 75%
+    );
+  }
+}
+
+@media (min-width: 1025px) {
+  .hero-gradient-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(247, 243, 232, 0.96) 0%,
+      rgba(247, 243, 232, 0.90) 35%,
+      rgba(247, 243, 232, 0.40) 52%,
+      rgba(247, 243, 232, 0) 65%
+    );
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-glow-effect {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(
+      circle at 82% 48%,
+      rgba(231, 201, 138, 0.35) 0%,
+      rgba(184, 138, 67, 0.12) 35%,
+      transparent 65%
+    );
+  }
+}
+
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-fade-up {
+  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-fade-up {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (hover: hover) {
+  .hero-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(184, 138, 67, 0.4);
+  }
+  .hero-btn-secondary:hover {
+    transform: translateY(-2px);
+    border-color: #7e5713;
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+}
+
+/* ==========================================================================
+   REUSABLE DARK SECTION BACKGROUND UTILITIES
+   ========================================================================== */
+
+.dark-bg-section {
+  position: relative;
+  overflow: hidden;
+  background-color: #241a12;
+}
+
+@media (min-width: 768px) {
+  .dark-bg-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--dark-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .dark-bg-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      135deg,
+      rgba(36, 26, 18, 0.88) 0%,
+      rgba(36, 26, 18, 0.68) 50%,
+      rgba(36, 26, 18, 0.85) 100%
+    );
+  }
+
+  .dark-bg-overlay-footer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(36, 26, 18, 0.92) 0%,
+      rgba(36, 26, 18, 0.86) 60%,
+      rgba(36, 26, 18, 0.94) 100%
+    );
+  }
+}
+
+/* ==========================================================================
+   CARD HOVER FIX UTILITIES (Gold Circle & White Icon, No Card Darkening)
+   ========================================================================== */
+
+.solvantra-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: #ffffff;
+}
+
+.solvantra-icon-circle {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .solvantra-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(36, 26, 18, 0.08), 0 8px 10px -6px rgba(36, 26, 18, 0.04);
+    border-color: rgba(184, 138, 67, 0.4);
+  }
+
+  .group:hover .solvantra-icon-circle {
+    background-color: #b88a43 !important;
+    color: #ffffff !important;
+    transform: scale(1.05);
+  }
+}
