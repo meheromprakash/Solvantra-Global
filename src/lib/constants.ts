@@ -135,8 +135,8 @@ export const WHO_WE_HELP_LIST = [
     id: "healthcare",
     title: "Healthcare",
     path: "/healthcare",
-    description: "Dental and medical revenue cycle management, claims processing, eligibility verification, alongside 24/7 home-care intake and caregiver scheduling.",
-    metrics: "Revenue Operations & Care Coordination",
+    description: "Dental and medical revenue cycle management, clean claims processing, eligibility verification, and disciplined denial resolution.",
+    metrics: "Revenue Operations & RCM Management",
     image: "/images/industry_healthcare.jpg",
   },
 ];

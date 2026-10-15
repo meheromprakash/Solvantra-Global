@@ -61,7 +61,7 @@ const SECTORS: SectorData[] = [
     num: "02",
     id: "home-services",
     title: "Home Services",
-    subtitle: "HVAC, Plumbing & Field Trades",
+    subtitle: "HVAC, plumbing, electrical, field trades and home care agencies",
     description:
       "24/7 customer front desk, appointment scheduling, technician coordination, emergency dispatch, and customer follow-ups that keep trucks rolling.",
     path: "/home-services",
@@ -75,28 +75,28 @@ const SECTORS: SectorData[] = [
     bullets: [
       "24/7 Live Inbound Front Desk",
       "Calendar & Software Scheduling",
-      "Technician Dispatch & Follow-Through",
+      "Home Care & Nursing Scheduling",
     ],
   },
   {
     num: "03",
     id: "healthcare",
     title: "Healthcare",
-    subtitle: "Clinics, Practices & Care Agencies",
+    subtitle: "Dental & medical clinics",
     description:
-      "Dental and medical revenue cycle management, clean claims processing, 24/7 home-care intake, and rapid caregiver call-out resolution.",
+      "Dental and medical revenue cycle management, clean claims processing, status tracking, and disciplined denial and accounts receivable resolution.",
     path: "/healthcare",
     linkText: "Explore Healthcare Pod",
     workflow: [
-      { label: "Intake", sublabel: "Patient triage", icon: UserCheck },
+      { label: "Intake", sublabel: "Patient registration", icon: UserCheck },
       { label: "Verify Eligibility", sublabel: "Payer confirmed", icon: ShieldCheck },
-      { label: "Claim Prep", sublabel: "Clean electronic submission", icon: FileCheck },
+      { label: "Claim", sublabel: "Clean electronic submission", icon: FileCheck },
       { label: "Resolution", sublabel: "AR closed & reconciled", icon: CheckCircle2 },
     ],
     bullets: [
-      "End-to-End Dental & Medical RCM",
-      "24/7 Caregiver Scheduling & Intake",
-      "Call-Out Resolution & EVV Tracking",
+      "Eligibility & Benefits Verification",
+      "Claim Preparation & Submission",
+      "Denial & AR Follow-up",
     ],
   },
 ];

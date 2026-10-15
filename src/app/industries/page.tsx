@@ -72,20 +72,20 @@ export default function IndustriesPage() {
       path: "/healthcare",
       title: "Healthcare",
       tagline:
-        "Dental and medical revenue cycle management, claims processing and follow-up, patient eligibility verification, alongside 24/7 home-care intake and caregiver scheduling.",
-      promise: "Revenue Operations & Care Coordination",
+        "Dental and medical revenue cycle management, claims processing and follow-up, and patient eligibility verification.",
+      promise: "Revenue Operations & RCM Management",
       paletteNote: "Midnight Navy & Vibrant Medical Blue Palette",
       challenges: [
         "Billing bottlenecks, claim rejections, and aging accounts receivable reducing cash flow",
-        "Unanswered after-hours patient and family intake calls that move on to other providers",
-        "Caregiver turnover and last-minute call-outs creating uncovered shifts and family distress",
-        "Complex EVV requirements and Medicaid billing compliance requiring constant vigilance",
+        "Complex payer rules, denial backlogs, and time-sensitive appeal deadlines",
+        "Unverified patient eligibility leading to front-end clearinghouse rejections",
+        "Manual claim tracking and payment reconciliation draining internal practice staff",
       ],
       solutions: [
         "End-to-end dental and medical RCM from eligibility verification through AR reconciliation",
-        "24/7 Care at home scheduling desk managing intake calls, referrals, and shift bookings",
-        "Rapid call-out resolution contacting replacement pools before families have to call",
-        "HIPAA-compliant workflows with signed BAAs and strict non-clinical operational boundaries",
+        "Clean electronic claim submission and clearinghouse rules scrubbing",
+        "Structured denial management and rapid appeal escalation",
+        "Payment posting, electronic remittance reconciliation, and regular telemetry",
       ],
     },
   ];

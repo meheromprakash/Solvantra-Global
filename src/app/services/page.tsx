@@ -33,6 +33,7 @@ const WORKFLOW_ICONS: Record<string, LucideIcon> = {
   "Follow-up": CheckCircle2,
   Intake: UserCheck,
   "Verify Eligibility": ShieldCheck,
+  Claim: FileCheck,
   "Claim Prep": FileCheck,
   Resolution: CheckCircle2,
 };

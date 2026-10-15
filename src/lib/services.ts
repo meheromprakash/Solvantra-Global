@@ -59,14 +59,13 @@ export const SERVICES: ServiceItem[] = [
     slug: "home-services",
     num: "02",
     title: "Home Services",
-    audience: "HVAC, plumbing, electrical, and field trades",
+    audience: "HVAC, plumbing, electrical, field trades and home care agencies",
     description:
       "24/7 customer front desk, appointment scheduling, technician coordination, emergency dispatch, and customer follow-ups that keep trucks rolling.",
     includedItems: [
       "24/7 Live Inbound Front Desk",
       "Calendar & Software Scheduling",
-      "Technician Dispatch & Follow-Through",
-      "Emergency Triage & Work Order Generation",
+      "Home Care & Nursing Scheduling",
     ],
     workflow: [
       { step: "01", label: "Call", sublabel: "Immediate response" },
@@ -86,19 +85,18 @@ export const SERVICES: ServiceItem[] = [
     slug: "healthcare",
     num: "03",
     title: "Healthcare",
-    audience: "Dental & medical clinics and home care agencies",
+    audience: "Dental & medical clinics",
     description:
-      "Dental and medical revenue cycle management, clean claims processing, 24/7 home-care intake, and rapid caregiver call-out resolution.",
+      "Dental and medical revenue cycle management, clean claims processing, status tracking, and disciplined denial and accounts receivable resolution.",
     includedItems: [
-      "End-to-End Dental & Medical RCM",
-      "24/7 Caregiver Scheduling & Intake",
-      "Call-Out Resolution & EVV Tracking",
-      "Payer Verification & Denial Appeals",
+      "Eligibility & Benefits Verification",
+      "Claim Preparation & Submission",
+      "Denial & AR Follow-up",
     ],
     workflow: [
-      { step: "01", label: "Intake", sublabel: "Patient triage" },
+      { step: "01", label: "Intake", sublabel: "Patient registration" },
       { step: "02", label: "Verify Eligibility", sublabel: "Payer confirmed" },
-      { step: "03", label: "Claim Prep", sublabel: "Clean submission" },
+      { step: "03", label: "Claim", sublabel: "Clean submission" },
       { step: "04", label: "Resolution", sublabel: "AR reconciled" },
     ],
     linkLabel: "Explore Healthcare Pod",
