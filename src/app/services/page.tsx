@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import {
-  PhoneCall,
-  MessageSquare,
+  Headset,
   Calendar,
   FileCheck,
   ClipboardList,
@@ -21,38 +20,24 @@ import PageHero from "@/components/sections/PageHero";
 
 export default function ServicesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState("24/7 Call Support");
+  const [selectedService, setSelectedService] = useState("24/7 Call & Chat Support");
   const [teamSize, setTeamSize] = useState(3);
   const [coverageHours, setCoverageHours] = useState("24/7 Continuous");
 
   const servicesList = [
     {
-      id: "call-support",
-      icon: PhoneCall,
-      title: "24/7 Call Support",
-      summary: "Round-the-clock professional customer communication and inbound desk management.",
+      id: "call-chat-support",
+      icon: Headset,
+      title: "24/7 Call & Chat Support",
+      summary: "Round-the-clock omnichannel customer communication, live chat triage, and inbound desk management.",
       image: "/images/service_call_support.jpg",
       deliverables: [
-        "Inbound customer service & hotline triage",
-        "Outbound follow-ups & satisfaction checks",
-        "Dedicated IVR & escalation protocols",
-        "Real-time call recording & sentiment scoring",
+        "24/7 Inbound & outbound call handling with dedicated IVR",
+        "Multi-channel live chat, email queue & ticket resolution",
+        "Dedicated escalation protocols & priority routing",
+        "Real-time call recording, sentiment scoring & CRM sync",
       ],
-      sla: "< 15s Average Speed of Answer",
-    },
-    {
-      id: "chat-email",
-      icon: MessageSquare,
-      title: "Chat & Email Support",
-      summary: "Responsive, prompt, and organized multi-channel customer communications.",
-      image: "/images/service_chat_support.jpg",
-      deliverables: [
-        "Live chat monitoring & ticket resolution",
-        "Email queue triage & macro responses",
-        "Social media DM & review response desk",
-        "CRM & helpdesk ticket synchronization",
-      ],
-      sla: "< 5m First Response Guarantee",
+      sla: "< 15s Call / < 5m Chat Response",
     },
     {
       id: "ai-scheduling",
@@ -170,57 +155,49 @@ export default function ServicesPage() {
                 return (
                   <div
                     key={service.id}
-                    className="rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+                    className="rounded-2xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm hover:shadow-xl hover:-translate-y-1.5 hover:border-primary/50 transition-all duration-300 flex flex-col justify-between p-7 md:p-8 relative group overflow-hidden"
                   >
+                    {/* Subtle Top Accent Line */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent group-hover:via-primary transition-all duration-300" />
+
                     <div>
-                      {/* Image Preview Banner */}
-                      <div className="relative w-full h-48 overflow-hidden bg-surface-container">
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/70 via-transparent to-transparent p-4 flex items-end justify-between">
-                          <span className="font-eyebrow text-[11px] px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary font-bold shadow border border-outline-variant/30">
-                            {service.sla}
-                          </span>
+                      {/* Header: Icon + SLA Metric Pill */}
+                      <div className="flex items-start justify-between gap-4 mb-6">
+                        <div className="w-13 h-13 rounded-xl bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary group-hover:scale-105 transition-all duration-300 shadow-sm border border-outline-variant/20 shrink-0">
+                          <IconComponent className="w-6 h-6" />
                         </div>
+                        <span className="font-eyebrow text-[10px] tracking-wider uppercase px-3 py-1.5 rounded-full bg-surface-container-low text-primary font-bold border border-outline-variant/30 shrink-0">
+                          {service.sla}
+                        </span>
                       </div>
 
-                      <div className="p-6">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-10 h-10 rounded-full bg-primary-fixed/40 flex items-center justify-center text-primary shrink-0">
-                            <IconComponent className="w-5 h-5" />
-                          </div>
-                          <h3 className="font-headline-sm text-2xl text-on-surface">
-                            {service.title}
-                          </h3>
-                        </div>
-                        <p className="font-body-md text-sm text-secondary mb-6 leading-relaxed">
-                          {service.summary}
-                        </p>
+                      <h3 className="font-headline-sm text-2xl text-on-surface mb-2 group-hover:text-primary transition-colors">
+                        {service.title}
+                      </h3>
+                      <p className="font-body-md text-sm text-secondary mb-6 leading-relaxed">
+                        {service.summary}
+                      </p>
 
-                        <div className="space-y-2.5 pt-4 border-t border-outline-variant/20 mb-4">
-                          <span className="font-eyebrow text-[10px] text-primary uppercase tracking-wider block mb-1">
-                            Key Deliverables:
-                          </span>
-                          {service.deliverables.map((item, i) => (
-                            <div key={i} className="flex items-start gap-2.5 text-xs text-on-surface-variant">
-                              <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                              <span>{item}</span>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="space-y-2.5 pt-4 pb-5 border-y border-outline-variant/20 mb-6">
+                        <span className="font-eyebrow text-[10px] text-on-surface uppercase tracking-wider block font-bold">
+                          Key Deliverables:
+                        </span>
+                        {service.deliverables.map((item, i) => (
+                          <div key={i} className="flex items-start gap-2.5 text-xs text-on-surface-variant">
+                            <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
 
-                    <div className="px-6 pb-6 pt-0">
+                    <div>
                       <button
                         onClick={() => {
                           setSelectedService(service.title);
                           setIsModalOpen(true);
                         }}
-                        className="inline-flex items-center justify-between w-full px-4 py-3 bg-surface-container hover:bg-primary-container hover:text-on-primary font-label-md text-xs rounded transition-colors group/btn"
+                        className="inline-flex items-center justify-between w-full px-4 py-3 bg-surface-container-low hover:bg-primary hover:text-on-primary text-primary font-label-md text-xs rounded-lg transition-all duration-200 group/btn border border-outline-variant/20 hover:border-transparent cursor-pointer"
                       >
                         <span>Request {service.title} Pod</span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />

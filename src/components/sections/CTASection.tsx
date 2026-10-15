@@ -22,7 +22,7 @@ export default function CTASection({
     <>
       <section className="w-full bg-surface-container-low py-16">
         <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-          <div className="relative w-full rounded-xl overflow-hidden shadow-xl border border-primary-container/30 bg-[#241a12] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 group">
+          <div className="relative w-full rounded-xl overflow-hidden shadow-xl border border-primary-container/30 bg-[#332419] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 group">
             {/* Background Image Layer */}
             <div className="absolute inset-0 z-0">
               <img
@@ -32,7 +32,7 @@ export default function CTASection({
                 loading="lazy"
               />
               {/* Dark Gradient Overlay for Readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#241a12]/95 via-[#241a12]/80 to-[#241a12]/45 md:from-[#241a12]/90 md:via-[#241a12]/65 md:to-[#241a12]/35" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#332419]/95 via-[#332419]/80 to-[#332419]/45 md:from-[#332419]/90 md:via-[#332419]/65 md:to-[#332419]/35" />
             </div>
 
             {/* Ambient Gold Halo */}

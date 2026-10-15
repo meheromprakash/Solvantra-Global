@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(36,26,18,0.04)]">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(51,36,25,0.04)]">
         <div className="h-20 max-w-[1240px] mx-auto px-5 md:px-12 flex items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
@@ -60,7 +60,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-5 py-2.5 bg-primary-container text-on-primary font-label-md text-xs rounded-lg shadow-[0_4px_20px_-2px_rgba(36,26,18,0.05),0_12px_32px_-4px_rgba(184,138,67,0.08)] hover:bg-primary transition-all duration-200 group"
+              className="inline-flex items-center justify-center px-5 py-2.5 bg-primary-container text-on-primary font-label-md text-xs rounded-lg shadow-[0_4px_20px_-2px_rgba(51,36,25,0.05),0_12px_32px_-4px_rgba(185,138,62,0.08)] hover:bg-primary transition-all duration-200 group"
             >
               <span>Book a Consultation</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />

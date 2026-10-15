@@ -2,16 +2,10 @@
 
 import React, { useState } from "react";
 import {
-  ShieldCheck,
-  Lock,
   Server,
-  Cpu,
-  RefreshCw,
   FileCheck2,
   CheckCircle2,
-  Key,
-  Database,
-  ArrowRight,
+  Cpu,
 } from "lucide-react";
 import ConsultationBanner from "@/components/ConsultationBanner";
 import ConsultationModal from "@/components/ConsultationModal";
@@ -22,34 +16,14 @@ export default function TechnologySecurityPage() {
 
   const securityPillars = [
     {
-      icon: Lock,
-      title: "SOC-2 Type II Certified Data Infrastructure",
-      description: "Rigorous independent audits validating operational security, availability, and confidentiality across all data centers.",
-    },
-    {
-      icon: FileCheck2,
-      title: "HIPAA & HITECH Compliance Enclosure",
-      description: "Dedicated PHI handling protocols, encrypted medical records storage, and strict Business Associate Agreement (BAA) execution.",
-    },
-    {
       icon: Server,
       title: "ISO 27001 Information Security",
       description: "Comprehensive risk management framework, continuous vulnerability scanning, and multi-factor authentication across all endpoints.",
     },
     {
-      icon: Key,
-      title: "AES-256 & TLS 1.3 Encryption",
-      description: "End-to-end data protection ensuring all customer data is fully encrypted both at rest and in transit.",
-    },
-    {
-      icon: Database,
-      title: "Clean-Desk Physical Security",
-      description: "Physical access control, biometric authentication, paperless clean-desk environments, and mobile device restrictions in all pods.",
-    },
-    {
-      icon: RefreshCw,
-      title: "Real-Time Disaster Recovery & Redundancy",
-      description: "Automated hourly data snapshots, multi-region failover nodes, and guaranteed 99.99% infrastructure uptime SLAs.",
+      icon: FileCheck2,
+      title: "HIPAA & HITECH Compliance Enclosure",
+      description: "Dedicated PHI handling protocols, encrypted medical records storage, and strict Business Associate Agreement (BAA) execution.",
     },
   ];
 
@@ -86,7 +60,7 @@ export default function TechnologySecurityPage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {securityPillars.map((pillar, idx) => {
                 const IconComp = pillar.icon;
                 return (

@@ -25,10 +25,10 @@ export default function GlobalOperations() {
       {/* Vector Background Graphic */}
       <div className="absolute inset-0 opacity-15 pointer-events-none flex items-center justify-center z-10">
         <svg className="w-full h-full max-w-5xl" fill="none" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="400" cy="200" r="180" stroke="#FFDDB1" strokeWidth="1" strokeDasharray="4 4" />
-          <circle cx="400" cy="200" r="120" stroke="#FFDDB1" strokeWidth="1" />
-          <line x1="200" y1="200" x2="600" y2="200" stroke="#FFDDB1" strokeWidth="1" />
-          <line x1="400" y1="20" x2="400" y2="380" stroke="#FFDDB1" strokeWidth="1" />
+          <circle cx="400" cy="200" r="180" stroke="#B98A3E" strokeWidth="1" strokeDasharray="4 4" />
+          <circle cx="400" cy="200" r="120" stroke="#B98A3E" strokeWidth="1" />
+          <line x1="200" y1="200" x2="600" y2="200" stroke="#B98A3E" strokeWidth="1" />
+          <line x1="400" y1="20" x2="400" y2="380" stroke="#B98A3E" strokeWidth="1" />
         </svg>
       </div>
 
@@ -50,7 +50,7 @@ export default function GlobalOperations() {
             return (
               <div
                 key={idx}
-                className="p-6 rounded-xl bg-[#2b2118]/70 border border-primary-container/30 backdrop-blur-md hover:border-primary-container/60 transition-all shadow-xl"
+                className="p-6 rounded-xl bg-[#332419]/70 border border-primary-container/30 backdrop-blur-md hover:border-primary-container/60 transition-all shadow-xl"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-stat-numeral text-5xl text-primary-fixed">{stat.value}</span>

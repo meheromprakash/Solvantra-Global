@@ -16,7 +16,13 @@ export default function HomePage() {
       {/* 2. Trust Strip */}
       <TrustStrip />
 
-      {/* 3. Introduction / Who We Help */}
+      {/* 3. Domain Specialization */}
+      <IndustriesGrid />
+
+      {/* 4. Core Services Grid */}
+      <ServicesGrid />
+
+      {/* 5. Who We Help / Helping Businesses Run Better */}
       <section className="w-full bg-surface py-24">
         <div className="max-w-[1240px] mx-auto px-5 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -28,7 +34,7 @@ export default function HomePage() {
                   alt="Helping Businesses Run Better"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary-ink/80 via-transparent to-transparent p-6 flex flex-col justify-end">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#332419]/80 via-transparent to-transparent p-6 flex flex-col justify-end">
                   <div className="p-3.5 rounded-lg bg-surface-container-lowest/95 backdrop-blur-md border border-outline-variant/30 flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
                     <p className="font-body-sm text-xs text-on-surface font-medium leading-snug">
@@ -64,12 +70,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* 4. Core Services Grid */}
-      <ServicesGrid />
-
-      {/* 5. Industries Overview */}
-      <IndustriesGrid />
 
       {/* 6. Global Operations Dark Panel with Schedule Consultation Button */}
       <GlobalOperations />

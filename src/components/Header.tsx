@@ -13,18 +13,14 @@ export default function Header() {
 
   const navItems = [
     { label: "Home", path: "/" },
-    { label: "About", path: "/about" },
     { label: "Services", path: "/services" },
-    { label: "Industries", path: "/industries" },
+    { label: "About", path: "/about" },
     { label: "Why Solvantra", path: "/why-solvantra" },
-    { label: "Technology & Security", path: "/technology-security" },
-    { label: "How It Works", path: "/how-it-works" },
-    { label: "Contact", path: "/contact" },
   ];
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(36,26,18,0.04)]">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(51,36,25,0.04)]">
         <div className="h-16 sm:h-20 max-w-[1240px] mx-auto px-3 sm:px-5 md:px-12 flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-1.5 sm:gap-3 group shrink-0">
@@ -70,7 +66,7 @@ export default function Header() {
           <div className="flex items-center gap-1 sm:gap-3 shrink-0">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-2 sm:px-4 py-1.5 sm:py-2.5 bg-primary-container text-on-primary font-label-md text-[10px] xs:text-[11px] sm:text-xs rounded-lg shadow-[0_4px_20px_-2px_rgba(36,26,18,0.05),0_12px_32px_-4px_rgba(184,138,67,0.08)] hover:bg-primary transition-all duration-200 group cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center justify-center px-2 sm:px-4 py-1.5 sm:py-2.5 bg-primary-container text-on-primary font-label-md text-[10px] xs:text-[11px] sm:text-xs rounded-lg shadow-[0_4px_20px_-2px_rgba(51,36,25,0.05),0_12px_32px_-4px_rgba(185,138,62,0.08)] hover:bg-primary transition-all duration-200 group cursor-pointer whitespace-nowrap"
             >
               <span>Book a Consultation</span>
               <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 ml-1 sm:ml-1.5 shrink-0 group-hover:translate-x-0.5 transition-transform" />

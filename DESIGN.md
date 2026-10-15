@@ -10,17 +10,17 @@
 
 | Token Name | HEX Value | Description & Usage |
 |---|---|---|
-| **Primary Accent** | `#7E5713` | Deep Antique Bronze. Primary interactive focus, active tab text, icon glyphs, and primary brand markers. |
-| **Primary Container** | `#B88A43` | Brushed Antique Bronze. Main CTA button fills, eyebrow highlights, active badges, and focus rings. |
-| **Primary Fixed** | `#FFDDB1` | Warm Champagne Highlight. Used for contrast text/numerals inside dark ground sections. |
-| **Primary Fixed Dim** | `#F2BE71` | Muted Gold. Used for dark mode sub-headers and secondary stats. |
-| **Secondary Ink** | `#241A12` | Deep Roasted Espresso (`on-secondary-fixed`). Foundational ink for primary headlines, dark-ground panels, and footers. |
-| **Secondary Slate** | `#6A5C51` | Warm Espresso Slate (`secondary`). Subtitles, body prose, and secondary label metadata. |
-| **Secondary Fixed Dim**| `#D6C3B6` | Muted Vellum Slate. Body prose text on dark-ground panels and footers. |
-| **Secondary Container**| `#F0DCCF` | Soft Vellum Cream. Recessed highlight chips and secondary badge containers. |
-| **Tertiary Accent** | `#7C5815` | Polished Champagne Gold (`tertiary`). Linear borders, directional chevrons, micro-badges. |
-| **Tertiary Container**| `#B68B45` | Warm Gold Metallic. Secondary CTA gradient stops and accent badges. |
-| **Tertiary Fixed** | `#FFDDAE` | Light Champagne Gold. Ambient highlights on dark surfaces. |
+| **Main Title** | `#332419` | Warm Roasted Espresso (`on-surface`). Foundational color for all page headings, hero titles, and card headers. |
+| **Accent / Primary** | `#B98A3E` | Warm Champagne Bronze Gold (`primary`, `primary-container`). Interactive highlights, buttons, badges, key glyphs, and active states. |
+| **Primary Fixed** | `#F5E5C9` | Warm Champagne Highlight. Contrast text/numerals inside dark ground sections and icon containers. |
+| **Primary Fixed Dim** | `#D8AA5E` | Muted Gold. Used for dark mode sub-headers and secondary stats. |
+| **Secondary Ink** | `#332419` | Deep Roasted Espresso (`on-secondary-fixed`). Foundational ink for primary headlines, dark-ground panels, and footers. |
+| **Secondary Slate** | `#635347` | Warm Espresso Slate (`secondary`). Subtitles, body prose, and secondary label metadata. |
+| **Secondary Fixed Dim**| `#D5C5B5` | Muted Vellum Slate. Body prose text on dark-ground panels and footers. |
+| **Secondary Container**| `#EDE1D1` | Soft Vellum Cream. Recessed highlight chips and secondary badge containers. |
+| **Tertiary Accent** | `#B98A3E` | Polished Champagne Bronze (`tertiary`). Linear borders, directional chevrons, micro-badges. |
+| **Tertiary Container**| `#B98A3E` | Warm Gold Metallic. Secondary CTA gradient stops and accent badges. |
+| **Tertiary Fixed** | `#F5E5C9` | Light Champagne Gold. Ambient highlights on dark surfaces. |
 | **Error** | `#BA1A1A` | System alert red for form validation errors. |
 | **Error Container** | `#FFDAD6` | Recessed red background for alert pills. |
 
@@ -30,15 +30,15 @@
 
 | Token Name | HEX Value | Description & Usage |
 |---|---|---|
-| **Surface (Base Canvas)** | `#FEF9EE` | Warm Ivory Vellum. The primary body and main section canvas background. |
-| **Surface Bright** | `#FEF9EE` | Luminous Ivory. Hero sections and elevated content canvases. |
-| **Surface Dim** | `#DEDACF` | Recessed Vellum. Subtle recessed framing and structural dividers. |
+| **Surface (Base Canvas)** | `#F8F1E5` | Warm Ivory Vellum. The primary body and main section canvas background. |
+| **Surface Bright** | `#FDFBF7` | Luminous Ivory. Hero sections and elevated content canvases. |
+| **Surface Dim** | `#DDD3C3` | Recessed Vellum. Subtle recessed framing and structural dividers. |
 | **Surface Container Lowest** | `#FFFFFF` | Warm Paper White. Resting service cards, elevated floating badges, and input fields. |
-| **Surface Container Low** | `#F8F3E8` | Light Vellum Cream. Recessed section backgrounds (Trust Strip, Core Services Grid). |
-| **Surface Container** | `#F2EDE3` | Soft Vellum. Secondary container backgrounds, image placeholders, and badge fills. |
-| **Surface Container High** | `#EDE8DD` | Mid-tier container elevation and media framing. |
-| **Surface Container Highest** | `#E7E2D7` | Highest light-mode surface container tier. |
-| **Inverse Surface (Dark Ground)** | `#323029` / `#241A12` | Deep Roasted Espresso. High-authority global operations panels, statement banners, and footers. |
+| **Surface Container Low** | `#F3EBDD` | Light Vellum Cream. Recessed section backgrounds (Trust Strip, Core Services Grid). |
+| **Surface Container** | `#EDE2D2` | Soft Vellum. Secondary container backgrounds, image placeholders, and badge fills. |
+| **Surface Container High** | `#E7DBCA` | Mid-tier container elevation and media framing. |
+| **Surface Container Highest** | `#E0D2C0` | Highest light-mode surface container tier. |
+| **Inverse Surface (Dark Ground)** | `#332419` | Deep Roasted Espresso. High-authority global operations panels, statement banners, and footers. |
 
 ---
 
@@ -46,30 +46,30 @@
 
 | Context | Token Name | HEX Value | Usage |
 |---|---|---|---|
-| **Light Canvas Headings** | `on-surface` | `#1D1C15` | Primary section titles, hero headlines, card titles. |
-| **Light Canvas Body Prose**| `secondary` / `on-surface-variant` | `#6A5C51` / `#4F4538` | Paragraph prose, descriptions, meta text. |
-| **Primary Accent Text** | `primary` / `primary-container` | `#7E5713` / `#B88A43` | Eyebrow badges, active links, stat highlights. |
-| **Dark Ground Headings** | `surface-bright` | `#FEF9EE` | Headlines inside dark statement panels and footers. |
-| **Dark Ground Body Prose** | `secondary-fixed-dim` | `#D6C3B6` | Paragraph text inside dark statement panels and footers. |
-| **Dark Ground Numerals** | `primary-fixed` | `#FFDDB1` | High-contrast numbers (`200+`, `98%`, `5+`) on dark grounds. |
+| **Light Canvas Headings** | `on-surface` | `#332419` | Primary section titles, hero headlines, card titles. |
+| **Light Canvas Body Prose**| `secondary` / `on-surface-variant` | `#635347` / `#514034` | Paragraph prose, descriptions, meta text. |
+| **Primary Accent Text** | `primary` / `primary-container` | `#B98A3E` | Eyebrow badges, active links, stat highlights. |
+| **Dark Ground Headings** | `surface-bright` | `#FDFBF7` | Headlines inside dark statement panels and footers. |
+| **Dark Ground Body Prose** | `secondary-fixed-dim` | `#D5C5B5` | Paragraph text inside dark statement panels and footers. |
+| **Dark Ground Numerals** | `primary-fixed` | `#F5E5C9` | High-contrast numbers (`200+`, `98%`, `5+`) on dark grounds. |
 | **CTA Button Text** | `on-primary` | `#FFFFFF` | Pure white text on primary button containers. |
 
 ---
 
 ## 4. Accent Colors
 
-- **Primary Antique Bronze:** `#B88A43` / `#7E5713`
-- **Champagne Metallic:** `#C79A52` / `#B68B45`
-- **Dark Ground Highlight:** `#FFDDB1` / `#F2BE71`
-- **Ambient Golden Shimmer:** `rgba(184, 138, 67, 0.08)` to `rgba(184, 138, 67, 0.4)`
+- **Primary Accent:** `#B98A3E`
+- **Champagne Metallic:** `#B98A3E` / `#D8AA5E`
+- **Dark Ground Highlight:** `#F5E5C9` / `#D8AA5E`
+- **Ambient Golden Shimmer:** `rgba(185, 138, 62, 0.08)` to `rgba(185, 138, 62, 0.4)`
 
 ---
 
 ## 5. Metallic Gold Gradients
 
-- **Primary CTA Button Gradient:** `linear-gradient(to right, #b88a43, #b68b45)` (Tailwind: `bg-gradient-to-r from-primary-container to-tertiary-container`)
-- **Executive Shimmer 135° Gradient:** `linear-gradient(135deg, #B88A43 0%, #9C7232 100%)`
-- **Dimensional Metallic Accent:** `linear-gradient(135deg, #E7C98A 0%, #B98A45 100%)`
+- **Primary CTA Button Gradient:** `linear-gradient(to right, #b98a3e, #b98a3e)` (Tailwind: `bg-gradient-to-r from-primary-container to-tertiary-container`)
+- **Executive Shimmer 135° Gradient:** `linear-gradient(135deg, #B98A3E 0%, #A67931 100%)`
+- **Dimensional Metallic Accent:** `linear-gradient(135deg, #F5E5C9 0%, #B98A3E 100%)`
 
 ---
 

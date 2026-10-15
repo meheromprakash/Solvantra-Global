@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
+  Wrench,
   HeartPulse,
-  Truck,
-  Landmark,
-  ShoppingBag,
-  Code2,
+  Building2,
   CheckCircle2,
   ArrowRight,
   ShieldCheck,
@@ -17,97 +16,66 @@ import PageHero from "@/components/sections/PageHero";
 
 export default function IndustriesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeIndustry, setActiveIndustry] = useState("Healthcare");
+  const [activeCategory, setActiveCategory] = useState("Home Services");
 
-  const industries = [
+  const categories = [
+    {
+      id: "Home Services",
+      icon: Wrench,
+      path: "/home-services",
+      title: "Home Services",
+      tagline: "24/7 call dispatch, technician scheduling, emergency job intake, estimate follow-ups, and review management.",
+      challenges: [
+        "Missed after-hours emergency calls resulting in lost high-ticket jobs to local competitors",
+        "Overloaded dispatchers causing scheduling bottlenecks and inefficient technician drive routes",
+        "Unsold estimates and customer quotes never followed up due to back-office bandwidth constraints",
+      ],
+      solutions: [
+        "24/7 live emergency dispatch desk capturing urgent HVAC, plumbing, electrical, and roofing calls",
+        "Real-time technician calendar optimization inside ServiceTitan, Housecall Pro, and Jobber",
+        "Structured estimate re-engagement sequences that convert pending bids into booked revenue",
+      ],
+      metrics: "24/7 Dispatch Readiness",
+    },
     {
       id: "Healthcare",
       icon: HeartPulse,
-      title: "Healthcare & Medical Practices",
-      tagline: "HIPAA-compliant patient coordination, medical billing, and insurance claims resolution.",
+      path: "/healthcare",
+      title: "Healthcare",
+      tagline: "HIPAA-compliant patient coordination, medical billing, prior authorizations, and claims resolution.",
       challenges: [
-        "High patient call volume & appointment scheduling backlogs",
-        "Complex insurance prior authorizations & claims denials",
-        "Strict HIPAA data security & patient privacy enforcement",
+        "High patient call volume leading to prolonged hold times and appointment scheduling backlogs",
+        "Complex insurance prior authorizations causing treatment delays and lost practice revenue",
+        "Elevated claim denial rates and aged accounts receivable tying up essential practice cash flow",
       ],
       solutions: [
-        "Dedicated patient intake & 24/7 hotline support",
-        "End-to-end medical billing, AR recovery & denial appeals",
-        "HIPAA-compliant EHR/EMR data entry & insurance verification",
+        "Dedicated, HIPAA-trained patient coordinators handling inbound intake, triage, and scheduling",
+        "Real-time insurance eligibility verification and pre-authorization processing before appointments",
+        "End-to-end medical billing, electronic claim scrubbing, and aggressive denial appeal management",
       ],
       metrics: "99.4% Claims First-Pass Approval",
     },
     {
-      id: "Logistics",
-      icon: Truck,
-      title: "Logistics, Freight & Supply Chain",
-      tagline: "Real-time dispatch support, load tracking, driver coordination, and invoice audit.",
+      id: "Real Estate",
+      icon: Building2,
+      path: "/real-estate",
+      title: "Real Estate",
+      tagline: "Rapid lead qualification, CRM management, tour scheduling, tenant communication, and administrative transaction support.",
       challenges: [
-        "Overnight dispatch triage & driver check-ins across time zones",
-        "Freight bill auditing & proof of delivery (POD) verification",
-        "Customer ETA inquiry spikes during peak shipping windows",
+        "Buyer and seller portal leads going cold because agents are in showings and miss the 5-minute response window",
+        "Incomplete and messy CRM pipelines with missing contact details, unassigned tasks, and dropped follow-ups",
+        "Showing coordination chaos and endless scheduling back-and-forth between buyers, sellers, and listing agents",
       ],
       solutions: [
-        "24/7 follow-the-sun dispatch desk & driver assistance",
-        "Automated shipment tracking & customer proactive updates",
-        "Freight invoicing, rate auditing & BOL documentation management",
+        "Instant 24/7 lead qualification via phone and SMS contacting new inquiries within minutes of submission",
+        "Meticulous CRM database hygiene and enriched buyer/seller contact profiles updated in Follow Up Boss or kvCORE",
+        "Seamless property showing and tour schedule coordination directly synced with your agents' live calendars",
       ],
-      metrics: "< 10m Urgent Dispatch Escalation",
-    },
-    {
-      id: "Financial",
-      icon: Landmark,
-      title: "Financial Services & FinTech",
-      tagline: "Secure back-office processing, KYC compliance, customer support, and loan intake.",
-      challenges: [
-        "Stringent regulatory compliance & AML/KYC audit trails",
-        "High-volume document verification for loan applications",
-        "Sensitive customer financial inquiry handling",
-      ],
-      solutions: [
-        "Standardized KYC document audit & customer onboarding",
-        "Inbound account support & transaction dispute intake",
-        "Secure back-office ledger reconciliation & compliance checks",
-      ],
-      metrics: "100% SOC-2 & ISO 27001 Audit Parity",
-    },
-    {
-      id: "Retail",
-      icon: ShoppingBag,
-      title: "Retail & E-Commerce",
-      tagline: "Omnichannel customer care, order tracking, returns processing, and review response.",
-      challenges: [
-        "Seasonal volume surges during holiday promotions & sales",
-        "Multi-channel support fragmentation (Chat, Email, Social DMs)",
-        "Delayed order status & return refund processing",
-      ],
-      solutions: [
-        "Omnichannel live chat & email support staffing",
-        "Order status (WISMO) inquiry resolution & return management",
-        "Customer review monitoring & brand reputation management",
-      ],
-      metrics: "< 3m Average Live Chat Resolution",
-    },
-    {
-      id: "Tech",
-      icon: Code2,
-      title: "Software, SaaS & Technology",
-      tagline: "Tier-1 technical helpdesk, onboarding coordination, and lead qualification.",
-      challenges: [
-        "Technical user support queues impacting engineering bandwidth",
-        "Trial user onboarding drop-off due to delayed initial response",
-        "CRM data decay & un-qualified lead clutter",
-      ],
-      solutions: [
-        "Tier-1 technical support desk & ticket triage",
-        "Proactive user onboarding assistance & feature walkthroughs",
-        "Lead enrichment, qualification & B2B sales meeting scheduling",
-      ],
-      metrics: "98.5% CSAT Ticket Resolution Score",
+      metrics: "< 5m Lead Response Window",
     },
   ];
 
-  const currentInd = industries.find((i) => i.id === activeIndustry) || industries[0];
+  const currentCategory = categories.find((c) => c.id === activeCategory) || categories[0];
 
   return (
     <>
@@ -115,11 +83,11 @@ export default function IndustriesPage() {
         {/* HERO */}
         <PageHero
           bgImage="/images/industry_real_estate.jpg"
-          bgAlt="Solvantra Industry Expertise"
-          eyebrow="DOMAIN EXPERTISE"
-          headingMain="Tailored Solutions Across"
-          headingGold="Industries."
-          paragraph="Every sector demands specialized domain knowledge, compliance standards, and workflow protocols. Solvantra builds dedicated operational pods configured for your specific industry."
+          bgAlt="Solvantra Who We Help"
+          eyebrow="WHO WE HELP"
+          headingMain="Tailored Operational Pods For"
+          headingGold="Specialized Sectors."
+          paragraph="Every sector demands specialized domain knowledge, compliance standards, and workflow protocols. Solvantra builds dedicated operational pods configured specifically for Home Services, Healthcare, and Real Estate."
           primaryButton={{
             label: "Book a Consultation",
             isModalTrigger: true,
@@ -130,43 +98,43 @@ export default function IndustriesPage() {
           }}
         />
 
-        {/* INTERACTIVE INDUSTRY SELECTOR */}
+        {/* INTERACTIVE WHO WE HELP SELECTOR */}
         <section className="w-full bg-surface py-20">
           <div className="max-w-[1240px] mx-auto px-5 md:px-12">
             {/* Tabs */}
             <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-12 scrollbar-none border-b border-outline-variant/20">
-              {industries.map((ind) => {
-                const IconComp = ind.icon;
-                const isActive = ind.id === activeIndustry;
+              {categories.map((cat) => {
+                const IconComp = cat.icon;
+                const isActive = cat.id === activeCategory;
                 return (
                   <button
-                    key={ind.id}
-                    onClick={() => setActiveIndustry(ind.id)}
-                    className={`flex items-center gap-2.5 px-5 py-3 rounded-lg text-xs font-label-md transition-all whitespace-nowrap border shrink-0 ${
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`flex items-center gap-2.5 px-6 py-3 rounded-lg text-xs font-label-md transition-all whitespace-nowrap border shrink-0 cursor-pointer ${
                       isActive
                         ? "bg-primary-container text-on-primary border-primary shadow-md"
                         : "bg-surface-container-low text-secondary border-outline-variant/30 hover:bg-surface-container hover:text-on-surface"
                     }`}
                   >
                     <IconComp className="w-4 h-4" />
-                    <span>{ind.title.split("&")[0]}</span>
+                    <span>{cat.title}</span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Active Industry Breakdown */}
+            {/* Active Category Breakdown */}
             <div className="bg-surface-container-lowest rounded-xl p-8 md:p-12 border border-outline-variant/30 shadow-xl">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 pb-8 border-b border-outline-variant/20">
                 <div>
                   <span className="font-eyebrow text-xs text-primary uppercase tracking-wider block mb-1">
-                    Industry Specialization
+                    Who We Help Pod
                   </span>
                   <h2 className="font-headline-lg text-3xl sm:text-4xl text-on-surface">
-                    {currentInd.title}
+                    {currentCategory.title}
                   </h2>
                   <p className="font-body-lg text-base text-secondary mt-2 max-w-2xl">
-                    {currentInd.tagline}
+                    {currentCategory.tagline}
                   </p>
                 </div>
                 <div className="px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant/30 text-center shrink-0">
@@ -174,7 +142,7 @@ export default function IndustriesPage() {
                     Benchmark SLA
                   </span>
                   <span className="font-headline-sm text-lg text-primary font-bold">
-                    {currentInd.metrics}
+                    {currentCategory.metrics}
                   </span>
                 </div>
               </div>
@@ -183,13 +151,13 @@ export default function IndustriesPage() {
                 {/* Challenges */}
                 <div className="p-6 rounded-xl bg-surface-container-low border border-outline-variant/20">
                   <h3 className="font-headline-sm text-lg text-on-surface mb-4 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-amber-600" />
-                    Key Industry Operational Challenges
+                    <span className="w-2 h-2 rounded-full bg-primary" />
+                    Key Domain Operational Challenges
                   </h3>
                   <div className="space-y-3">
-                    {currentInd.challenges.map((c, i) => (
+                    {currentCategory.challenges.map((c, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-xs text-secondary">
-                        <span className="text-amber-600 font-bold">•</span>
+                        <span className="text-primary font-bold">•</span>
                         <span>{c}</span>
                       </div>
                     ))}
@@ -203,7 +171,7 @@ export default function IndustriesPage() {
                     Solvantra Tailored Operational Solution
                   </h3>
                   <div className="space-y-3">
-                    {currentInd.solutions.map((s, i) => (
+                    {currentCategory.solutions.map((s, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-xs text-on-surface font-medium">
                         <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                         <span>{s}</span>
@@ -217,13 +185,13 @@ export default function IndustriesPage() {
                 <div className="flex items-center gap-2 text-xs font-eyebrow text-primary">
                   <ShieldCheck className="w-4 h-4" /> Domain Specific SOP Training &amp; Compliance Included
                 </div>
-                <button
-                  onClick={() => setIsModalOpen(true)}
+                <Link
+                  href={currentCategory.path}
                   className="px-6 py-3 bg-primary-container text-on-primary font-label-md text-xs rounded hover:bg-primary transition-colors inline-flex items-center gap-2"
                 >
-                  <span>Build a {currentInd.title.split("&")[0]} Pod</span>
+                  <span>View Dedicated {currentCategory.title} Page</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -236,7 +204,7 @@ export default function IndustriesPage() {
       <ConsultationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        defaultService={`${currentInd.title.split("&")[0]} Operational Support`}
+        defaultService={`${currentCategory.title} Operational Support`}
       />
     </>
   );

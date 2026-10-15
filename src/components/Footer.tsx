@@ -13,22 +13,17 @@ export default function Footer() {
 
   const quickLinks = [
     { label: "Home", path: "/" },
-    { label: "About", path: "/about" },
     { label: "Services", path: "/services" },
-    { label: "Industries", path: "/industries" },
+    { label: "About", path: "/about" },
     { label: "Why Solvantra", path: "/why-solvantra" },
-    { label: "Technology & Security", path: "/technology-security" },
-    { label: "How It Works", path: "/how-it-works" },
-    { label: "Contact", path: "/contact" },
   ];
 
   const services = [
-    "24/7 Call Support",
-    "Chat & Email Support",
+    "24/7 Call & Chat Support",
     "AI Scheduling",
     "Claims & AR Support",
     "Administrative Support",
-    "Compliance & Process Support",
+    "Compliance & Process",
     "Lead Management",
     "Virtual Staffing",
   ];
@@ -74,7 +69,7 @@ export default function Footer() {
               <p className="font-body-md text-sm text-secondary-fixed-dim max-w-sm mb-6 leading-relaxed">
                 People. Processes. Technology. Built Around Your Business.
               </p>
-              <div className="flex items-center gap-2 text-secondary-fixed-dim bg-[#2b2118]/80 backdrop-blur-md px-3 py-1.5 rounded-md border border-primary-container/20">
+              <div className="flex items-center gap-2 text-secondary-fixed-dim bg-[#332419]/80 backdrop-blur-md px-3 py-1.5 rounded-md border border-primary-container/20">
                 <Verified className="w-4 h-4 text-primary-fixed" />
                 <span className="font-body-sm text-xs text-surface-bright">
                   Tier-One Global Business Operations
@@ -120,7 +115,7 @@ export default function Footer() {
             </div>
 
             {/* Col 10-12: High-Contrast Consultation Callout Box */}
-            <div className="lg:col-span-3 flex flex-col justify-between bg-[#2b2118]/80 backdrop-blur-md p-6 rounded-xl border border-primary-container/30 shadow-xl">
+            <div className="lg:col-span-3 flex flex-col justify-between bg-[#332419]/80 backdrop-blur-md p-6 rounded-xl border border-primary-container/30 shadow-xl">
               <div>
                 <p className="font-headline-sm text-base text-surface-bright mb-2 leading-snug">
                   Ready to streamline your operations?

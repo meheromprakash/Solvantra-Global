@@ -1,100 +1,107 @@
 @import "tailwindcss";
 
 @theme {
-  /* Solvantra Brand Colors - Design DNA */
-  --color-primary: #7e5713;
-  --color-primary-container: #b88a43;
-  --color-primary-fixed: #ffddb1;
-  --color-primary-fixed-dim: #f2be71;
-  --color-on-primary: #ffffff;
-  --color-on-primary-container: #3d2700;
+  /* Solvantra Brand Colors - New Website Theme */
+  --color-main-title: #332419;
+  --color-accent: #b98a3e;
+  --color-background: #f8f1e5;
 
-  /* Primary Accent & Champagne Gold Tokens */
-  --color-champagne-gold: #c79a52;
-  --color-champagne-gold-rich: #c9a05a;
-  --color-antique-bronze: #b88a43;
+  /* Primary Accent Tokens (#B98A3E) */
+  --color-primary: #b98a3e;
+  --color-primary-container: #b98a3e;
+  --color-primary-fixed: #f5e5c9;
+  --color-primary-fixed-dim: #d8aa5e;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #332419;
+
+  /* Accent & Gold Tokens */
+  --color-champagne-gold: #b98a3e;
+  --color-champagne-gold-rich: #b98a3e;
+  --color-antique-bronze: #b98a3e;
 
   /* Metallic Gold Palette */
-  --color-metallic-gold-light: #f0d9a3;
-  --color-metallic-gold-bright: #e7c98a;
-  --color-metallic-gold: #d7b36a;
-  --color-metallic-gold-dark: #b98a45;
+  --color-metallic-gold-light: #f5e5c9;
+  --color-metallic-gold-bright: #d8aa5e;
+  --color-metallic-gold: #b98a3e;
+  --color-metallic-gold-dark: #a2752f;
 
-  /* Dark Espresso Text & Dark Section Palette */
-  --color-espresso-dark: #241a12;
-  --color-espresso-deep: #2b2118;
-  --color-espresso-ground: #33251a;
-  --color-secondary: #6a5c51;
-  --color-secondary-container: #f0dccf;
-  --color-secondary-fixed: #f3dfd2;
-  --color-secondary-fixed-dim: #d6c3b6;
-  --color-on-secondary-fixed: #241a12;
-  --color-on-secondary-fixed-variant: #51443b;
-  --color-on-secondary-container: #6e6055;
+  /* Main Title (#332419) & Dark Espresso Palette */
+  --color-espresso-dark: #332419;
+  --color-espresso-deep: #281b12;
+  --color-espresso-ground: #332419;
+  --color-secondary: #635347;
+  --color-secondary-container: #ede1d1;
+  --color-secondary-fixed: #f0e3d3;
+  --color-secondary-fixed-dim: #d5c5b5;
+  --color-on-secondary-fixed: #332419;
+  --color-on-secondary-fixed-variant: #4f3e32;
+  --color-on-secondary-container: #635347;
 
-  /* Tertiary Champagne Accents */
-  --color-tertiary: #7c5815;
-  --color-tertiary-container: #b68b45;
-  --color-tertiary-fixed: #ffddae;
-  --color-tertiary-fixed-dim: #efbe73;
+  /* Tertiary Accents (#B98A3E) */
+  --color-tertiary: #b98a3e;
+  --color-tertiary-container: #b98a3e;
+  --color-tertiary-fixed: #f5e5c9;
+  --color-tertiary-fixed-dim: #d8aa5e;
 
-  /* Warm Ivory / Cream Background Palette */
-  --color-surface: #f8f3e8;
-  --color-surface-ivory: #f8f3e8;
-  --color-surface-cream: #f5efe2;
-  --color-surface-luminous: #fbf8f1;
-  --color-surface-dim: #dedacf;
-  --color-surface-bright: #fef9ee;
+  /* Background Palette (#F8F1E5) */
+  --color-surface: #f8f1e5;
+  --color-surface-ivory: #f8f1e5;
+  --color-surface-cream: #f2e8d9;
+  --color-surface-luminous: #fcf9f3;
+  --color-surface-dim: #ddd3c3;
+  --color-surface-bright: #fdfbf7;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f8f3e8;
-  --color-surface-container: #f2ede3;
-  --color-surface-container-high: #ede8dd;
-  --color-surface-container-highest: #e7e2d7;
+  --color-surface-container-low: #f3ebdd;
+  --color-surface-container: #ede2d2;
+  --color-surface-container-high: #e7dbca;
+  --color-surface-container-highest: #e0d2c0;
 
-  --color-on-surface: #241a12;
-  --color-on-surface-variant: #51443b;
+  --color-on-surface: #332419;
+  --color-on-surface-variant: #514034;
 
-  --color-inverse-surface: #241a12;
-  --color-inverse-on-surface: #f5f0e5;
-  --color-inverse-primary: #f2be71;
+  --color-inverse-surface: #332419;
+  --color-inverse-on-surface: #f8f1e5;
+  --color-inverse-primary: #d8aa5e;
 
-  --color-outline: #817567;
-  --color-outline-variant: #d3c4b3;
+  --color-outline: #837365;
+  --color-outline-variant: #d5c7b5;
 
-  --color-background: #f8f3e8;
-  --color-on-background: #241a12;
+  --color-on-background: #332419;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #f8f3e8;
-    color: #241a12;
+    background-color: #f8f1e5;
+    color: #332419;
   }
   body {
-    background-color: #f8f3e8;
-    color: #241a12;
+    background-color: #f8f1e5;
+    color: #332419;
     font-family: var(--font-manrope), system-ui, sans-serif;
     min-height: 100vh;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #332419;
   }
 }
 
 /* Metallic Gold Gradient Classes */
 .bg-gradient-metallic-gold {
-  background: linear-gradient(135deg, #f0d9a3 0%, #e7c98a 35%, #d7b36a 70%, #b98a45 100%);
+  background: linear-gradient(135deg, #f5e5c9 0%, #d8aa5e 35%, #b98a3e 70%, #a2752f 100%);
 }
 
 .bg-gradient-champagne {
-  background: linear-gradient(135deg, #c79a52 0%, #b88a43 100%);
+  background: linear-gradient(135deg, #cfa356 0%, #b98a3e 100%);
 }
 
 .bg-gradient-bronze-cta {
-  background: linear-gradient(135deg, #b88a43 0%, #b68b45 100%);
+  background: linear-gradient(135deg, #b98a3e 0%, #a67931 100%);
 }
 
 /* Dark Ground Section Utility */
 .bg-dark-espresso {
-  background-color: #241a12;
+  background-color: #332419;
 }
 
 /* Typography Classes */
@@ -197,8 +204,8 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background-color: #f7f3e8;
-  background-image: linear-gradient(180deg, #fef9ee 0%, #f7f3e8 100%);
+  background-color: #f8f1e5;
+  background-image: linear-gradient(180deg, #fdfbf7 0%, #f8f1e5 100%);
 }
 
 .hero-bg-layer {
@@ -220,10 +227,10 @@
   z-index: 1;
   background: linear-gradient(
     180deg,
-    rgba(247, 243, 232, 0.88) 0%,
-    rgba(247, 243, 232, 0) 18%,
-    rgba(247, 243, 232, 0) 82%,
-    rgba(247, 243, 232, 0.95) 100%
+    rgba(248, 241, 229, 0.88) 0%,
+    rgba(248, 241, 229, 0) 18%,
+    rgba(248, 241, 229, 0) 82%,
+    rgba(248, 241, 229, 0.95) 100%
   );
 }
 
@@ -234,9 +241,9 @@
   z-index: 2;
   background: linear-gradient(
     180deg,
-    rgba(247, 243, 232, 0.92) 0%,
-    rgba(247, 243, 232, 0.78) 45%,
-    rgba(247, 243, 232, 0.94) 100%
+    rgba(248, 241, 229, 0.92) 0%,
+    rgba(248, 241, 229, 0.78) 45%,
+    rgba(248, 241, 229, 0.94) 100%
   );
 }
 
@@ -250,10 +257,10 @@
   .hero-gradient-overlay {
     background: linear-gradient(
       90deg,
-      rgba(247, 243, 232, 0.97) 0%,
-      rgba(247, 243, 232, 0.92) 40%,
-      rgba(247, 243, 232, 0.55) 60%,
-      rgba(247, 243, 232, 0) 75%
+      rgba(248, 241, 229, 0.97) 0%,
+      rgba(248, 241, 229, 0.92) 40%,
+      rgba(248, 241, 229, 0.55) 60%,
+      rgba(248, 241, 229, 0) 75%
     );
   }
 }
@@ -262,10 +269,10 @@
   .hero-gradient-overlay {
     background: linear-gradient(
       90deg,
-      rgba(247, 243, 232, 0.96) 0%,
-      rgba(247, 243, 232, 0.90) 35%,
-      rgba(247, 243, 232, 0.40) 52%,
-      rgba(247, 243, 232, 0) 65%
+      rgba(248, 241, 229, 0.96) 0%,
+      rgba(248, 241, 229, 0.90) 35%,
+      rgba(248, 241, 229, 0.40) 52%,
+      rgba(248, 241, 229, 0) 65%
     );
   }
 }
@@ -278,8 +285,8 @@
     z-index: 1;
     background: radial-gradient(
       circle at 82% 48%,
-      rgba(231, 201, 138, 0.35) 0%,
-      rgba(184, 138, 67, 0.12) 35%,
+      rgba(216, 170, 94, 0.35) 0%,
+      rgba(185, 138, 62, 0.15) 35%,
       transparent 65%
     );
   }
@@ -311,11 +318,11 @@
 @media (hover: hover) {
   .hero-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(184, 138, 67, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(185, 138, 62, 0.45);
   }
   .hero-btn-secondary:hover {
     transform: translateY(-2px);
-    border-color: #7e5713;
+    border-color: #b98a3e;
     background-color: rgba(255, 255, 255, 0.95);
   }
 }
@@ -327,7 +334,7 @@
 .dark-bg-section {
   position: relative;
   overflow: hidden;
-  background-color: #241a12;
+  background-color: #332419;
 }
 
 @media (min-width: 768px) {
@@ -350,9 +357,9 @@
     z-index: 1;
     background: linear-gradient(
       135deg,
-      rgba(36, 26, 18, 0.88) 0%,
-      rgba(36, 26, 18, 0.68) 50%,
-      rgba(36, 26, 18, 0.85) 100%
+      rgba(51, 36, 25, 0.90) 0%,
+      rgba(51, 36, 25, 0.72) 50%,
+      rgba(51, 36, 25, 0.88) 100%
     );
   }
 
@@ -363,9 +370,9 @@
     z-index: 1;
     background: linear-gradient(
       180deg,
-      rgba(36, 26, 18, 0.92) 0%,
-      rgba(36, 26, 18, 0.86) 60%,
-      rgba(36, 26, 18, 0.94) 100%
+      rgba(51, 36, 25, 0.94) 0%,
+      rgba(51, 36, 25, 0.88) 60%,
+      rgba(51, 36, 25, 0.96) 100%
     );
   }
 }
@@ -386,12 +393,12 @@
 @media (hover: hover) {
   .solvantra-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(36, 26, 18, 0.08), 0 8px 10px -6px rgba(36, 26, 18, 0.04);
-    border-color: rgba(184, 138, 67, 0.4);
+    box-shadow: 0 20px 25px -5px rgba(51, 36, 25, 0.08), 0 8px 10px -6px rgba(51, 36, 25, 0.04);
+    border-color: rgba(185, 138, 62, 0.4);
   }
 
   .group:hover .solvantra-icon-circle {
-    background-color: #b88a43 !important;
+    background-color: #b98a3e !important;
     color: #ffffff !important;
     transform: scale(1.05);
   }

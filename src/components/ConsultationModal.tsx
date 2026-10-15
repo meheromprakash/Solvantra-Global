@@ -171,14 +171,16 @@ export default function ConsultationModal({
                     onChange={(e) => setFormData({ ...formData, serviceNeeded: e.target.value })}
                     className="w-full px-3 py-2 bg-surface border border-outline-variant/40 rounded focus:border-primary focus:outline-none text-sm text-on-surface"
                   >
-                    <option value="24/7 Call Support">24/7 Call Support</option>
-                    <option value="Chat & Email Support">Chat & Email Support</option>
+                    <option value="24/7 Call & Chat Support">24/7 Call & Chat Support</option>
                     <option value="AI Scheduling">AI Scheduling & Workflows</option>
                     <option value="Claims & AR Support">Claims & AR Support</option>
                     <option value="Administrative Support">Administrative Support</option>
                     <option value="Compliance & Process Support">Compliance & Process Support</option>
                     <option value="Lead Management">Lead Management</option>
                     <option value="Virtual Staffing">Virtual Dedicated Staffing</option>
+                    <option value="Home Services Operational Support">Home Services Operational Pod</option>
+                    <option value="Healthcare Operational Support">Healthcare Operational Pod</option>
+                    <option value="Real Estate Operational Support">Real Estate Operational Pod</option>
                     <option value="Full Custom Operational Pod">Full Custom Operational Pod</option>
                   </select>
                 </div>
