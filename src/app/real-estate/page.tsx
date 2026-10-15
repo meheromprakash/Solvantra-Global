@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  Building2,
   Calendar,
   CheckCircle2,
   ArrowRight,
@@ -14,6 +13,16 @@ import {
   FileCheck,
   Wrench,
   AlertTriangle,
+  ChevronDown,
+  ChevronRight,
+  Users,
+  BarChart3,
+  MessageSquare,
+  FileText,
+  Lock,
+  X,
+  Layers,
+  Sparkles,
 } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -21,260 +30,434 @@ import FinalCTA from "@/components/sections/FinalCTA";
 export default function RealEstatePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const audienceGroups = [
+  // Hero interactive log ticker state
+  const [activeLogRow, setActiveLogRow] = useState(0);
+
+  // Audience Explorer state
+  const [selectedAudienceIndex, setSelectedAudienceIndex] = useState(0);
+  const [userInteractedAudience, setUserInteractedAudience] = useState(false);
+
+  // Accordion state for What We Handle (Section 6)
+  const [openCol1Index, setOpenCol1Index] = useState<number | null>(null);
+  const [openCol2Index, setOpenCol2Index] = useState<number | null>(null);
+
+  // Regulatory reference tab & collapse state (Section 10)
+  const [isRegOpen, setIsRegOpen] = useState(false);
+  const [regTab, setRegTab] = useState<"england" | "us">("england");
+
+  // Hero ticker cycle
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveLogRow((prev) => (prev + 1) % 5);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Audience explorer auto-advance every 8s until user interacts
+  useEffect(() => {
+    if (userInteractedAudience) return;
+    const timer = setInterval(() => {
+      setSelectedAudienceIndex((prev) => (prev + 1) % 6);
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [userInteractedAudience]);
+
+  // Section 1: Hero Log Rows
+  const heroLogRows = [
+    { time: "22:45", text: "Viewing booked · Diary updated" },
+    { time: "02:10", text: "Maintenance report logged · Urgent" },
+    { time: "03:30", text: "Portal enquiry answered · Lead logged" },
+    { time: "06:50", text: "Certificate reminder raised · Your team" },
+    { time: "07:15", text: "Complaint acknowledged · Escalated" },
+  ];
+
+  // Section 3: What You Get (4 Pillars)
+  const fourPillars = [
     {
       num: "01",
+      title: "Never miss an enquiry",
+      points: [
+        "Calls, portal enquiries, web forms and chats.",
+        "Answered in your agency's name, any hour.",
+        "Every lead logged with full details.",
+      ],
+    },
+    {
+      num: "02",
+      title: "Viewings and valuations booked",
+      points: [
+        "Appointments placed straight into your diary.",
+        "Confirmations and reminders to cut no-shows.",
+        "Negotiators briefed before each visit.",
+      ],
+    },
+    {
+      num: "03",
+      title: "Tenants and landlords looked after",
+      points: [
+        "Maintenance reports logged and triaged.",
+        "Contractors booked and progress updated.",
+        "Clear, timely updates to every party.",
+      ],
+    },
+    {
+      num: "04",
+      title: "Compliance support built in",
+      points: [
+        "Certificate and deadline reminders.",
+        "Document chasing and audit-ready records.",
+        "Scripts that follow your approved policies.",
+      ],
+    },
+  ];
+
+  // Section 4: Built for the Full Property Ecosystem (6 Audiences)
+  const audienceList = [
+    {
+      id: "online-hybrid",
       title: "Online & Hybrid Estate Agents",
-      services: [
+      bullets: [
         "Sales and lettings enquiries from portals and web",
         "Valuation and viewing bookings straight to your diary",
         "Applicant follow-up and progress updates",
       ],
     },
     {
-      num: "02",
+      id: "letting-agencies",
       title: "Letting Agencies",
-      services: [
+      bullets: [
         "Tenant applications and referencing support",
-        "Move-in and tenancy renewal coordination",
+        "Move-in and renewal coordination",
         "Landlord and tenant ongoing communication",
       ],
     },
     {
-      num: "03",
+      id: "property-mgmt",
       title: "Property Management Companies",
-      services: [
+      bullets: [
         "Maintenance helpdesk and contractor booking",
-        "Tenant queries and prompt issue reporting",
+        "Tenant queries and issue reporting",
         "Routine property inspections scheduling",
       ],
     },
     {
-      num: "04",
+      id: "block-managers",
       title: "Block & Portfolio Managers",
-      services: [
+      bullets: [
         "Resident and leaseholder enquiry desk",
         "Out-of-hours emergency intake and escalation",
         "Service charge and notice queries",
       ],
     },
     {
-      num: "05",
+      id: "portfolio-landlords",
       title: "Landlords with Larger Portfolios",
-      services: [
-        "Single dedicated point of contact for tenants",
-        "Repair logging, triage, and follow-up",
+      bullets: [
+        "Single point of contact for tenants",
+        "Repair logging and follow-up until closure",
         "Compliance date and certificate tracking",
       ],
     },
     {
-      num: "06",
+      id: "student-btr",
       title: "Student & Build-to-Rent Operators",
-      services: [
-        "High-volume seasonal enquiry intake",
+      bullets: [
+        "High-volume seasonal enquiries and intake",
         "Viewing and tenancy start coordination",
         "Resident support and out-of-hours coverage",
       ],
     },
   ];
 
-  const fourPillars = [
+  // Section 5: Is Solvantra Right For You (4 Signals)
+  const signals = [
     {
-      num: "01",
-      title: "Never Miss an Enquiry",
-      points: [
-        "Calls, portal enquiries, web forms and chats.",
-        "Answered in your agency's name, any hour of the day or night.",
-        "Every lead logged with complete details directly into your CRM.",
-      ],
+      icon: Clock,
+      text: "Enquiries and maintenance calls arrive out of hours and go unanswered.",
     },
     {
-      num: "02",
-      title: "Viewings & Valuations Booked",
-      points: [
-        "Appointments placed straight into your negotiator's diary.",
-        "Confirmations and timely reminders to cut no-shows.",
-        "Negotiators briefed with applicant requirements before each visit.",
-      ],
+      icon: Users,
+      text: "Your team is stretched across sales, lettings, maintenance and admin.",
     },
     {
-      num: "03",
-      title: "Tenants & Landlords Looked After",
-      points: [
-        "Maintenance reports logged, urgency triaged by priority.",
-        "Contractors booked and progress updated until closure.",
-        "Clear, timely updates sent to every party without chasing.",
-      ],
+      icon: FileText,
+      text: "Compliance dates live in spreadsheets, inboxes or people's heads.",
     },
     {
-      num: "04",
-      title: "Compliance Support Built In",
-      points: [
-        "Certificate expiries and statutory deadline reminders.",
-        "Document chasing and audit-ready records maintained.",
-        "Scripts strictly follow your approved policies and legal standards.",
-      ],
+      icon: BarChart3,
+      text: "Your portfolio is growing faster than your headcount.",
     },
   ];
 
-  const fullJourneyServices = [
+  // Section 6: What We Handle (9 Services)
+  const handleServices = [
     {
       num: "01",
       title: "24/7 Enquiry Handling",
-      description:
+      summary: "Fast response to every call, portal enquiry and chat.",
+      detail:
         "Every call, portal enquiry, web form and chat answered fast. Needs captured, applicants qualified on lawful, relevant criteria and everything logged in your CRM.",
     },
     {
       num: "02",
       title: "Viewing & Valuation Booking",
-      description:
-        "Appointments booked, confirmed and reminded, with rescheduling handled and the right negotiator briefed before every inspection.",
+      summary: "Direct diary scheduling with confirmations and brief.",
+      detail:
+        "Appointments booked, confirmed and reminded, with rescheduling handled and the right negotiator briefed before every visit.",
     },
     {
       num: "03",
       title: "Applicant & Tenant Onboarding",
-      description:
+      summary: "Document and reference chasing through your secure portal.",
+      detail:
         "Chasing documents, references, ID and signed paperwork through your own secure process, with a clear record of what is outstanding.",
     },
     {
       num: "04",
       title: "Maintenance Helpdesk",
-      description:
+      summary: "Triage, contractor booking and status tracking to completion.",
+      detail:
         "Repair reports logged, urgency triaged, contractors booked and tenant and landlord kept updated until the job is closed.",
     },
     {
       num: "05",
       title: "Landlord & Vendor Updates",
-      description:
+      summary: "Viewing feedback and scheduled reports in your brand tone.",
+      detail:
         "Viewing feedback, progress updates and routine messages sent on your schedule and in your brand's tone.",
     },
     {
       num: "06",
       title: "Compliance Admin Support",
-      description:
+      summary: "Reminders and logs for certificate expiries and deposit deadlines.",
+      detail:
         "Reminders and tracking for certificate expiries, deposit deadlines and document renewals, with records ready for audit.",
     },
     {
       num: "07",
       title: "Payment Reminders",
-      description:
+      summary: "Respectful policy-aligned reminders with instant escalation.",
+      detail:
         "Polite reminders following your policy and escalation rules, with anything sensitive passed directly to your team.",
     },
     {
       num: "08",
       title: "Complaints Intake",
-      description:
+      summary: "Logged, acknowledged and escalated with an auditable trail.",
+      detail:
         "Complaints logged, acknowledged and escalated to the right person within your set timescales, building an auditable trail.",
     },
     {
       num: "09",
       title: "Reporting",
-      description:
+      summary: "Regular data on volumes, response times and task statuses.",
+      detail:
         "Enquiry volumes, bookings, response times, maintenance status and compliance task status shared on a regular schedule.",
     },
   ];
 
-  const maintenanceTriage = [
+  // Section 7: Why 24/7 Matters Comparison
+  const why247Rows = [
+    {
+      time: "Nights",
+      without: "Enquiries and emergency reports go to voicemail.",
+      withSolvantra: "Live answer; emergencies escalated immediately.",
+    },
+    {
+      time: "Weekends",
+      without: "Buyers and tenants move on to the next agent.",
+      withSolvantra: "Viewings booked directly for the next available slot.",
+    },
+    {
+      time: "Holidays",
+      without: "Office is closed, unresolved tenant issues pile up.",
+      withSolvantra: "Full continuous coverage as normal.",
+    },
+    {
+      time: "Peak season",
+      without: "Phones overwhelmed, frustrated callers hang up.",
+      withSolvantra: "Extra capacity absorbs and handles the spike.",
+    },
+  ];
+
+  // Section 8: Informed Matrix
+  const informedMatrix = [
+    {
+      stage: "Enquiry",
+      applicant: "Fast reply and clear next steps",
+      landlord: "Interest summary on request",
+      team: "Lead logged with full criteria in CRM",
+    },
+    {
+      stage: "Viewing",
+      applicant: "Confirmation and timely reminder",
+      landlord: "Viewing booked and feedback shared",
+      team: "Diary updated, negotiator briefed",
+    },
+    {
+      stage: "Onboarding",
+      applicant: "List of documents needed and chasers",
+      landlord: "Progress updates relayed",
+      team: "Outstanding items flagged for review",
+    },
+    {
+      stage: "Repairs",
+      applicant: "Report acknowledged, contractor attendance time confirmed",
+      landlord: "Issue and cost approvals relayed",
+      team: "Job log with urgency and status",
+    },
+    {
+      stage: "Compliance",
+      applicant: "Access visits arranged politely",
+      landlord: "Renewal reminders sent",
+      team: "Actionable task list ahead of expiry dates",
+    },
+    {
+      stage: "Complaints",
+      applicant: "Formal acknowledgement and expected timescale",
+      landlord: "Informed where relevant",
+      team: "Escalated immediately with full background record",
+    },
+  ];
+
+  // Section 9: Urgency Triage Rows
+  const triageRows = [
     {
       priority: "Emergency",
+      chipClass: "bg-[var(--primary)] text-[var(--on-dark)] font-bold",
       examples: "Gas smell, major leak or flooding, fire or storm damage, security breach.",
-      action: "Safety advice from your approved script, immediate escalation to your on-call contact or emergency contractor.",
-      badgeBg: "var(--primary)",
-      badgeText: "var(--on-dark)",
+      action:
+        "Safety advice from your approved script, immediate escalation to your on-call contact or emergency contractor.",
     },
     {
       priority: "Urgent",
+      chipClass: "bg-[var(--accent)] text-[var(--primary)] font-bold",
       examples: "No heating or hot water, electrical fault, broken lock.",
-      action: "Contractor booked within your target time, tenant and landlord updated with expected attendance.",
-      badgeBg: "var(--secondary)",
-      badgeText: "var(--on-dark)",
+      action:
+        "Contractor booked within your target time, tenant and landlord updated with expected attendance.",
     },
     {
       priority: "Routine",
+      chipClass: "bg-[var(--highlight)] text-[var(--primary)] font-bold",
       examples: "Dripping tap, appliance fault, cosmetic repair.",
-      action: "Logged, approved with the landlord where needed, scheduled and tracked through to completion.",
-      badgeBg: "var(--highlight)",
-      badgeText: "var(--primary)",
+      action:
+        "Logged, approved with the landlord where needed, scheduled and tracked through to completion.",
     },
   ];
 
-  const complianceStandards = [
+  // Section 10: 8 Habits
+  const regulatoryHabits = [
     {
-      area: "Tenant fees & advertised rent",
-      requirement:
-        "Only permitted payments quoted; offers above advertised rent are neither encouraged nor accepted under the Renters' Rights Act.",
-      mitigation:
-        "Agents follow scripts quoting only your published fee schedule, with zero unauthorized charge discussions.",
+      title: "Tenant fees and advertised rent",
+      desc: "Agents follow scripts that quote only your published fees and never discuss payments outside your approved list. Offers above the advertised rent are not encouraged or accepted.",
     },
     {
-      area: "Fair treatment of applicants",
-      requirement:
-        "Lawful, non-discriminatory qualification. No screening out applicants because of children or benefits.",
-      mitigation:
-        "Qualifying questions strictly limited to approved, objective criteria.",
+      title: "Fair treatment of applicants",
+      desc: "Qualifying questions are limited to approved, lawful criteria. Agents are trained never to screen out applicants because of children or benefits.",
     },
     {
-      area: "Deposit & document deadlines",
-      requirement:
-        "Deposit protection in approved schemes with prescribed information served within statutory 30-day limits.",
-      mitigation:
-        "Tasks, reminders, and escalation logs raised for your staff so deadlines are never missed.",
+      title: "Deposit and document deadlines",
+      desc: "Tasks and reminders are raised for your team so deposit protection and prescribed information steps are not missed.",
     },
     {
-      area: "Safety certificates & checks",
-      requirement:
-        "Gas safety, electrical safety (EICR), EPC, smoke and carbon monoxide alarm date tracking.",
-      mitigation:
-        "We track expiry dates, chase landlords and contractors, and arrange inspection renewals ahead of time.",
+      title: "Safety certificates and checks",
+      desc: "We track gas safety, electrical safety, EPC and alarm dates, chase landlords and contractors, and book renewals before expiry.",
     },
     {
-      area: "ID & Right to Rent chasing",
-      requirement:
-        "Timely document collection and audit-ready verification records.",
-      mitigation:
-        "Tenants chased for required documents through your secure process; verification remains with your authorized staff.",
+      title: "ID, referencing and Right to Rent",
+      desc: "We chase tenants for documents through your secure process and flag gaps. Checks themselves stay with your authorised staff.",
     },
     {
-      area: "US Fair Housing & TCPA Rules",
-      requirement:
-        "Consistent neutral scripts, non-discriminatory qualifying, and TCPA consent-aware outreach.",
-      mitigation:
-        "Recording notices read out where required; consent guidelines strictly honoured.",
+      title: "Maintenance and hazards",
+      desc: "Reports are logged with time and detail, urgent hazards are escalated at once, and updates follow until closure.",
+    },
+    {
+      title: "Complaints",
+      desc: "Every complaint is logged, acknowledged and escalated within your timescales, building a clear record.",
+    },
+    {
+      title: "Call recording and data",
+      desc: "Recording notices read out where you require them. Access is limited to trained staff under confidentiality terms.",
     },
   ];
 
-  const onboardingSteps = [
+  // Section 10: Regulatory Tables
+  const englandRegulations = [
     {
-      step: "01",
-      title: "Discovery & Compliance Mapping",
-      description:
-        "We learn your services, markets, fee schedule, policies and the regulations you operate under.",
+      area: "Tenant fees",
+      requirement:
+        "Only permitted payments may be charged; holding deposit rules must be followed (up to £5,000 for a first breach; up to £30,000 or prosecution for a second).",
+      help: "Quoting only permitted fees; zero unauthorized charges.",
     },
     {
-      step: "02",
-      title: "Scripts & Escalation Rules",
-      description:
-        "We build approved scripts, FAQs, prohibited-topic lists and emergency escalation contacts with you.",
+      area: "Client money protection",
+      requirement:
+        "Agents holding client money must belong to an approved scheme and display their certificate (up to £30,000 for no membership; up to £5,000 for not publishing the certificate).",
+      help: "Certificate tracking and scheme renewal alerts.",
     },
     {
-      step: "03",
-      title: "Connect Your Tools",
-      description:
-        "Call forwarding, CRM, diary and maintenance software are linked so records land directly where you need them.",
+      area: "Redress scheme",
+      requirement:
+        "Membership of an approved redress scheme (up to £5,000).",
+      help: "Redress membership verification and annual reminders.",
     },
     {
-      step: "04",
-      title: "Pilot & Go Live",
-      description:
-        "A short pilot phase, followed by a collaborative call-quality review with your team, then full live launch.",
+      area: "Fee transparency",
+      requirement:
+        "Fees and scheme memberships shown in the office, on the website and on portals (up to £5,000 per breach).",
+      help: "Consistent fee quote scripts matched to published schedules.",
+    },
+    {
+      area: "Deposit protection",
+      requirement:
+        "Deposits protected in an approved scheme, prescribed information given within 30 days (enforcement action and tenant claims).",
+      help: "30-day statutory deposit and PI deadline tracking.",
+    },
+    {
+      area: "Renters' Rights Act 2025/2026",
+      requirement:
+        "No accepting offers above advertised rent; no refusing tenants because of children or benefits; information sheet to existing tenants by 31 May 2026 (penalties up to £7,000; up to £40,000 for severe offences).",
+      help: "Script enforcement against rent bidding; objective criteria screening; tenant notice logs.",
+    },
+    {
+      area: "Safety and checks",
+      requirement:
+        "Gas safety, electrical safety (EICR), EPC, smoke and CO alarms, Right to Rent and anti-money-laundering checks (serious breaches lead to prosecution).",
+      help: "Expiry calendar chasing landlords and arranging contractor renewals.",
+    },
+  ];
+
+  const usRegulations = [
+    {
+      area: "Fair Housing Act",
+      requirement:
+        "Non-discriminatory qualification, neutral objective criteria, no screening based on protected classes.",
+      help: "Standardized script templates following federal and state guidelines.",
+    },
+    {
+      area: "TCPA & Consent",
+      requirement:
+        "Telephone Consumer Protection Act rules for SMS and calling outreach; recording disclosure mandates.",
+      help: "Mandatory call recording notices read out; consent-aware outreach.",
+    },
+    {
+      area: "Security Deposits",
+      requirement:
+        "State-by-state return windows (typically 14–30 days) and statutory itemization rules.",
+      help: "Milestone tracking and reminder alerts for property accounting staff.",
+    },
+    {
+      area: "Habitability & Emergencies",
+      requirement:
+        "Implied warranty of habitability; statutory emergency heat, water and security response times.",
+      help: "24/7 immediate triage and escalation to designated emergency contractors.",
     },
   ];
 
   return (
     <div data-sector="property" className="flex flex-col w-full">
       {/* =========================================================================
-          HERO SECTION (DARK SECTOR THEME: --primary #12372A)
-          Explicit text colors ensure perfect readability. 3-stat strip removed.
+          1. HERO (Dark Primary: --primary #12372A, Layout 7/5, No Image)
          ========================================================================= */}
       <section className="sector-dark w-full pt-32 pb-20 md:pt-40 md:pb-[112px] relative overflow-hidden">
         {/* Fine grid (currentColor at 5%, 48px) fading to edges */}
@@ -294,13 +477,23 @@ export default function RealEstatePage() {
           }}
         />
 
-        {/* Soft accent radial glow (accent at 24%, ~800px) */}
+        {/* Soft accent radial glow (accent at 20%, ~800px) */}
         <div
           aria-hidden="true"
           className="absolute right-0 top-1/2 -translate-y-1/2 w-[700px] lg:w-[850px] h-[700px] lg:h-[850px] rounded-full pointer-events-none select-none z-0 blur-[100px] lg:blur-[140px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(214, 190, 138, 0.24) 0%, rgba(214, 190, 138, 0.04) 50%, transparent 70%)",
+              "radial-gradient(circle, rgba(214, 190, 138, 0.20) 0%, rgba(214, 190, 138, 0.04) 50%, transparent 70%)",
+          }}
+        />
+
+        {/* 2px accent hairline at the bottom */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 right-0 h-[2px] pointer-events-none z-10"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(214, 190, 138, 0.65) 0%, rgba(214, 190, 138, 0.20) 60%, transparent 100%)",
           }}
         />
 
@@ -308,47 +501,21 @@ export default function RealEstatePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
             {/* Left 7 Columns */}
             <div className="lg:col-span-7 flex flex-col items-start">
-              {/* Mono Breadcrumb */}
-              <nav aria-label="Breadcrumb" className="mb-3">
-                <ol className="flex items-center gap-2 font-mono text-[14px] text-[var(--on-dark-65)]">
-                  <li>
-                    <Link
-                      href="/"
-                      className="hover:text-[var(--on-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  <li aria-hidden="true">/</li>
-                  <li>
-                    <Link
-                      href="/services"
-                      className="hover:text-[var(--on-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
-                    >
-                      Services
-                    </Link>
-                  </li>
-                  <li aria-hidden="true">/</li>
-                  <li className="text-[var(--on-dark)] font-semibold" aria-current="page">
-                    Real Estate
-                  </li>
-                </ol>
-              </nav>
-
-              {/* Eyebrow */}
+              {/* Mono Eyebrow */}
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
                 <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--accent)] font-semibold">
-                  SOLVANTRA PROPERTY SERVICES • ALWAYS ON. ALWAYS COMPLIANT.
+                  SOLVANTRA PROPERTY SERVICES · ALWAYS ON. ALWAYS COMPLIANT.
                 </span>
               </div>
 
-              {/* H1 with explicit text-[var(--on-dark)] to fix dark-on-dark bug */}
+              {/* H1 with italic accent on "Front Office" */}
               <h1 className="text-[clamp(44px,5.8vw,76px)] font-serif font-medium leading-[1.04] tracking-[-0.03em] text-[var(--on-dark)] mb-6">
-                Your 24/7 Front Office for{" "}
-                <span className="italic text-[var(--accent)] font-normal block sm:inline">
-                  Property.
-                </span>
+                Your 24/7{" "}
+                <span className="italic text-[var(--accent)] font-normal">
+                  Front Office
+                </span>{" "}
+                for Property.
               </h1>
 
               {/* Subline */}
@@ -357,7 +524,7 @@ export default function RealEstatePage() {
                 agents, letting agencies, and property management companies.
               </p>
 
-              {/* Action Buttons */}
+              {/* Buttons */}
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   type="button"
@@ -375,70 +542,48 @@ export default function RealEstatePage() {
               </div>
             </div>
 
-            {/* Right 5 Columns: Illustrative CSS/SVG Front Office Operational Diagram */}
+            {/* Right 5 Columns: Illustrative Front Office Log Card */}
             <div className="lg:col-span-5 w-full">
-              <div className="sector-card-dark p-6 sm:p-7 relative backdrop-blur-sm">
+              <div className="bg-[var(--on-dark-6)] border border-[var(--on-dark-15)] rounded-[16px] p-6 sm:p-7 relative backdrop-blur-sm shadow-xl">
                 <div className="flex items-center justify-between pb-4 border-b border-[var(--on-dark-15)] mb-5">
                   <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--accent)] font-semibold">
-                    FRONT OFFICE DISPATCH
+                    AFTER-HOURS LOG · ILLUSTRATIVE
                   </span>
-                  <span className="font-mono text-[14px] text-[var(--on-dark-65)]">
-                    Illustrative
-                  </span>
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-ping" />
                 </div>
 
-                {/* Workflow Simulation Cards */}
-                <div className="space-y-3 font-sans">
-                  <div className="p-3.5 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[var(--accent)]/15 flex items-center justify-center shrink-0 mt-0.5">
-                      <PhoneCall className="w-4 h-4 text-[var(--accent)]" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between text-[14px] font-semibold text-[var(--on-dark)] mb-0.5">
-                        <span>24/7 Enquiry Intake</span>
-                        <span className="font-mono text-[14px] text-[var(--accent)]">Live</span>
+                {/* 5 Log Rows with Loop Indicator */}
+                <div className="space-y-2.5 font-mono text-[14px]">
+                  {heroLogRows.map((row, index) => {
+                    const isActive = activeLogRow === index;
+                    return (
+                      <div
+                        key={index}
+                        className={`p-3 rounded-lg border transition-all duration-300 flex items-center justify-between gap-3 ${
+                          isActive
+                            ? "bg-[rgba(214,190,138,0.12)] border-[var(--accent)] text-[var(--on-dark)]"
+                            : "bg-[rgba(248,245,236,0.03)] border-[var(--on-dark-15)] text-[var(--on-dark-75)]"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span
+                            className={`w-2 h-2 rounded-full shrink-0 ${
+                              isActive ? "bg-[var(--accent)]" : "bg-[var(--on-dark-35)]"
+                            }`}
+                          />
+                          <span className="truncate">{row.text}</span>
+                        </div>
+                        <span className="text-[var(--accent)] shrink-0 font-semibold text-[13px]">
+                          {row.time}
+                        </span>
                       </div>
-                      <p className="text-[14px] text-[var(--on-dark-75)] leading-snug truncate">
-                        Portal, phone & chat leads qualified and recorded
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="p-3.5 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[var(--highlight)]/15 flex items-center justify-center shrink-0 mt-0.5">
-                      <Calendar className="w-4 h-4 text-[var(--highlight)]" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between text-[14px] font-semibold text-[var(--on-dark)] mb-0.5">
-                        <span>Diary & Viewing Booking</span>
-                        <span className="font-mono text-[14px] text-[var(--highlight)]">Direct CRM</span>
-                      </div>
-                      <p className="text-[14px] text-[var(--on-dark-75)] leading-snug truncate">
-                        Slots synced to negotiator diaries with brief
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="p-3.5 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[var(--accent)]/15 flex items-center justify-center shrink-0 mt-0.5">
-                      <Wrench className="w-4 h-4 text-[var(--accent)]" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between text-[14px] font-semibold text-[var(--on-dark)] mb-0.5">
-                        <span>Urgent Maintenance Triage</span>
-                        <span className="font-mono text-[14px] text-[var(--accent)]">Priority SLA</span>
-                      </div>
-                      <p className="text-[14px] text-[var(--on-dark-75)] leading-snug truncate">
-                        Triaged by severity; contractors notified instantly
-                      </p>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
 
-                {/* Footer status line */}
                 <div className="pt-4 mt-4 border-t border-[var(--on-dark-15)] flex items-center justify-between text-[14px] font-mono text-[var(--on-dark-65)]">
-                  <span>Continuous 24/7/365 Desk</span>
-                  <span className="text-[var(--accent)]">Zero Drop-Offs</span>
+                  <span>Continuous 24/7 Intake</span>
+                  <span className="text-[var(--accent)]">Live CRM Sync</span>
                 </div>
               </div>
             </div>
@@ -447,94 +592,93 @@ export default function RealEstatePage() {
       </section>
 
       {/* =========================================================================
-          SECTION 1: THE CORE PROBLEM & TWO RISKS (LIGHT SECTION: --light #F5F2E9)
+          2. REALITY ("01 / THE OPERATIONAL REALITY") LIGHT SECTION
          ========================================================================= */}
       <section className="sector-light w-full py-16 md:py-[112px] border-b border-[var(--primary-15)]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
-            {/* Left Column (6 cols) */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
-                <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
-                  01 / OPERATIONAL REALITY
-                </span>
-              </div>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
+            <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
+              01 / THE OPERATIONAL REALITY
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start mb-14">
+            {/* Left Sticky Heading (6 cols) */}
+            <div className="lg:col-span-6 lg:sticky lg:top-28">
               <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--primary)]">
                 Enquiries Never Stop. <br />
                 Neither Should Your Front Office.
               </h2>
-              <p className="text-[17px] sm:text-[18px] text-[var(--primary-80)] leading-[1.65] font-sans">
+            </div>
+
+            {/* Right Paragraphs (6 cols) */}
+            <div className="lg:col-span-6 space-y-6 text-[17px] sm:text-[18px] text-[var(--primary-80)] leading-[1.65] font-sans">
+              <p>
                 Online and hybrid estate agents and property managers run lean teams, yet enquiries
                 never stop. Buyers and tenants browse at night, landlords report problems at
                 weekends, and a tenant with a leak calls at 2 a.m.
               </p>
-              <p className="text-[16px] text-[var(--primary-80)] leading-[1.65] font-sans">
+              <p>
                 Solvantra gives you an always-on team that answers, books, logs and follows up, and
                 keeps your compliance admin on track so small gaps do not turn into costly penalties.
               </p>
             </div>
+          </div>
 
-            {/* Right Column (6 cols): Two Risks, One Partner Card */}
-            <div className="lg:col-span-6">
-              <div className="bg-[var(--primary)] text-[var(--on-dark)] p-8 sm:p-10 rounded-[12px] border border-[var(--accent)]/30 shadow-lg relative overflow-hidden">
-                <div
-                  aria-hidden="true"
-                  className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-20 bg-[var(--accent)]"
-                />
+          {/* Dark Panel: TWO RISKS, ONE PARTNER (--secondary #1B5140) */}
+          <div className="bg-[var(--secondary)] text-[var(--on-dark)] p-8 sm:p-10 rounded-[12px] border border-[var(--accent)]/30 shadow-lg relative overflow-hidden">
+            <div
+              aria-hidden="true"
+              className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-20 bg-[var(--accent)]"
+            />
 
-                <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--accent)] font-semibold block mb-3">
-                  TWO RISKS, ONE PARTNER
-                </span>
-                <h3 className="text-[26px] sm:text-[28px] font-serif font-medium text-[var(--on-dark)] mb-6 leading-snug">
-                  Protecting Your Revenue &amp; Reputation
-                </h3>
+            <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--accent)] font-semibold block mb-2">
+              TWO RISKS, ONE PARTNER
+            </span>
+            <h3 className="text-[26px] sm:text-[28px] font-serif font-medium text-[var(--on-dark)] mb-6">
+              Protecting Your Revenue &amp; Reputation
+            </h3>
 
-                <div className="space-y-5 text-[15px] leading-relaxed mb-8 font-sans">
-                  <div className="flex items-start gap-3.5">
-                    <div className="w-6 h-6 rounded-full bg-[var(--secondary)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[14px]">
-                      ✕
-                    </div>
-                    <p className="text-[var(--on-dark-80)]">
-                      <strong className="text-[var(--accent)] font-semibold">Missed enquiries</strong>{" "}
-                      cost you valuable instructions, lost viewings, and prospective tenants who
-                      immediately move to the next agency.
-                    </p>
-                  </div>
-
-                  <div className="flex items-start gap-3.5">
-                    <div className="w-6 h-6 rounded-full bg-[var(--secondary)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[14px]">
-                      ✕
-                    </div>
-                    <p className="text-[var(--on-dark-80)]">
-                      <strong className="text-[var(--accent)] font-semibold">Missed compliance steps</strong>{" "}
-                      cost you heavy council fines, legal disputes, deposit penalties, and permanent
-                      brand damage.
-                    </p>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 font-sans">
+              <div className="p-4 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-[var(--primary)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[14px]">
+                  ✕
                 </div>
-
-                <div className="pt-5 border-t border-[var(--on-dark-15)] flex items-center gap-3 text-[14px] font-semibold text-[var(--highlight)]">
-                  <CheckCircle2 className="w-5 h-5 text-[var(--accent)] shrink-0" />
-                  <span>Solvantra covers both seamlessly around the clock.</span>
-                </div>
+                <p className="text-[15px] text-[var(--on-dark-80)] leading-relaxed">
+                  Missed enquiries cost you instructions and tenants.
+                </p>
               </div>
+
+              <div className="p-4 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-[var(--primary)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5 font-bold text-[14px]">
+                  ✕
+                </div>
+                <p className="text-[15px] text-[var(--on-dark-80)] leading-relaxed">
+                  Missed compliance steps cost you fines, disputes and reputation.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-5 border-t border-[var(--on-dark-15)] flex items-center gap-3">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--accent)] text-[var(--primary)] font-mono text-[14px] font-bold uppercase tracking-wider">
+                <Check className="w-4 h-4 stroke-[3]" /> Solvantra covers both.
+              </span>
             </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          SECTION 2: WHAT YOU GET WITH SOLVANTRA (4 CORE PILLARS)
-          TINTED BACKGROUND: --highlight at 10% over --light
+          3. WHAT YOU GET ("02 / COVERAGE") LIGHT WITH HIGHLIGHT 14% TINT
          ========================================================================= */}
-      <section className="sector-light-tinted w-full py-16 md:py-[112px] border-b border-[var(--primary-15)]">
+      <section className="sector-light-tinted-14 w-full py-16 md:py-[112px] border-b border-[var(--primary-15)]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="max-w-3xl mb-12 lg:mb-16">
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
-                02 / CORE PILLARS
+                02 / COVERAGE
               </span>
             </div>
             <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--primary)] mb-4">
@@ -542,27 +686,28 @@ export default function RealEstatePage() {
             </h2>
             <p className="text-[17px] sm:text-[18px] text-[var(--primary-80)] leading-[1.65] font-sans">
               Built specifically to give property businesses round-the-clock coverage and tighter
-              compliance.
+              compliance without growing a large in-house team.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* 4 Columns separated by vertical hairlines (no cards) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-y border-[var(--primary-15)] divide-y md:divide-y-0 md:divide-x divide-[var(--primary-15)]">
             {fourPillars.map((pillar) => (
-              <div
-                key={pillar.num}
-                className="sector-card-light p-7 flex flex-col justify-between hover:-translate-y-1 hover:shadow-md transition-all duration-200"
-              >
+              <div key={pillar.num} className="p-8 lg:p-9 flex flex-col justify-between">
                 <div>
-                  <span className="font-mono text-[36px] font-light leading-none text-[var(--primary-35)] block mb-4 select-none">
+                  <span className="font-mono text-[48px] font-light leading-none text-[var(--primary-35)] block mb-6 select-none">
                     {pillar.num}
                   </span>
+                  <div className="w-12 h-12 rounded-[8px] bg-[var(--accent)]/15 text-[var(--primary)] flex items-center justify-center mb-6">
+                    <CheckCircle2 className="w-6 h-6 text-[var(--secondary)]" />
+                  </div>
                   <h3 className="text-[20px] font-serif font-semibold text-[var(--primary)] mb-4 leading-snug">
                     {pillar.title}
                   </h3>
                   <ul className="space-y-3 font-sans text-[14px] leading-relaxed text-[var(--primary-80)]">
                     {pillar.points.map((pt, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <Check className="w-4 h-4 shrink-0 mt-0.5 text-[var(--secondary)]" />
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="font-bold text-[var(--secondary)]">•</span>
                         <span>{pt}</span>
                       </li>
                     ))}
@@ -575,8 +720,7 @@ export default function RealEstatePage() {
       </section>
 
       {/* =========================================================================
-          SECTION 3: BUILT FOR THE FULL PROPERTY ECOSYSTEM (6 AUDIENCES)
-          LIGHT BACKGROUND: --light #F5F2E9
+          4. BUILT FOR ("03 / WHO WE SERVE") INTERACTIVE AUDIENCE EXPLORER
          ========================================================================= */}
       <section className="sector-light w-full py-16 md:py-[112px] border-b border-[var(--primary-15)]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
@@ -584,89 +728,389 @@ export default function RealEstatePage() {
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
-                03 / AUDIENCES
+                03 / WHO WE SERVE
               </span>
             </div>
             <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--primary)] mb-4">
               Built for the Full Property Ecosystem
             </h2>
             <p className="text-[17px] sm:text-[18px] text-[var(--primary-80)] leading-[1.65] font-sans">
-              Supporting property businesses that want round-the-clock coverage and tighter
-              compliance without growing a large in-house team.
+              Tailored workflows engineered for every major property operating model.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {audienceGroups.map((group) => (
+          {/* Mobile Horizontal Scrollable Pills */}
+          <div className="md:hidden flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
+            {audienceList.map((aud, index) => (
+              <button
+                key={aud.id}
+                type="button"
+                onClick={() => {
+                  setSelectedAudienceIndex(index);
+                  setUserInteractedAudience(true);
+                }}
+                className={`px-4 py-2 rounded-full whitespace-nowrap text-[14px] font-medium transition-colors ${
+                  selectedAudienceIndex === index
+                    ? "bg-[var(--primary)] text-[var(--on-dark)]"
+                    : "bg-[var(--primary-6)] text-[var(--primary)] border border-[var(--primary-15)]"
+                }`}
+              >
+                {aud.title}
+              </button>
+            ))}
+          </div>
+
+          {/* Desktop Interactive Layout (Left: 6 vertical selectable rows, Right: Detail Panel) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Left 5 Cols: Selectable Rows */}
+            <div
+              className="hidden md:flex lg:col-span-5 flex-col space-y-2"
+              role="tablist"
+              aria-label="Property Audiences"
+            >
+              {audienceList.map((aud, index) => {
+                const isSelected = selectedAudienceIndex === index;
+                return (
+                  <button
+                    key={aud.id}
+                    role="tab"
+                    id={`tab-${aud.id}`}
+                    aria-selected={isSelected}
+                    aria-controls={`panel-${aud.id}`}
+                    type="button"
+                    onClick={() => {
+                      setSelectedAudienceIndex(index);
+                      setUserInteractedAudience(true);
+                    }}
+                    className={`w-full text-left p-4 rounded-lg transition-all duration-200 flex items-center justify-between cursor-pointer border ${
+                      isSelected
+                        ? "bg-[var(--primary)] text-[var(--on-dark)] border-[var(--primary)] shadow-sm"
+                        : "bg-[var(--light)] text-[var(--primary)] border-[var(--primary-15)] hover:bg-[var(--primary-6)]"
+                    }`}
+                  >
+                    <span className="font-serif text-[17px] font-medium">{aud.title}</span>
+                    <ChevronRight
+                      className={`w-4 h-4 transition-transform ${
+                        isSelected ? "text-[var(--accent)] translate-x-1" : "text-[var(--primary-35)]"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right 7 Cols: Cross-Fading Detail Panel */}
+            <div className="lg:col-span-7">
               <div
-                key={group.num}
-                className="sector-card-light p-8 flex flex-col justify-between hover:shadow-md transition-all duration-200"
+                id={`panel-${audienceList[selectedAudienceIndex].id}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${audienceList[selectedAudienceIndex].id}`}
+                className="sector-card-light p-8 sm:p-10 min-h-[320px] flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-[14px] font-semibold text-[var(--primary-65)]">
-                      {group.num}
+                    <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--secondary)] font-semibold">
+                      OPERATIONAL COVERAGE
                     </span>
-                    <span className="w-2 h-2 rounded-full bg-[var(--highlight)]" />
+                    <span className="font-mono text-[14px] text-[var(--primary-65)]">
+                      0{selectedAudienceIndex + 1} / 06
+                    </span>
                   </div>
-                  <h3 className="text-[22px] font-serif font-semibold text-[var(--primary)] mb-4 leading-snug">
-                    {group.title}
+
+                  <h3 className="text-[26px] sm:text-[28px] font-serif font-semibold text-[var(--primary)] mb-6">
+                    {audienceList[selectedAudienceIndex].title}
                   </h3>
-                  <ul className="space-y-2.5 text-[14px] font-sans text-[var(--primary-80)] leading-relaxed">
-                    {group.services.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <span className="font-bold text-[var(--primary)]">•</span>
-                        <span>{item}</span>
-                      </li>
+
+                  <div className="space-y-4 font-sans text-[16px] text-[var(--primary-80)]">
+                    {audienceList[selectedAudienceIndex].bullets.map((bullet, i) => (
+                      <div key={i} className="flex items-start gap-3.5">
+                        <div className="w-5 h-5 rounded-full bg-[var(--highlight)] text-[var(--primary)] flex items-center justify-center shrink-0 mt-0.5">
+                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                        </div>
+                        <span className="leading-relaxed">{bullet}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
+                </div>
+
+                <div className="pt-6 mt-6 border-t border-[var(--primary-15)] flex items-center justify-between text-[14px] font-sans">
+                  <span className="text-[var(--primary-65)]">Auto-synced into your existing systems</span>
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(true)}
+                    className="sector-link text-[var(--primary)] font-semibold"
+                  >
+                    Discuss this workflow →
+                  </button>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          SECTION 4: FULL TENANCY JOURNEY COVERAGE (9 HANDLED SERVICES)
-          TINTED BACKGROUND: --accent at 8% over --light
+          5. IS SOLVANTRA RIGHT FOR YOU? (SLIM BAND: HIGHLIGHT 22% TINT)
+         ========================================================================= */}
+      <section className="sector-light-tinted-22 w-full py-16 md:py-20 border-b border-[var(--primary-15)]">
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="text-[32px] sm:text-[38px] font-serif font-medium leading-[1.1] text-[var(--primary)]">
+              Is Solvantra right for you?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-y border-[var(--primary-15)] divide-y sm:divide-y-0 sm:divide-x divide-[var(--primary-15)]">
+            {signals.map((sig, idx) => {
+              const IconComp = sig.icon;
+              return (
+                <div key={idx} className="p-6 sm:p-7 flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-[8px] bg-[var(--primary)] text-[var(--on-dark)] flex items-center justify-center shrink-0">
+                    <IconComp className="w-5 h-5" />
+                  </div>
+                  <p className="text-[15px] font-sans text-[var(--primary)] leading-relaxed font-medium">
+                    {sig.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6. WHAT WE HANDLE ("04 / WHAT WE HANDLE") LIGHT ACCORDION INDEX
          ========================================================================= */}
       <section
         id="services-breakdown"
-        className="sector-light-accent-tinted w-full py-16 md:py-[112px] border-b border-[var(--primary-15)] scroll-mt-24"
+        className="sector-light w-full py-16 md:py-[112px] border-b border-[var(--primary-15)] scroll-mt-24"
       >
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="max-w-3xl mb-12 lg:mb-16">
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
-                04 / SERVICES
+                04 / WHAT WE HANDLE
               </span>
             </div>
             <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--primary)] mb-4">
               What We Handle For You
             </h2>
             <p className="text-[17px] sm:text-[18px] text-[var(--primary-80)] leading-[1.65] font-sans">
-              Support across the full journey, from the very first enquiry to tenancy conclusion.
+              Support across the full journey, from the first enquiry to the end of the tenancy.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {fullJourneyServices.map((srv) => (
+          {/* 9-Row Numbered Index in 2 Columns */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 border-t border-[var(--primary-15)]">
+            {/* Column 1: Items 0 to 4 */}
+            <div className="divide-y divide-[var(--primary-15)]">
+              {handleServices.slice(0, 5).map((srv, idx) => {
+                const isOpen = openCol1Index === idx;
+                return (
+                  <div
+                    key={srv.num}
+                    className={`transition-colors duration-200 ${
+                      isOpen ? "bg-[var(--primary)] text-[var(--on-dark)]" : "hover:bg-[var(--primary-6)] text-[var(--primary)]"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenCol1Index(isOpen ? null : idx)}
+                      className="w-full text-left py-5 px-4 flex items-start justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                    >
+                      <div className="flex items-start gap-4">
+                        <span
+                          className={`font-mono text-[14px] font-semibold shrink-0 mt-0.5 ${
+                            isOpen ? "text-[var(--accent)]" : "text-[var(--primary-65)]"
+                          }`}
+                        >
+                          {srv.num}
+                        </span>
+                        <div>
+                          <h3
+                            className={`text-[20px] font-serif font-semibold leading-snug ${
+                              isOpen ? "text-[var(--on-dark)]" : "text-[var(--primary)]"
+                            }`}
+                          >
+                            {srv.title}
+                          </h3>
+                          <p
+                            className={`text-[14px] mt-1 font-sans leading-relaxed ${
+                              isOpen ? "text-[var(--on-dark-75)]" : "text-[var(--primary-80)]"
+                            }`}
+                          >
+                            {srv.summary}
+                          </p>
+                        </div>
+                      </div>
+                      <ChevronDown
+                        className={`w-5 h-5 shrink-0 transition-transform duration-200 mt-1 ${
+                          isOpen ? "rotate-180 text-[var(--accent)]" : "text-[var(--primary-65)]"
+                        }`}
+                      />
+                    </button>
+
+                    {isOpen && (
+                      <div className="px-4 pb-5 pt-1 text-[15px] font-sans leading-relaxed text-[var(--on-dark-80)] border-t border-[var(--on-dark-15)]">
+                        {srv.detail}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Column 2: Items 5 to 8 */}
+            <div className="divide-y divide-[var(--primary-15)] border-t lg:border-t-0 border-[var(--primary-15)]">
+              {handleServices.slice(5).map((srv, idx) => {
+                const isOpen = openCol2Index === idx;
+                return (
+                  <div
+                    key={srv.num}
+                    className={`transition-colors duration-200 ${
+                      isOpen ? "bg-[var(--primary)] text-[var(--on-dark)]" : "hover:bg-[var(--primary-6)] text-[var(--primary)]"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenCol2Index(isOpen ? null : idx)}
+                      className="w-full text-left py-5 px-4 flex items-start justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                    >
+                      <div className="flex items-start gap-4">
+                        <span
+                          className={`font-mono text-[14px] font-semibold shrink-0 mt-0.5 ${
+                            isOpen ? "text-[var(--accent)]" : "text-[var(--primary-65)]"
+                          }`}
+                        >
+                          {srv.num}
+                        </span>
+                        <div>
+                          <h3
+                            className={`text-[20px] font-serif font-semibold leading-snug ${
+                              isOpen ? "text-[var(--on-dark)]" : "text-[var(--primary)]"
+                            }`}
+                          >
+                            {srv.title}
+                          </h3>
+                          <p
+                            className={`text-[14px] mt-1 font-sans leading-relaxed ${
+                              isOpen ? "text-[var(--on-dark-75)]" : "text-[var(--primary-80)]"
+                            }`}
+                          >
+                            {srv.summary}
+                          </p>
+                        </div>
+                      </div>
+                      <ChevronDown
+                        className={`w-5 h-5 shrink-0 transition-transform duration-200 mt-1 ${
+                          isOpen ? "rotate-180 text-[var(--accent)]" : "text-[var(--primary-65)]"
+                        }`}
+                      />
+                    </button>
+
+                    {isOpen && (
+                      <div className="px-4 pb-5 pt-1 text-[15px] font-sans leading-relaxed text-[var(--on-dark-80)] border-t border-[var(--on-dark-15)]">
+                        {srv.detail}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          7. WHY 24/7 MATTERS (DARK SECONDARY: --secondary #1B5140)
+         ========================================================================= */}
+      <section className="sector-dark-secondary w-full py-16 md:py-[112px]">
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
+          <div className="max-w-3xl mb-12 lg:mb-16">
+            <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--on-dark)] mb-4">
+              Why 24/7 matters
+            </h2>
+            <p className="text-[17px] sm:text-[18px] text-[var(--on-dark-80)] leading-[1.65] font-sans">
+              Enquiries and emergency repairs follow tenant and buyer schedules, not 9-to-5 office hours.
+            </p>
+          </div>
+
+          {/* Desktop 3-Column Comparison Matrix */}
+          <div className="hidden md:grid grid-cols-12 gap-6 items-stretch">
+            {/* Left 7 Cols (Time: 3 cols, Without: 4 cols) */}
+            <div className="col-span-7 flex flex-col justify-between">
+              <div className="grid grid-cols-7 gap-4 pb-4 border-b border-[var(--on-dark-15)] font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--on-dark-65)] font-semibold">
+                <div className="col-span-3">Time Window</div>
+                <div className="col-span-4">Without Coverage</div>
+              </div>
+
+              {why247Rows.map((row, idx) => (
+                <div
+                  key={idx}
+                  className="grid grid-cols-7 gap-4 py-6 border-b border-[var(--on-dark-15)] items-center min-h-[88px]"
+                >
+                  <div className="col-span-3 font-serif text-[20px] font-medium text-[var(--on-dark)]">
+                    {row.time}
+                  </div>
+                  <div className="col-span-4 text-[15px] font-sans text-[var(--on-dark-75)] flex items-center gap-2.5">
+                    <X className="w-4 h-4 text-[var(--on-dark-35)] shrink-0" />
+                    <span>{row.without}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right 5 Cols: With Solvantra Lifted Light Panel */}
+            <div className="col-span-5 bg-[var(--light)] text-[var(--primary)] rounded-[16px] p-7 shadow-2xl border border-[var(--accent)]/40 flex flex-col justify-between -my-4 relative z-10">
+              <div className="flex items-center justify-between pb-4 border-b border-[var(--primary-12)]">
+                <span className="font-serif text-[20px] font-semibold text-[var(--primary)]">
+                  With Solvantra
+                </span>
+                <span className="px-3 py-1 rounded-full bg-[var(--accent)] text-[var(--primary)] font-mono text-[13px] font-bold uppercase tracking-wider">
+                  Always Live
+                </span>
+              </div>
+
+              {why247Rows.map((row, idx) => (
+                <div
+                  key={idx}
+                  className="py-5 border-b border-[var(--primary-12)] last:border-b-0 min-h-[88px] flex items-center gap-3 text-[15px] font-sans font-medium text-[var(--primary)]"
+                >
+                  <div className="w-6 h-6 rounded-full bg-[var(--highlight)] text-[var(--primary)] flex items-center justify-center shrink-0">
+                    <Check className="w-4 h-4 stroke-[2.5]" />
+                  </div>
+                  <span>{row.withSolvantra}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Stacked Cards */}
+          <div className="md:hidden flex flex-col space-y-6">
+            {why247Rows.map((row, idx) => (
               <div
-                key={srv.num}
-                className="sector-card-light p-7 flex flex-col justify-between hover:shadow-md transition-all duration-200"
+                key={idx}
+                className="border-b border-[var(--on-dark-15)] pb-6 last:border-b-0 space-y-2.5"
               >
-                <div>
-                  <span className="font-mono text-[14px] text-[var(--primary-65)] font-semibold block mb-2">
-                    {srv.num}
-                  </span>
-                  <h3 className="text-[20px] font-serif font-semibold text-[var(--primary)] mb-3 leading-snug">
-                    {srv.title}
-                  </h3>
-                  <p className="text-[14px] leading-relaxed text-[var(--primary-80)] font-sans">
-                    {srv.description}
-                  </p>
+                <div className="font-serif text-[20px] font-medium text-[var(--accent)]">
+                  {row.time}
+                </div>
+                <div className="p-3.5 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-2.5 text-[14px] text-[var(--on-dark-75)]">
+                  <X className="w-4 h-4 text-[var(--on-dark-35)] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold mr-1">Without:</span>
+                    {row.without}
+                  </div>
+                </div>
+                <div className="p-4 rounded-xl bg-[var(--light)] text-[var(--primary)] shadow-md flex items-start gap-3 text-[14px] font-medium">
+                  <Check className="w-4 h-4 text-[var(--secondary)] shrink-0 mt-0.5 stroke-[2.5]" />
+                  <div>
+                    <span className="font-bold mr-1">With Solvantra:</span>
+                    {row.withSolvantra}
+                  </div>
                 </div>
               </div>
             ))}
@@ -675,8 +1119,7 @@ export default function RealEstatePage() {
       </section>
 
       {/* =========================================================================
-          SECTION 5: MAINTENANCE TRIAGE MATRIX
-          LIGHT BACKGROUND: --light #F5F2E9
+          8. PROCESS ("05 / HOW IT WORKS") LIGHT SECTION
          ========================================================================= */}
       <section className="sector-light w-full py-16 md:py-[112px] border-b border-[var(--primary-15)]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
@@ -684,7 +1127,187 @@ export default function RealEstatePage() {
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
-                05 / MAINTENANCE HELP DESK
+                05 / HOW IT WORKS
+              </span>
+            </div>
+            <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--primary)] mb-4">
+              A clear process, every hour of the day
+            </h2>
+          </div>
+
+          {/* Horizontal 4-Step Timeline */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[14px] font-semibold text-[var(--primary-65)] block mb-3">
+                  STEP 01
+                </span>
+                <h3 className="text-[20px] font-serif font-semibold text-[var(--primary)] mb-3">
+                  Enquiry arrives
+                </h3>
+                <p className="text-[14px] text-[var(--primary-80)] font-sans leading-relaxed">
+                  A call, portal message, web form or maintenance report comes in at any hour and is
+                  picked up in your agency's name.
+                </p>
+              </div>
+            </div>
+
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[14px] font-semibold text-[var(--primary-65)] block mb-3">
+                  STEP 02
+                </span>
+                <h3 className="text-[20px] font-serif font-semibold text-[var(--primary)] mb-3">
+                  Understand and log
+                </h3>
+                <p className="text-[14px] text-[var(--primary-80)] font-sans leading-relaxed">
+                  The agent captures needs, urgency and contact details using your approved script
+                  and records everything in your system.
+                </p>
+              </div>
+            </div>
+
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[14px] font-semibold text-[var(--primary-65)] block mb-3">
+                  STEP 03
+                </span>
+                <h3 className="text-[20px] font-serif font-semibold text-[var(--primary)] mb-3">
+                  Act
+                </h3>
+                <p className="text-[14px] text-[var(--primary-80)] font-sans leading-relaxed">
+                  Viewings are booked, repairs triaged and contractors arranged, with emergencies
+                  escalated straight away.
+                </p>
+              </div>
+            </div>
+
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[14px] font-semibold text-[var(--primary-65)] block mb-3">
+                  STEP 04
+                </span>
+                <h3 className="text-[20px] font-serif font-semibold text-[var(--primary)] mb-3">
+                  Keep everyone informed
+                </h3>
+                <p className="text-[14px] text-[var(--primary-80)] font-sans leading-relaxed">
+                  Applicants, tenants, landlords, contractors and your team each get the updates
+                  relevant to them.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Track, Follow Up, Report 3-Column Strip */}
+          <div className="border-t border-b border-[var(--primary-15)] py-10 mb-16">
+            <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold block mb-6">
+              TRACK, FOLLOW UP, REPORT
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 font-sans">
+              <div>
+                <h4 className="text-[18px] font-serif font-semibold text-[var(--primary)] mb-2">
+                  Track compliance tasks
+                </h4>
+                <p className="text-[15px] text-[var(--primary-80)] leading-relaxed">
+                  Deadlines, documents and certificates are tracked and chased so nothing slips past
+                  its date.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-[18px] font-serif font-semibold text-[var(--primary)] mb-2">
+                  Follow up and close
+                </h4>
+                <p className="text-[15px] text-[var(--primary-80)] leading-relaxed">
+                  We confirm outcomes, collect feedback and log complaints or issues for your review.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-[18px] font-serif font-semibold text-[var(--primary)] mb-2">
+                  Report and improve
+                </h4>
+                <p className="text-[15px] text-[var(--primary-80)] leading-relaxed">
+                  Regular reports on enquiries, response times, maintenance and compliance tasks,
+                  with reviews to refine scripts.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Everyone Informed at Every Step Matrix + Why it Matters */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            {/* Left 8 Cols: Matrix Table */}
+            <div className="lg:col-span-8">
+              <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold block mb-4">
+                EVERYONE INFORMED AT EVERY STEP
+              </span>
+              <div className="overflow-x-auto sector-card-light">
+                <table className="w-full text-left border-collapse text-[14px] font-sans">
+                  <thead>
+                    <tr className="bg-[var(--primary-6)] border-b border-[var(--primary-15)] font-mono text-[13px] uppercase tracking-wider text-[var(--primary)]">
+                      <th className="p-3.5">Stage</th>
+                      <th className="p-3.5">Applicant / Tenant</th>
+                      <th className="p-3.5">Landlord / Vendor</th>
+                      <th className="p-3.5">Your Team</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[var(--primary-12)] text-[var(--primary-80)]">
+                    {informedMatrix.map((m, i) => (
+                      <tr key={i} className="hover:bg-[var(--primary-6)] transition-colors">
+                        <td className="p-3.5 font-semibold text-[var(--primary)] whitespace-nowrap">
+                          {m.stage}
+                        </td>
+                        <td className="p-3.5 leading-snug">{m.applicant}</td>
+                        <td className="p-3.5 leading-snug">{m.landlord}</td>
+                        <td className="p-3.5 leading-snug font-medium text-[var(--primary)]">
+                          {m.team}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Right 4 Cols: Why It Matters List */}
+            <div className="lg:col-span-4 sector-card-light p-7 space-y-5">
+              <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--secondary)] font-semibold block">
+                WHY IT MATTERS
+              </span>
+              <ul className="space-y-4 text-[15px] font-sans text-[var(--primary-80)] leading-relaxed">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-[var(--secondary)] shrink-0 mt-1 stroke-[2.5]" />
+                  <span>Fewer chasing calls into your office.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-[var(--secondary)] shrink-0 mt-1 stroke-[2.5]" />
+                  <span>Better reviews from tenants and landlords who are kept informed.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-[var(--secondary)] shrink-0 mt-1 stroke-[2.5]" />
+                  <span>A written trail that supports you if a dispute arises.</span>
+                </li>
+              </ul>
+              <div className="pt-4 border-t border-[var(--primary-15)]">
+                <p className="text-[13px] font-mono text-[var(--primary-65)] leading-relaxed">
+                  Updates go out through the channels you prefer: phone, SMS, email or directly in
+                  your CRM or property management software.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          9. URGENCY TRIAGE ("06 / MAINTENANCE HELPDESK") TINTED SECTION
+         ========================================================================= */}
+      <section className="sector-light-tinted w-full py-16 md:py-[112px] border-b border-[var(--primary-15)]">
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
+          <div className="max-w-3xl mb-12 lg:mb-16">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
+              <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
+                06 / MAINTENANCE HELPDESK
               </span>
             </div>
             <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--primary)] mb-4">
@@ -696,39 +1319,34 @@ export default function RealEstatePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {maintenanceTriage.map((row, idx) => (
+          <div className="space-y-4">
+            {triageRows.map((row, idx) => (
               <div
                 key={idx}
-                className="sector-card-light p-8 flex flex-col justify-between hover:shadow-md transition-all duration-200"
+                className="sector-card-light p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
               >
-                <div>
-                  <div className="mb-6">
-                    <span
-                      className="inline-block px-3.5 py-1.5 rounded-[6px] text-[14px] font-mono font-semibold uppercase tracking-wider"
-                      style={{ backgroundColor: row.badgeBg, color: row.badgeText }}
-                    >
-                      {row.priority} Priority
-                    </span>
-                  </div>
-
-                  <div className="mb-6">
-                    <h4 className="text-[14px] font-mono uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold mb-2">
-                      Examples
-                    </h4>
-                    <p className="text-[15px] font-sans text-[var(--primary-80)] leading-relaxed">
-                      {row.examples}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="text-[14px] font-mono uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold mb-2">
-                      What We Do
-                    </h4>
-                    <p className="text-[15px] font-sans text-[var(--primary-80)] leading-relaxed">
-                      {row.action}
-                    </p>
-                  </div>
+                <div className="md:col-span-3">
+                  <span
+                    className={`inline-block px-4 py-1.5 rounded-full text-[14px] font-mono uppercase tracking-wider ${row.chipClass}`}
+                  >
+                    {row.priority}
+                  </span>
+                </div>
+                <div className="md:col-span-4">
+                  <span className="block font-mono text-[13px] uppercase tracking-wider text-[var(--primary-65)] mb-1 font-semibold">
+                    Examples
+                  </span>
+                  <p className="text-[15px] font-sans text-[var(--primary-80)] leading-relaxed">
+                    {row.examples}
+                  </p>
+                </div>
+                <div className="md:col-span-5">
+                  <span className="block font-mono text-[13px] uppercase tracking-wider text-[var(--primary-65)] mb-1 font-semibold">
+                    What We Do
+                  </span>
+                  <p className="text-[15px] font-sans text-[var(--primary)] font-medium leading-relaxed">
+                    {row.action}
+                  </p>
                 </div>
               </div>
             ))}
@@ -737,8 +1355,7 @@ export default function RealEstatePage() {
       </section>
 
       {/* =========================================================================
-          SECTION 6: COMPLIANCE ADMINISTRATION & RISK MITIGATION (DARK SECTION)
-          --primary #12372A | Hairline rule at top edge | Explicit text colors
+          10. REGULATORY (DARK PRIMARY: --primary #12372A) ("07 / REGULATORY RIGOUR")
          ========================================================================= */}
       <section className="sector-dark w-full py-16 md:py-[112px]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
@@ -746,69 +1363,176 @@ export default function RealEstatePage() {
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--accent)] font-semibold">
-                06 / REGULATORY RIGOUR
+                07 / REGULATORY RIGOUR
               </span>
             </div>
             <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--on-dark)] mb-4">
               How Solvantra Keeps You on Track
             </h2>
             <p className="text-[17px] sm:text-[18px] text-[var(--on-dark-80)] leading-[1.65] font-sans">
-              We do not replace your legal adviser or compliance officer. We build the daily
-              operational habits, scripts, reminders, and time-stamped records that stop avoidable
-              breaches.
+              We do not replace your legal adviser or compliance officer. We build the daily habits
+              and records that stop avoidable breaches.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-            {complianceStandards.map((std, i) => (
-              <div
-                key={i}
-                className="sector-card-dark p-7 flex flex-col justify-between"
-              >
-                <div>
-                  <h3 className="text-[20px] font-serif font-semibold text-[var(--accent)] mb-3 leading-snug">
-                    {std.area}
-                  </h3>
-                  <div className="mb-4">
-                    <span className="block font-mono text-[14px] uppercase tracking-wider text-[var(--highlight)] mb-1 font-semibold">
-                      Requirement:
-                    </span>
-                    <p className="text-[14px] text-[var(--on-dark-75)] leading-relaxed font-sans">
-                      {std.requirement}
-                    </p>
-                  </div>
-                  <div className="pt-3 border-t border-[var(--on-dark-15)]">
-                    <span className="block font-mono text-[14px] uppercase tracking-wider text-[var(--accent)] mb-1 font-semibold">
-                      Our Habit:
-                    </span>
-                    <p className="text-[14px] text-[var(--on-dark-80)] leading-relaxed font-sans">
-                      {std.mitigation}
+          {/* Eight Habits in 4x2 Ruled Grid (Hairlines, No Cards) */}
+          <div className="border-t border-b border-[var(--on-dark-15)] mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[var(--on-dark-15)]">
+              {regulatoryHabits.slice(0, 4).map((h, i) => (
+                <div key={i} className="p-6 sm:p-7 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-[19px] font-serif font-semibold text-[var(--accent)] mb-3 leading-snug">
+                      {h.title}
+                    </h3>
+                    <p className="text-[14px] font-sans text-[var(--on-dark-75)] leading-relaxed">
+                      {h.desc}
                     </p>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="border-t border-[var(--on-dark-15)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[var(--on-dark-15)]">
+              {regulatoryHabits.slice(4).map((h, i) => (
+                <div key={i} className="p-6 sm:p-7 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-[19px] font-serif font-semibold text-[var(--accent)] mb-3 leading-snug">
+                      {h.title}
+                    </h3>
+                    <p className="text-[14px] font-sans text-[var(--on-dark-75)] leading-relaxed">
+                      {h.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* You Stay in Control Box */}
-          <div className="p-6 sm:p-7 rounded-[12px] bg-[rgba(27,81,64,0.6)] border border-[var(--accent)]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          {/* Highlighted Callout (--accent at 14% fill) */}
+          <div className="p-6 sm:p-7 rounded-[12px] bg-[rgba(214,190,138,0.14)] border border-[var(--accent)]/30 mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <ShieldCheck className="w-6 h-6 shrink-0 text-[var(--accent)]" />
-              <p className="text-[14px] sm:text-[15px] text-[var(--on-dark)] font-sans leading-relaxed">
-                <strong className="font-semibold text-[var(--on-dark)]">You stay in control:</strong>{" "}
-                You remain the responsible party. We strictly follow your approved scripts, fee
-                lists, and policies, flagging any edge cases for your decision.
+              <p className="text-[15px] text-[var(--on-dark)] font-sans leading-relaxed">
+                <strong className="font-semibold text-[var(--on-dark)]">You stay in control.</strong>{" "}
+                You remain the responsible party. We follow your approved scripts and policies, and
+                flag anything that needs your decision.
               </p>
             </div>
             <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--highlight)] shrink-0 font-semibold">
-              Auditable Written Trail
+              Client Governance
             </span>
+          </div>
+
+          {/* Collapsible Regulatory Reference Container */}
+          <div className="pt-4">
+            <button
+              type="button"
+              onClick={() => setIsRegOpen(!isRegOpen)}
+              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg border border-[var(--on-dark-15)] text-[14px] font-mono uppercase tracking-wider text-[var(--accent)] hover:bg-[var(--on-dark-6)] transition-colors cursor-pointer"
+            >
+              <span>{isRegOpen ? "Hide" : "View"} regulatory reference</span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-200 ${
+                  isRegOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {isRegOpen && (
+              <div className="mt-8 p-6 sm:p-8 rounded-[12px] bg-[var(--on-dark-6)] border border-[var(--on-dark-15)] animate-fade-up">
+                {/* Tabs */}
+                <div className="flex items-center gap-4 mb-6 border-b border-[var(--on-dark-15)] pb-4 font-mono text-[14px]">
+                  <button
+                    type="button"
+                    onClick={() => setRegTab("england")}
+                    className={`pb-2 px-1 cursor-pointer transition-colors border-b-2 font-semibold ${
+                      regTab === "england"
+                        ? "border-[var(--accent)] text-[var(--accent)]"
+                        : "border-transparent text-[var(--on-dark-65)] hover:text-[var(--on-dark)]"
+                    }`}
+                  >
+                    England Reference
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRegTab("us")}
+                    className={`pb-2 px-1 cursor-pointer transition-colors border-b-2 font-semibold ${
+                      regTab === "us"
+                        ? "border-[var(--accent)] text-[var(--accent)]"
+                        : "border-transparent text-[var(--on-dark-65)] hover:text-[var(--on-dark)]"
+                    }`}
+                  >
+                    United States Reference
+                  </button>
+                </div>
+
+                {regTab === "england" ? (
+                  <div>
+                    <p className="text-[15px] font-sans text-[var(--on-dark-80)] mb-6 leading-relaxed">
+                      Property regulation is tightening. Since the Renters' Rights Act began taking
+                      effect on 1 May 2026, councils in England have stronger enforcement powers and
+                      higher civil penalties. Many breaches come from missed admin, not bad intent.
+                    </p>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse text-[14px] font-sans">
+                        <thead>
+                          <tr className="border-b border-[var(--on-dark-15)] font-mono text-[13px] uppercase tracking-wider text-[var(--accent)]">
+                            <th className="py-3 pr-4">Area</th>
+                            <th className="py-3 px-4">What is required or risk</th>
+                            <th className="py-3 pl-4">How we help</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[var(--on-dark-15)] text-[var(--on-dark-75)]">
+                          {englandRegulations.map((r, i) => (
+                            <tr key={i}>
+                              <td className="py-3.5 pr-4 font-semibold text-[var(--on-dark)] whitespace-nowrap">
+                                {r.area}
+                              </td>
+                              <td className="py-3.5 px-4 leading-relaxed">{r.requirement}</td>
+                              <td className="py-3.5 pl-4 leading-relaxed text-[var(--accent)] font-medium">
+                                {r.help}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse text-[14px] font-sans">
+                        <thead>
+                          <tr className="border-b border-[var(--on-dark-15)] font-mono text-[13px] uppercase tracking-wider text-[var(--accent)]">
+                            <th className="py-3 pr-4">Area</th>
+                            <th className="py-3 px-4">What is required or risk</th>
+                            <th className="py-3 pl-4">How we help</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[var(--on-dark-15)] text-[var(--on-dark-75)]">
+                          {usRegulations.map((r, i) => (
+                            <tr key={i}>
+                              <td className="py-3.5 pr-4 font-semibold text-[var(--on-dark)] whitespace-nowrap">
+                                {r.area}
+                              </td>
+                              <td className="py-3.5 px-4 leading-relaxed">{r.requirement}</td>
+                              <td className="py-3.5 pl-4 leading-relaxed text-[var(--accent)] font-medium">
+                                {r.help}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          SECTION 7: ONBOARDING & LAUNCH PROCESS (LIGHT SECTION: --light #F5F2E9)
+          11. QUALITY & ONBOARDING LIGHT SECTION
          ========================================================================= */}
       <section className="sector-light w-full py-16 md:py-[112px] border-b border-[var(--primary-15)]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
@@ -816,7 +1540,7 @@ export default function RealEstatePage() {
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold">
-                07 / ONBOARDING
+                08 / ONBOARDING &amp; GOVERNANCE
               </span>
             </div>
             <h2 className="text-[36px] sm:text-[44px] lg:text-[48px] font-serif font-medium leading-[1.08] text-[var(--primary)] mb-4">
@@ -827,39 +1551,109 @@ export default function RealEstatePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {onboardingSteps.map((s) => (
-              <div
-                key={s.step}
-                className="sector-card-light p-7 flex flex-col justify-between hover:shadow-md transition-all duration-200"
-              >
-                <div>
-                  <span className="font-mono text-[32px] font-light leading-none text-[var(--primary-35)] block mb-4 select-none">
-                    {s.step}
-                  </span>
-                  <h3 className="text-[19px] font-serif font-semibold text-[var(--primary)] mb-3 leading-snug">
-                    {s.title}
-                  </h3>
-                  <p className="text-[14px] leading-relaxed text-[var(--primary-80)] font-sans">
-                    {s.description}
-                  </p>
-                </div>
+          {/* 4 Steps */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[32px] font-light leading-none text-[var(--primary-35)] block mb-4 select-none">
+                  01
+                </span>
+                <h3 className="text-[19px] font-serif font-semibold text-[var(--primary)] mb-3 leading-snug">
+                  Discovery &amp; Compliance Mapping
+                </h3>
+                <p className="text-[14px] leading-relaxed text-[var(--primary-80)] font-sans">
+                  We learn your services, markets, fee schedule, policies and the regulations you
+                  operate under.
+                </p>
               </div>
-            ))}
+            </div>
+
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[32px] font-light leading-none text-[var(--primary-35)] block mb-4 select-none">
+                  02
+                </span>
+                <h3 className="text-[19px] font-serif font-semibold text-[var(--primary)] mb-3 leading-snug">
+                  Scripts &amp; Escalation Rules
+                </h3>
+                <p className="text-[14px] leading-relaxed text-[var(--primary-80)] font-sans">
+                  We build approved scripts, FAQs, prohibited-topic lists and emergency escalation
+                  contacts with you.
+                </p>
+              </div>
+            </div>
+
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[32px] font-light leading-none text-[var(--primary-35)] block mb-4 select-none">
+                  03
+                </span>
+                <h3 className="text-[19px] font-serif font-semibold text-[var(--primary)] mb-3 leading-snug">
+                  Connect Your Tools
+                </h3>
+                <p className="text-[14px] leading-relaxed text-[var(--primary-80)] font-sans">
+                  Call forwarding, CRM, diary and maintenance software are linked so records land
+                  directly where you need them.
+                </p>
+              </div>
+            </div>
+
+            <div className="sector-card-light p-7 flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[32px] font-light leading-none text-[var(--primary-35)] block mb-4 select-none">
+                  04
+                </span>
+                <h3 className="text-[19px] font-serif font-semibold text-[var(--primary)] mb-3 leading-snug">
+                  Pilot &amp; Go Live
+                </h3>
+                <p className="text-[14px] leading-relaxed text-[var(--primary-80)] font-sans">
+                  A short pilot phase, followed by a collaborative call-quality review with your team,
+                  then full live launch.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quality Assurance Strip */}
+          <div className="border-t border-[var(--primary-15)] pt-12 grid grid-cols-1 md:grid-cols-3 gap-8 font-sans">
+            <div>
+              <h4 className="text-[18px] font-serif font-semibold text-[var(--primary)] mb-2">
+                Scorecard Auditing
+              </h4>
+              <p className="text-[15px] text-[var(--primary-80)] leading-relaxed">
+                Random samples of calls, tickets and bookings audited weekly against strict QA rubrics.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-[18px] font-serif font-semibold text-[var(--primary)] mb-2">
+                Dedicated Account Lead
+              </h4>
+              <p className="text-[15px] text-[var(--primary-80)] leading-relaxed">
+                Continuous operational oversight and regular performance reviews with your management.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-[18px] font-serif font-semibold text-[var(--primary)] mb-2">
+                CRM &amp; Tool Parity
+              </h4>
+              <p className="text-[15px] text-[var(--primary-80)] leading-relaxed">
+                Direct integration with Reapit, Alto, Street, MRI, Buildium, AppFolio and standard telephony.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          SECTION 8: SHARED FINAL CTA
-          Full-bleed, big H2, interactive consultation form with sector selection
+          12. FINAL CTA (SHARED HOMEPAGE CTA COMPONENT)
          ========================================================================= */}
       <FinalCTA />
 
-      {/* Legal Disclaimer Footnote */}
-      <div className="bg-[var(--ink)] py-4 px-6 text-center border-t border-[rgba(248,241,229,0.08)]">
-        <p className="text-[14px] font-mono text-[var(--bg-55)] max-w-4xl mx-auto">
-          Solvantra supports your compliance processes and does not provide legal advice. Your agency remains responsible for meeting its legal obligations.
+      {/* Legal Disclaimer Footnote from Source */}
+      <div className="bg-[var(--ink)] py-5 px-6 text-center border-t border-[rgba(248,241,229,0.08)]">
+        <p className="text-[14px] font-mono text-[var(--bg-55)] max-w-4xl mx-auto leading-relaxed">
+          Solvantra supports your compliance processes and does not provide legal advice. Your agency
+          remains responsible for meeting its legal obligations.
         </p>
       </div>
 

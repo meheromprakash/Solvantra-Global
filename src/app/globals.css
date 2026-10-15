@@ -298,6 +298,13 @@ nextjs-portal,
   position: relative;
 }
 
+[data-sector] .sector-dark-secondary {
+  background-color: var(--secondary);
+  color: var(--on-dark);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  position: relative;
+}
+
 [data-sector] .sector-light {
   background-color: var(--light);
   color: var(--primary);
@@ -305,6 +312,16 @@ nextjs-portal,
 
 [data-sector] .sector-light-tinted {
   background-color: color-mix(in srgb, var(--highlight) 10%, var(--light));
+  color: var(--primary);
+}
+
+[data-sector] .sector-light-tinted-14 {
+  background-color: color-mix(in srgb, var(--highlight) 14%, var(--light));
+  color: var(--primary);
+}
+
+[data-sector] .sector-light-tinted-22 {
+  background-color: color-mix(in srgb, var(--highlight) 22%, var(--light));
   color: var(--primary);
 }
 
