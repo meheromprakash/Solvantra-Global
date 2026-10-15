@@ -76,12 +76,12 @@ export default function Header() {
 
           {/* Desktop Primary CTA Right (hidden under 900px) */}
           <div className="hidden min-[900px]:flex items-center shrink-0">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="btn-solvantra-primary h-[40px] px-5 text-[14px] cursor-pointer"
+            <Link
+              href="/contact"
+              className="btn-solvantra-primary h-[40px] px-5 text-[14px] cursor-pointer inline-flex items-center justify-center"
             >
               Book a Consultation
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Hamburger Button (visible under 900px) */}
@@ -116,15 +116,13 @@ export default function Header() {
                 );
               })}
               <div className="p-6">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setIsModalOpen(true);
-                  }}
-                  className="btn-solvantra-primary w-full h-[48px] text-[15px] cursor-pointer"
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="btn-solvantra-primary w-full h-[48px] text-[15px] cursor-pointer inline-flex items-center justify-center"
                 >
                   Book a Consultation
-                </button>
+                </Link>
               </div>
             </nav>
           </div>
