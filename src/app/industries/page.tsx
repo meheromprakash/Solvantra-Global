@@ -9,6 +9,9 @@ import {
   CheckCircle2,
   ArrowRight,
   ShieldCheck,
+  Calendar,
+  Clock,
+  Check,
 } from "lucide-react";
 import ConsultationBanner from "@/components/ConsultationBanner";
 import ConsultationModal from "@/components/ConsultationModal";
@@ -16,62 +19,74 @@ import PageHero from "@/components/sections/PageHero";
 
 export default function IndustriesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState("Home Services");
+  const [activeCategory, setActiveCategory] = useState("Real Estate");
 
   const categories = [
+    {
+      id: "Real Estate",
+      icon: Building2,
+      path: "/real-estate",
+      title: "Real Estate",
+      tagline:
+        "24/7 enquiry handling, lettings support, viewing and valuation bookings, tenant and landlord communication, maintenance coordination, and compliance administration.",
+      promise: "Always On. Always Compliant.",
+      paletteNote: "Deep Forest & Accent Gold Palette",
+      challenges: [
+        "Enquiries and urgent maintenance calls arrive out of hours and go unanswered",
+        "Teams stretched across sales, lettings, maintenance and endless admin",
+        "Compliance dates live in spreadsheets, inboxes, or people's heads",
+        "Portfolio growing faster than internal administrative headcount",
+      ],
+      solutions: [
+        "24/7 Live front desk covering calls, portal leads, forms, and chats in your agency's name",
+        "Viewing and valuation appointments placed directly into negotiator diaries",
+        "Maintenance triage handling emergency, urgent, and routine contractor bookings",
+        "Compliance admin tracking certificate expiries, deposit deadlines, and lawful scripts",
+      ],
+    },
     {
       id: "Home Services",
       icon: Wrench,
       path: "/home-services",
       title: "Home Services",
-      tagline: "24/7 call dispatch, technician scheduling, emergency job intake, estimate follow-ups, and review management.",
+      tagline:
+        "24/7 enquiry handling, appointment scheduling, technician coordination, emergency dispatch support, follow-ups, and customer communication.",
+      promise: "Coverage. Coordination. Follow-through.",
+      paletteNote: "Charcoal Slate & Warm Terracotta Palette",
       challenges: [
-        "Missed after-hours emergency calls resulting in lost high-ticket jobs to local competitors",
-        "Overloaded dispatchers causing scheduling bottlenecks and inefficient technician drive routes",
-        "Unsold estimates and customer quotes never followed up due to back-office bandwidth constraints",
+        "Missed emergency calls redirecting urgent homeowner demand directly to competitors",
+        "Office team or dispatchers overwhelmed answering phones instead of managing field work",
+        "Unbooked estimates, quotes, and cold leads never systematically followed up",
+        "Need to increase booked jobs without hiring and training a full internal call center",
       ],
       solutions: [
-        "24/7 live emergency dispatch desk capturing urgent HVAC, plumbing, electrical, and roofing calls",
-        "Real-time technician calendar optimization inside ServiceTitan, Housecall Pro, and Jobber",
-        "Structured estimate re-engagement sequences that convert pending bids into booked revenue",
+        "24/7 Inbound front desk answering calls and web forms live in your company name",
+        "Seamless appointment scheduling directly in your calendar or field management software",
+        "Technician coordination with access notes, issue summaries, and customer history",
+        "Proactive follow-up on unbooked quotes, satisfaction check-ins, and recurring tune-ups",
       ],
-      metrics: "24/7 Dispatch Readiness",
     },
     {
       id: "Healthcare",
       icon: HeartPulse,
       path: "/healthcare",
       title: "Healthcare",
-      tagline: "HIPAA-compliant patient coordination, medical billing, prior authorizations, and claims resolution.",
+      tagline:
+        "Dental and medical revenue cycle management, claims processing and follow-up, patient eligibility verification, alongside 24/7 home-care intake and caregiver scheduling.",
+      promise: "Revenue Operations & Care Coordination",
+      paletteNote: "Midnight Navy & Vibrant Medical Blue Palette",
       challenges: [
-        "High patient call volume leading to prolonged hold times and appointment scheduling backlogs",
-        "Complex insurance prior authorizations causing treatment delays and lost practice revenue",
-        "Elevated claim denial rates and aged accounts receivable tying up essential practice cash flow",
+        "Billing bottlenecks, claim rejections, and aging accounts receivable reducing cash flow",
+        "Unanswered after-hours patient and family intake calls that move on to other providers",
+        "Caregiver turnover and last-minute call-outs creating uncovered shifts and family distress",
+        "Complex EVV requirements and Medicaid billing compliance requiring constant vigilance",
       ],
       solutions: [
-        "Dedicated, HIPAA-trained patient coordinators handling inbound intake, triage, and scheduling",
-        "Real-time insurance eligibility verification and pre-authorization processing before appointments",
-        "End-to-end medical billing, electronic claim scrubbing, and aggressive denial appeal management",
+        "End-to-end dental and medical RCM from eligibility verification through AR reconciliation",
+        "24/7 Care at home scheduling desk managing intake calls, referrals, and shift bookings",
+        "Rapid call-out resolution contacting replacement pools before families have to call",
+        "HIPAA-compliant workflows with signed BAAs and strict non-clinical operational boundaries",
       ],
-      metrics: "99.4% Claims First-Pass Approval",
-    },
-    {
-      id: "Real Estate",
-      icon: Building2,
-      path: "/real-estate",
-      title: "Real Estate",
-      tagline: "Rapid lead qualification, CRM management, tour scheduling, tenant communication, and administrative transaction support.",
-      challenges: [
-        "Buyer and seller portal leads going cold because agents are in showings and miss the 5-minute response window",
-        "Incomplete and messy CRM pipelines with missing contact details, unassigned tasks, and dropped follow-ups",
-        "Showing coordination chaos and endless scheduling back-and-forth between buyers, sellers, and listing agents",
-      ],
-      solutions: [
-        "Instant 24/7 lead qualification via phone and SMS contacting new inquiries within minutes of submission",
-        "Meticulous CRM database hygiene and enriched buyer/seller contact profiles updated in Follow Up Boss or kvCORE",
-        "Seamless property showing and tour schedule coordination directly synced with your agents' live calendars",
-      ],
-      metrics: "< 5m Lead Response Window",
     },
   ];
 
@@ -84,16 +99,16 @@ export default function IndustriesPage() {
         <PageHero
           bgImage="/images/industry_real_estate.jpg"
           bgAlt="Solvantra Who We Help"
-          eyebrow="WHO WE HELP"
-          headingMain="Tailored Operational Pods For"
-          headingGold="Specialized Sectors."
-          paragraph="Every sector demands specialized domain knowledge, compliance standards, and workflow protocols. Solvantra builds dedicated operational pods configured specifically for Home Services, Healthcare, and Real Estate."
+          eyebrow="WHO WE HELP • SPECIALIZED SECTORS"
+          headingMain="Operational Excellence for"
+          headingGold="Specialized Industries."
+          paragraph="Solvantra provides dedicated, domain-grounded operational support. Explore our specialized industry services for Real Estate, Home Services, and Healthcare."
           primaryButton={{
             label: "Book a Consultation",
             isModalTrigger: true,
           }}
           secondaryButton={{
-            label: "Explore Capabilities",
+            label: "Explore Core Services",
             href: "/services",
           }}
         />
@@ -128,21 +143,21 @@ export default function IndustriesPage() {
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 pb-8 border-b border-outline-variant/20">
                 <div>
                   <span className="font-eyebrow text-xs text-primary uppercase tracking-wider block mb-1">
-                    Who We Help Pod
+                    Industry Specialization
                   </span>
                   <h2 className="font-headline-lg text-3xl sm:text-4xl text-on-surface">
                     {currentCategory.title}
                   </h2>
-                  <p className="font-body-lg text-base text-secondary mt-2 max-w-2xl">
+                  <p className="font-body-lg text-base text-secondary mt-2 max-w-2xl leading-relaxed">
                     {currentCategory.tagline}
                   </p>
                 </div>
-                <div className="px-4 py-3 rounded-lg bg-surface-container-low border border-outline-variant/30 text-center shrink-0">
+                <div className="px-5 py-3.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-center shrink-0">
                   <span className="font-eyebrow text-[10px] text-secondary uppercase block mb-0.5">
-                    Benchmark SLA
+                    Operating Principle
                   </span>
-                  <span className="font-headline-sm text-lg text-primary font-bold">
-                    {currentCategory.metrics}
+                  <span className="font-headline-sm text-base text-primary font-bold">
+                    {currentCategory.promise}
                   </span>
                 </div>
               </div>
@@ -151,12 +166,12 @@ export default function IndustriesPage() {
                 {/* Challenges */}
                 <div className="p-6 rounded-xl bg-surface-container-low border border-outline-variant/20">
                   <h3 className="font-headline-sm text-lg text-on-surface mb-4 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary" />
-                    Key Domain Operational Challenges
+                    <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                    Key Sector Operational Challenges
                   </h3>
                   <div className="space-y-3">
                     {currentCategory.challenges.map((c, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-secondary">
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-secondary leading-relaxed">
                         <span className="text-primary font-bold">•</span>
                         <span>{c}</span>
                       </div>
@@ -168,12 +183,12 @@ export default function IndustriesPage() {
                 <div className="p-6 rounded-xl bg-surface-container-low border border-outline-variant/20">
                   <h3 className="font-headline-sm text-lg text-on-surface mb-4 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-primary" />
-                    Solvantra Tailored Operational Solution
+                    Solvantra Turnkey Operational Solution
                   </h3>
                   <div className="space-y-3">
                     {currentCategory.solutions.map((s, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-on-surface font-medium">
-                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-on-surface font-medium leading-relaxed">
+                        <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                         <span>{s}</span>
                       </div>
                     ))}
@@ -183,7 +198,8 @@ export default function IndustriesPage() {
 
               <div className="pt-6 border-t border-outline-variant/20 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-2 text-xs font-eyebrow text-primary">
-                  <ShieldCheck className="w-4 h-4" /> Domain Specific SOP Training &amp; Compliance Included
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Domain Protocols &amp; Dedicated Color Identity Configured</span>
                 </div>
                 <Link
                   href={currentCategory.path}
@@ -198,7 +214,10 @@ export default function IndustriesPage() {
         </section>
 
         {/* CTA BANNER */}
-        <ConsultationBanner />
+        <ConsultationBanner
+          title="Build your dedicated industry operational pod."
+          subtitle="Connect with our team to discuss customized workflows, approved scripts, and software integrations for your business."
+        />
       </div>
 
       <ConsultationModal

@@ -1,15 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, Shield } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 
 export default function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { label: "Home", path: "/" },
@@ -20,73 +30,74 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(51,36,25,0.04)]">
-        <div className="h-16 sm:h-20 max-w-[1240px] mx-auto px-3 sm:px-5 md:px-12 flex items-center justify-between gap-2 sm:gap-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-1.5 sm:gap-3 group shrink-0">
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 h-[72px] transition-colors duration-200 backdrop-blur-md ${
+          scrolled ? "border-b border-[var(--ink-12)]" : "border-b-0"
+        }`}
+        style={{
+          backgroundColor: "color-mix(in srgb, var(--bg) 92%, transparent)",
+        }}
+      >
+        <div className="h-[72px] max-w-[1200px] mx-auto px-6 lg:px-10 flex items-center justify-between gap-4">
+          {/* Logo & Wordmark Left */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 rounded"
+          >
             <img
               src="/images/logo-mark.png"
               alt="Solvantra Global Logo"
-              className="h-5 sm:h-8 md:h-9 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform duration-300"
+              className="h-8 w-auto object-contain shrink-0"
             />
-            <div className="flex flex-col shrink-0">
-              <span className="font-headline-sm text-[11px] xs:text-xs sm:text-base md:text-lg font-bold tracking-wider text-on-surface uppercase leading-none whitespace-nowrap">
-                Solvantra
-              </span>
-              <span className="font-eyebrow text-[7px] xs:text-[8px] sm:text-[9px] md:text-[10px] text-primary tracking-[0.16em] sm:tracking-[0.22em] uppercase leading-none mt-0.5 sm:mt-1 font-semibold whitespace-nowrap">
-                Global
-              </span>
-            </div>
+            <span className="text-[15px] font-bold tracking-wider text-[var(--ink)] uppercase whitespace-nowrap">
+              SOLVANTRA GLOBAL
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-6">
+          {/* Desktop Navigation Centered (hidden under 900px) */}
+          <nav className="hidden min-[900px]:flex items-center gap-8">
             {navItems.map((item) => {
               const isActive = pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   href={item.path}
-                  className={`font-label-md text-sm transition-colors relative py-1 ${
+                  className={`text-[15px] font-medium transition-all py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 rounded ${
                     isActive
-                      ? "text-primary font-bold"
-                      : "text-on-surface-variant hover:text-on-surface"
+                      ? "text-[var(--ink)] font-semibold underline decoration-2 decoration-[var(--accent)] underline-offset-4"
+                      : "text-[var(--ink-80)] hover:text-[var(--ink)] hover:underline hover:decoration-2 hover:decoration-[var(--accent)] hover:underline-offset-4"
                   }`}
                 >
                   {item.label}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full animate-fadeIn" />
-                  )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Header Actions */}
-          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
+          {/* Desktop Primary CTA Right (hidden under 900px) */}
+          <div className="hidden min-[900px]:flex items-center shrink-0">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-2 sm:px-4 py-1.5 sm:py-2.5 bg-primary-container text-on-primary font-label-md text-[10px] xs:text-[11px] sm:text-xs rounded-lg shadow-[0_4px_20px_-2px_rgba(51,36,25,0.05),0_12px_32px_-4px_rgba(185,138,62,0.08)] hover:bg-primary transition-all duration-200 group cursor-pointer whitespace-nowrap"
+              className="btn-solvantra-primary h-[40px] px-5 text-[14px] cursor-pointer"
             >
-              <span>Book a Consultation</span>
-              <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 ml-1 sm:ml-1.5 shrink-0 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-
-            {/* Mobile Hamburger Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-1 sm:p-2 text-on-surface hover:text-primary transition-colors cursor-pointer shrink-0"
-              aria-label="Toggle Navigation Menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+              Book a Consultation
             </button>
           </div>
+
+          {/* Mobile Hamburger Button (visible under 900px) */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="min-[900px]:hidden p-2 text-[var(--ink)] hover:text-[var(--accent)] transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded"
+            aria-label="Toggle Navigation Menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6 stroke-[1.5]" /> : <Menu className="w-6 h-6 stroke-[1.5]" />}
+          </button>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Navigation Dropdown (Under 900px) */}
         {mobileMenuOpen && (
-          <div className="xl:hidden bg-surface-container-low border-b border-outline-variant/30 px-6 py-6 shadow-xl animate-fadeIn">
-            <nav className="flex flex-col space-y-4">
+          <div className="min-[900px]:hidden border-b border-[var(--ink-12)] shadow-lg bg-[var(--bg)] animate-fadeIn">
+            <nav className="flex flex-col">
               {navItems.map((item) => {
                 const isActive = pathname === item.path;
                 return (
@@ -94,22 +105,33 @@ export default function Header() {
                     key={item.path}
                     href={item.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`font-label-md text-base py-1 border-b border-outline-variant/10 ${
+                    className={`h-[56px] px-6 flex items-center text-[16px] border-b border-[var(--ink-12)] transition-colors ${
                       isActive
-                        ? "text-primary font-bold"
-                        : "text-on-surface-variant hover:text-on-surface"
+                        ? "text-[var(--ink)] font-semibold bg-[var(--accent-14)] underline decoration-2 decoration-[var(--accent)] underline-offset-4"
+                        : "text-[var(--ink-80)] hover:text-[var(--ink)] hover:bg-[var(--ink-6)]"
                     }`}
                   >
                     {item.label}
                   </Link>
                 );
               })}
+              <div className="p-6">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setIsModalOpen(true);
+                  }}
+                  className="btn-solvantra-primary w-full h-[48px] text-[15px] cursor-pointer"
+                >
+                  Book a Consultation
+                </button>
+              </div>
             </nav>
           </div>
         )}
       </header>
 
-      {/* Consultation Modal */}
+      {/* Shared Consultation Modal */}
       <ConsultationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

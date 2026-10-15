@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Verified, ArrowRight } from "lucide-react";
-import ConsultationModal from "./ConsultationModal";
 
 export default function Footer() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const pathname = usePathname();
-  const isHomePage = pathname === "/";
+  const currentYear = new Date().getFullYear();
+
+  const scrollToTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const quickLinks = [
     { label: "Home", path: "/" },
@@ -19,149 +20,161 @@ export default function Footer() {
   ];
 
   const services = [
-    "24/7 Call & Chat Support",
-    "AI Scheduling",
-    "Claims & AR Support",
-    "Administrative Support",
-    "Compliance & Process",
-    "Lead Management",
-    "Virtual Staffing",
+    { label: "Real Estate", path: "/real-estate" },
+    { label: "Home Services", path: "/home-services" },
+    { label: "Healthcare", path: "/healthcare" },
+  ];
+
+  const operations = [
+    { label: "24/7 Call & Chat Support", path: "/services#operations" },
+    { label: "Intelligent Scheduling & Dispatch", path: "/services#operations" },
+    { label: "Claims & Revenue Operations", path: "/services#operations" },
+    { label: "Administrative Support", path: "/services#operations" },
+    { label: "Compliance & Process Admin", path: "/services#operations" },
+    { label: "Lead Management & Follow-Up", path: "/services#operations" },
+    { label: "Dedicated Operational Pods", path: "/services#operations" },
   ];
 
   return (
-    <>
-      <footer
-        className="dark-bg-section w-full border-t border-outline-variant/20 pt-24 pb-10 text-surface-container-high"
-        style={
-          !isHomePage
-            ? ({
-                "--dark-bg-image": "url('/images/dark_bg_footer.webp')",
-              } as React.CSSProperties)
-            : undefined
-        }
-      >
-        {/* Background image layer (Desktop/Tablet >= 768px only, non-homepage) */}
-        {!isHomePage && <div className="hidden md:block dark-bg-layer" />}
+    <footer className="w-full bg-[var(--ink)] pt-16 md:pt-24 pb-0 border-t border-[rgba(185,138,62,0.25)] overflow-hidden relative">
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
+        {/* Main 5-Column Grid using 4/2/2/4/3 proportions at 1280px (above 1024px) */}
+        <div className="footer-main-grid">
+          {/* Col 1: Logo & Tagline (4fr on desktop, full span on tablet) */}
+          <div className="footer-col-brand flex flex-col items-start">
+            <Link href="/" className="flex items-center gap-3 mb-4 group">
+              <img
+                src="/images/logo-mark.png"
+                alt="Solvantra Global Logo"
+                className="h-8 w-auto object-contain shrink-0"
+              />
+              <span className="text-[17px] font-bold tracking-wider text-[var(--bg)] uppercase">
+                SOLVANTRA GLOBAL
+              </span>
+            </Link>
+            <p className="text-[14px] text-[var(--bg-70)] leading-[1.65] max-w-sm font-sans">
+              People. Processes. Technology. Built Around Your Business.
+            </p>
+          </div>
 
-        {/* Stronger ~90% dark overlay layer (non-homepage) */}
-        {!isHomePage && <div className="hidden md:block dark-bg-overlay-footer" />}
+          {/* Col 2: Quick Links (2fr) */}
+          <div className="footer-col-links">
+            <h4 className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--bg-55)] mb-4 font-semibold">
+              Quick Links
+            </h4>
+            <nav className="flex flex-col space-y-2.5 font-sans">
+              {quickLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className="text-[14px] text-[var(--bg-75)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
-        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-12">
-          {/* Main 12-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-20">
-            {/* Col 1-4: Brand Statement */}
-            <div className="lg:col-span-4 flex flex-col items-start">
-              <Link href="/" className="flex items-center gap-3 mb-4 group">
-                <img
-                  src="/images/logo-mark.png"
-                  alt="Solvantra Global Logo"
-                  className="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="flex flex-col">
-                  <span className="font-headline-sm text-lg font-bold tracking-wider text-surface-bright uppercase leading-none">
-                    Solvantra
-                  </span>
-                  <span className="font-eyebrow text-[10px] text-primary-fixed tracking-[0.22em] uppercase leading-none mt-1 font-semibold">
-                    Global
-                  </span>
-                </div>
-              </Link>
-              <p className="font-body-md text-sm text-secondary-fixed-dim max-w-sm mb-6 leading-relaxed">
-                People. Processes. Technology. Built Around Your Business.
-              </p>
-              <div className="flex items-center gap-2 text-secondary-fixed-dim bg-[#332419]/80 backdrop-blur-md px-3 py-1.5 rounded-md border border-primary-container/20">
-                <Verified className="w-4 h-4 text-primary-fixed" />
-                <span className="font-body-sm text-xs text-surface-bright">
-                  Tier-One Global Business Operations
-                </span>
-              </div>
-            </div>
-
-            {/* Col 5-6: Quick Links */}
-            <div className="lg:col-span-2">
-              <h4 className="font-eyebrow text-xs tracking-[0.14em] uppercase text-primary-fixed mb-4">
-                Quick Links
-              </h4>
-              <nav className="flex flex-col space-y-2">
-                {quickLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    href={link.path}
-                    className="font-body-sm text-xs text-secondary-fixed-dim hover:text-surface-bright transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-
-            {/* Col 7-9: Our Services */}
-            <div className="lg:col-span-3">
-              <h4 className="font-eyebrow text-xs tracking-[0.14em] uppercase text-primary-fixed mb-4">
-                Our Services
-              </h4>
-              <div className="flex flex-col space-y-2">
-                {services.map((service, index) => (
-                  <Link
-                    key={index}
-                    href="/services"
-                    className="font-body-sm text-xs text-secondary-fixed-dim hover:text-surface-bright transition-colors flex items-center gap-1.5 group"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-primary-container group-hover:scale-150 transition-transform" />
-                    <span>{service}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Col 10-12: High-Contrast Consultation Callout Box */}
-            <div className="lg:col-span-3 flex flex-col justify-between bg-[#332419]/80 backdrop-blur-md p-6 rounded-xl border border-primary-container/30 shadow-xl">
-              <div>
-                <p className="font-headline-sm text-base text-surface-bright mb-2 leading-snug">
-                  Ready to streamline your operations?
-                </p>
-                <p className="font-body-sm text-xs text-secondary-fixed-dim mb-6 leading-relaxed">
-                  Partner with dedicated talent, precision protocols, and enterprise technology.
-                </p>
-              </div>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center justify-between px-4 py-2.5 bg-primary-container text-on-primary font-label-md text-xs rounded-lg hover:bg-primary transition-colors group w-full cursor-pointer"
-              >
-                <span>Book a Consultation</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+          {/* Col 3: Services (2fr) */}
+          <div className="footer-col-services">
+            <h4 className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--bg-55)] mb-4 font-semibold">
+              Services
+            </h4>
+            <div className="flex flex-col space-y-2.5 font-sans">
+              {services.map((service, index) => (
+                <Link
+                  key={index}
+                  href={service.path}
+                  className="text-[14px] text-[var(--bg-75)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+                >
+                  {service.label}
+                </Link>
+              ))}
             </div>
           </div>
 
-          {/* Bottom Copyright & Policy Links */}
-          <div className="pt-6 border-t border-outline-variant/15 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="font-body-sm text-xs text-secondary-fixed-dim text-center md:text-left">
-              © {new Date().getFullYear()} Solvantra Global. All rights reserved.
-            </p>
-            <div className="flex items-center gap-4 text-xs">
-              <Link
-                href="/privacy-policy"
-                className="font-body-sm text-secondary-fixed-dim hover:text-surface-bright transition-colors"
-              >
-                Privacy Policy
-              </Link>
-              <span className="text-outline-variant">|</span>
-              <Link
-                href="/terms-of-service"
-                className="font-body-sm text-secondary-fixed-dim hover:text-surface-bright transition-colors"
-              >
-                Terms of Service
-              </Link>
+          {/* Col 4: Operations (4fr on 1280px, 2 columns at 1024px and below, 1 column at 375px) */}
+          <div className="footer-col-operations">
+            <h4 className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--bg-55)] mb-4 font-semibold">
+              Operations
+            </h4>
+            <div className="footer-operations-list font-sans">
+              {operations.map((op, index) => (
+                <Link
+                  key={index}
+                  href={op.path}
+                  className="text-[14px] text-[var(--bg-75)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+                >
+                  {op.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Col 5: Contact (3fr on 1280px) */}
+          <div className="footer-col-contact">
+            <h4 className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--bg-55)] mb-4 font-semibold">
+              Contact
+            </h4>
+            <div className="flex flex-col space-y-3 text-[14px] font-sans">
+              <div>
+                <span className="block font-mono text-[14px] text-[var(--bg-55)] uppercase tracking-wider mb-0.5">
+                  Direct Operations Email
+                </span>
+                <a
+                  href="mailto:solutions@solvantra.com"
+                  className="text-[var(--bg-75)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+                >
+                  solutions@solvantra.com
+                </a>
+              </div>
+              <div>
+                <span className="block font-mono text-[14px] text-[var(--bg-55)] uppercase tracking-wider mb-0.5">
+                  Global Client Desk
+                </span>
+                <span className="text-[var(--bg-75)]">+1 (800) 584-9271</span>
+              </div>
+              <div>
+                <span className="block font-mono text-[14px] text-[var(--bg-55)] uppercase tracking-wider mb-0.5">
+                  Availability
+                </span>
+                <span className="text-[var(--bg-70)]">24/7 Operations</span>
+              </div>
             </div>
           </div>
         </div>
-      </footer>
 
-      <ConsultationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-    </>
+        {/* Bottom Bar: copyright left, Privacy/Terms right, plus a small "Back to top ^" link */}
+        <div className="pt-6 pb-10 sm:pb-12 border-t border-[var(--bg-12)] flex flex-col sm:flex-row items-center justify-between gap-4 font-sans">
+          <p className="text-[14px] text-[var(--bg-60)] text-center sm:text-left">
+            &copy; {currentYear} Solvantra Global. All rights reserved.
+          </p>
+
+          <div className="flex items-center gap-6 text-[14px]">
+            <Link
+              href="/privacy-policy"
+              className="text-[var(--bg-60)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms-of-service"
+              className="text-[var(--bg-60)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+            >
+              Terms of Service
+            </Link>
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="text-[var(--bg-60)] hover:text-[var(--bg)] transition-colors duration-150 inline-flex items-center gap-1 cursor-pointer font-mono text-[14px] uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+              aria-label="Scroll back to top"
+            >
+              <span>Back to top</span>
+              <span aria-hidden="true">^</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

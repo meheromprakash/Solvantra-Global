@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Manrope } from "next/font/google";
+import { EB_Garamond, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,11 +11,18 @@ const ebGaramond = EB_Garamond({
   weight: ["400", "500", "600", "700"],
 });
 
-const manrope = Manrope({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-manrope",
+  variable: "--font-dm-sans",
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  variable: "--font-dm-mono",
+  display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -25,11 +32,10 @@ export const metadata: Metadata = {
   keywords: [
     "Business Operations",
     "Operational Support",
-    "Outsourcing",
     "Customer Support",
     "Claims Management",
-    "AI Scheduling",
-    "Virtual Staffing",
+    "Intelligent Scheduling & Dispatch",
+    "Dedicated Operational Pods",
     "Solvantra Global",
   ],
 };
@@ -42,11 +48,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ebGaramond.variable} ${manrope.variable} h-full antialiased`}
+      className={`${ebGaramond.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-surface text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+      <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--ink)] font-sans antialiased selection:bg-[var(--accent)] selection:text-[var(--ink)]">
         <Header />
-        <main className="flex-1 w-full pt-20">{children}</main>
+        <main className="flex-1 w-full pt-[72px]">{children}</main>
         <Footer />
       </body>
     </html>

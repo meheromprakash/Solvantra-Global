@@ -134,14 +134,17 @@ export default function ContactPage() {
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                         className="w-full px-3 py-2.5 bg-surface border border-outline-variant/40 rounded focus:border-primary focus:outline-none text-sm text-on-surface"
                       >
-                        <option value="24/7 Call Support">24/7 Call Support</option>
-                        <option value="Chat & Email Support">Chat &amp; Email Support</option>
-                        <option value="AI Scheduling">AI Scheduling</option>
-                        <option value="Claims & AR Support">Claims &amp; AR Support</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Home Services">Home Services</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="24/7 Call & Chat Support">24/7 Call &amp; Chat Support</option>
+                        <option value="Intelligent Scheduling & Dispatch">Intelligent Scheduling &amp; Dispatch</option>
+                        <option value="Claims & Revenue Operations">Claims &amp; Revenue Operations</option>
                         <option value="Administrative Support">Administrative Support</option>
-                        <option value="Compliance & Process Support">Compliance &amp; Process Support</option>
-                        <option value="Lead Management">Lead Management</option>
-                        <option value="Virtual Staffing">Virtual Staffing</option>
+                        <option value="Compliance & Process Admin">Compliance &amp; Process Admin</option>
+                        <option value="Lead Management & Follow-Up">Lead Management &amp; Follow-Up</option>
+                        <option value="Dedicated Operational Pods">Dedicated Operational Pods</option>
+                        <option value="Custom Solution">Custom Solution</option>
                       </select>
                     </div>
                   </div>

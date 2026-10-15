@@ -1,405 +1,348 @@
 @import "tailwindcss";
 
 @theme {
-  /* Solvantra Brand Colors - New Website Theme */
-  --color-main-title: #332419;
+  /* Solvantra Brand Strict 3-Color Tokens */
+  --color-ink: #332419;
   --color-accent: #b98a3e;
-  --color-background: #f8f1e5;
+  --color-bg: #f8f1e5;
 
-  /* Primary Accent Tokens (#B98A3E) */
-  --color-primary: #b98a3e;
-  --color-primary-container: #b98a3e;
-  --color-primary-fixed: #f5e5c9;
-  --color-primary-fixed-dim: #d8aa5e;
-  --color-on-primary: #ffffff;
-  --color-on-primary-container: #332419;
+  /* Font definitions */
+  --font-serif: var(--font-eb-garamond), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, SFMono-Regular, monospace;
+}
 
-  /* Accent & Gold Tokens */
-  --color-champagne-gold: #b98a3e;
-  --color-champagne-gold-rich: #b98a3e;
-  --color-antique-bronze: #b98a3e;
+:root {
+  /* Three approved home page colors */
+  --ink: #332419;
+  --accent: #b98a3e;
+  --bg: #f8f1e5;
 
-  /* Metallic Gold Palette */
-  --color-metallic-gold-light: #f5e5c9;
-  --color-metallic-gold-bright: #d8aa5e;
-  --color-metallic-gold: #b98a3e;
-  --color-metallic-gold-dark: #a2752f;
+  /* Allowed tints (opacity only, never new hex values) */
+  --ink-80: rgba(51, 36, 25, 0.80);
+  --ink-65: rgba(51, 36, 25, 0.65);
+  --ink-30: rgba(51, 36, 25, 0.30);
+  --ink-25: rgba(51, 36, 25, 0.25);
+  --ink-20: rgba(51, 36, 25, 0.20);
+  --ink-15: rgba(51, 36, 25, 0.15);
+  --ink-12: rgba(51, 36, 25, 0.12);
+  --ink-6: rgba(51, 36, 25, 0.06);
 
-  /* Main Title (#332419) & Dark Espresso Palette */
-  --color-espresso-dark: #332419;
-  --color-espresso-deep: #281b12;
-  --color-espresso-ground: #332419;
-  --color-secondary: #635347;
-  --color-secondary-container: #ede1d1;
-  --color-secondary-fixed: #f0e3d3;
-  --color-secondary-fixed-dim: #d5c5b5;
-  --color-on-secondary-fixed: #332419;
-  --color-on-secondary-fixed-variant: #4f3e32;
-  --color-on-secondary-container: #635347;
+  --accent-14: rgba(185, 138, 62, 0.14);
+  --accent-8: rgba(185, 138, 62, 0.08);
+  --accent-40: rgba(185, 138, 62, 0.40);
 
-  /* Tertiary Accents (#B98A3E) */
-  --color-tertiary: #b98a3e;
-  --color-tertiary-container: #b98a3e;
-  --color-tertiary-fixed: #f5e5c9;
-  --color-tertiary-fixed-dim: #d8aa5e;
-
-  /* Background Palette (#F8F1E5) */
-  --color-surface: #f8f1e5;
-  --color-surface-ivory: #f8f1e5;
-  --color-surface-cream: #f2e8d9;
-  --color-surface-luminous: #fcf9f3;
-  --color-surface-dim: #ddd3c3;
-  --color-surface-bright: #fdfbf7;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f3ebdd;
-  --color-surface-container: #ede2d2;
-  --color-surface-container-high: #e7dbca;
-  --color-surface-container-highest: #e0d2c0;
-
-  --color-on-surface: #332419;
-  --color-on-surface-variant: #514034;
-
-  --color-inverse-surface: #332419;
-  --color-inverse-on-surface: #f8f1e5;
-  --color-inverse-primary: #d8aa5e;
-
-  --color-outline: #837365;
-  --color-outline-variant: #d5c7b5;
-
-  --color-on-background: #332419;
+  --bg-100: #f8f1e5;
+  --bg-75: rgba(248, 241, 229, 0.75);
+  --bg-70: rgba(248, 241, 229, 0.70);
+  --bg-60: rgba(248, 241, 229, 0.60);
+  --bg-55: rgba(248, 241, 229, 0.55);
+  --bg-50: rgba(248, 241, 229, 0.50);
+  --bg-15: rgba(248, 241, 229, 0.15);
+  --bg-12: rgba(248, 241, 229, 0.12);
+  --bg-10: rgba(248, 241, 229, 0.10);
+  --bg-8: rgba(248, 241, 229, 0.08);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #f8f1e5;
-    color: #332419;
+    background-color: var(--bg);
+    color: var(--ink);
   }
   body {
-    background-color: #f8f1e5;
-    color: #332419;
-    font-family: var(--font-manrope), system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
     min-height: 100vh;
   }
   h1, h2, h3, h4, h5, h6 {
-    color: #332419;
+    color: var(--ink);
+    font-family: var(--font-eb-garamond), Georgia, serif;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    font-weight: 500;
   }
 }
 
-/* Metallic Gold Gradient Classes */
-.bg-gradient-metallic-gold {
-  background: linear-gradient(135deg, #f5e5c9 0%, #d8aa5e 35%, #b98a3e 70%, #a2752f 100%);
+/* Suppress Next.js dev badge indicators in DOM */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dev-overlay],
+#__next-build-watcher,
+[data-nextjs-badge] {
+  display: none !important;
 }
 
-.bg-gradient-champagne {
-  background: linear-gradient(135deg, #cfa356 0%, #b98a3e 100%);
-}
-
-.bg-gradient-bronze-cta {
-  background: linear-gradient(135deg, #b98a3e 0%, #a67931 100%);
-}
-
-/* Dark Ground Section Utility */
-.bg-dark-espresso {
-  background-color: #332419;
-}
-
-/* Typography Classes */
-.font-display-hero {
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-size: 3.75rem;
-  line-height: 4.25rem;
-  letter-spacing: -0.02em;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .font-display-hero {
-    font-size: 2.5rem;
-    line-height: 3rem;
-    letter-spacing: -0.01em;
-  }
-}
-
-.font-headline-lg {
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-size: 2.75rem;
-  line-height: 3.25rem;
-  letter-spacing: -0.015em;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .font-headline-lg {
-    font-size: 2rem;
-    line-height: 2.5rem;
-    letter-spacing: 0;
-  }
-}
-
-.font-headline-md {
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-size: 2rem;
-  line-height: 2.5rem;
-  font-weight: 500;
-}
-
-.font-headline-sm {
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  font-weight: 600;
-}
-
-.font-stat-numeral {
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-size: 3.5rem;
-  line-height: 3.75rem;
-  font-weight: 500;
-}
-
-.font-eyebrow {
-  font-family: var(--font-manrope), sans-serif;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  letter-spacing: 0.14em;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.font-body-lg {
-  font-family: var(--font-manrope), sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.875rem;
-  font-weight: 400;
-}
-
-.font-body-md {
-  font-family: var(--font-manrope), sans-serif;
-  font-size: 0.9375rem;
-  line-height: 1.6rem;
-  font-weight: 400;
-}
-
-.font-body-sm {
-  font-family: var(--font-manrope), sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.35rem;
-  font-weight: 400;
-}
-
-.font-label-md {
-  font-family: var(--font-manrope), sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.02em;
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   HERO BACKGROUND & EDITORIAL LAYOUT UTILITIES
-   ========================================================================== */
-
-.hero-bg-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background-color: #f8f1e5;
-  background-image: linear-gradient(180deg, #fdfbf7 0%, #f8f1e5 100%);
-}
-
-.hero-bg-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-image: var(--hero-bg-image);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-}
-
-.hero-vignette {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(248, 241, 229, 0.88) 0%,
-    rgba(248, 241, 229, 0) 18%,
-    rgba(248, 241, 229, 0) 82%,
-    rgba(248, 241, 229, 0.95) 100%
-  );
-}
-
-.hero-gradient-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(
-    180deg,
-    rgba(248, 241, 229, 0.92) 0%,
-    rgba(248, 241, 229, 0.78) 45%,
-    rgba(248, 241, 229, 0.94) 100%
-  );
-}
-
-@media (min-width: 768px) {
-  .hero-bg-layer {
-    background-position: right center;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .hero-gradient-overlay {
-    background: linear-gradient(
-      90deg,
-      rgba(248, 241, 229, 0.97) 0%,
-      rgba(248, 241, 229, 0.92) 40%,
-      rgba(248, 241, 229, 0.55) 60%,
-      rgba(248, 241, 229, 0) 75%
-    );
-  }
-}
-
-@media (min-width: 1025px) {
-  .hero-gradient-overlay {
-    background: linear-gradient(
-      90deg,
-      rgba(248, 241, 229, 0.96) 0%,
-      rgba(248, 241, 229, 0.90) 35%,
-      rgba(248, 241, 229, 0.40) 52%,
-      rgba(248, 241, 229, 0) 65%
-    );
-  }
-}
-
-@media (min-width: 768px) {
-  .hero-glow-effect {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    background: radial-gradient(
-      circle at 82% 48%,
-      rgba(216, 170, 94, 0.35) 0%,
-      rgba(185, 138, 62, 0.15) 35%,
-      transparent 65%
-    );
-  }
-}
-
-@keyframes heroFadeUp {
-  0% {
+@keyframes fadeUpOnce {
+  from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.animate-hero-fade-up {
-  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-fade-up {
+  animation: fadeUpOnce 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-hero-fade-up {
+  .animate-fade-up {
     animation: none !important;
-    transform: none !important;
     opacity: 1 !important;
+    transform: none !important;
   }
 }
 
-@media (hover: hover) {
-  .hero-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(185, 138, 62, 0.45);
-  }
-  .hero-btn-secondary:hover {
-    transform: translateY(-2px);
-    border-color: #b98a3e;
-    background-color: rgba(255, 255, 255, 0.95);
-  }
+.font-mono-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 /* ==========================================================================
-   REUSABLE DARK SECTION BACKGROUND UTILITIES
+   BUTTON & INTERACTION UTILITIES
    ========================================================================== */
 
-.dark-bg-section {
+/* Primary button: accent background, ink text, weight 600.
+   Hover: inset 1px ink border at 25% plus a 6% ink overlay. */
+.btn-solvantra-primary {
+  background-color: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
   position: relative;
-  overflow: hidden;
-  background-color: #332419;
+  outline: none;
+}
+.btn-solvantra-primary:hover {
+  box-shadow: inset 0 0 0 1px var(--ink-25);
+  background-color: color-mix(in srgb, var(--accent) 94%, var(--ink) 6%);
+}
+.btn-solvantra-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 }
 
-@media (min-width: 768px) {
-  .dark-bg-layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background-image: var(--dark-bg-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
-  }
+/* Secondary button: transparent, 1px border ink at 30%, ink text.
+   Hover: ink at 6% background. */
+.btn-solvantra-secondary {
+  background-color: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  border: 1px solid var(--ink-30);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  outline: none;
+}
+.btn-solvantra-secondary:hover {
+  background-color: var(--ink-6);
+}
+.btn-solvantra-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
 
-  .dark-bg-overlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(
-      135deg,
-      rgba(51, 36, 25, 0.90) 0%,
-      rgba(51, 36, 25, 0.72) 50%,
-      rgba(51, 36, 25, 0.88) 100%
-    );
-  }
+/* Links: ink text, weight 600, 2px accent underline with 4px offset. */
+.link-solvantra {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+  transition: opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+}
+.link-solvantra:hover {
+  opacity: 0.85;
+}
+.link-solvantra:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
 
-  .dark-bg-overlay-footer {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(
-      180deg,
-      rgba(51, 36, 25, 0.94) 0%,
-      rgba(51, 36, 25, 0.88) 60%,
-      rgba(51, 36, 25, 0.96) 100%
-    );
+/* Cards: use bg (NOT white) with a 1px border at ink 12% and a faint shadow. */
+.card-solvantra {
+  background-color: var(--bg);
+  border: 1px solid var(--ink-12);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px var(--ink-6);
+  transition: border-color 0.2s ease;
+}
+.card-solvantra:hover {
+  border-color: var(--accent-40);
+}
+
+/* Eyebrow Label pattern: ink at 65%, uppercase, 13px, letter-spacing 0.12em, with a 24px x 2px accent line before the text. */
+.eyebrow-solvantra {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-65);
+}
+.eyebrow-solvantra::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background-color: var(--accent);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   MARQUEE ANIMATION
+   ========================================================================== */
+
+@keyframes marqueeSlow {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marqueeSlow 40s linear infinite;
+}
+
+.animate-marquee-slow:hover,
+.marquee-container:hover .animate-marquee-slow {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-slow {
+    animation: none;
+    transform: none;
   }
 }
 
 /* ==========================================================================
-   CARD HOVER FIX UTILITIES (Gold Circle & White Icon, No Card Darkening)
+   INDUSTRY-SPECIFIC BRAND COLOR PALETTES (Scoped strictly to industry pages)
    ========================================================================== */
 
-.solvantra-card {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  background-color: #ffffff;
+.palette-real-estate {
+  --ind-primary: #12372A;
+  --ind-secondary: #1B5140;
+  --ind-accent: #D6BE8A;
+  --ind-highlight: #A9C4AE;
+  --ind-light-bg: #F5F2E9;
+  --ind-dark-text: #F8F5EC;
+  background-color: #F5F2E9;
+  color: #12372A;
 }
 
-.solvantra-icon-circle {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.palette-home-services {
+  --ind-primary: #20262E;
+  --ind-secondary: #303A46;
+  --ind-accent: #D97745;
+  --ind-highlight: #F2B66D;
+  --ind-light-bg: #F4F1EA;
+  --ind-dark-text: #FAF8F4;
+  background-color: #F4F1EA;
+  color: #20262E;
 }
 
-@media (hover: hover) {
-  .solvantra-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(51, 36, 25, 0.08), 0 8px 10px -6px rgba(51, 36, 25, 0.04);
-    border-color: rgba(185, 138, 62, 0.4);
+.palette-healthcare {
+  --ind-primary: #10243A;
+  --ind-secondary: #174A7E;
+  --ind-accent: #3B82F6;
+  --ind-highlight: #67D5E8;
+  --ind-light-bg: #F3F7FB;
+  --ind-dark-text: #FFFFFF;
+  background-color: #F3F7FB;
+  color: #10243A;
+}
+
+/* ==========================================================================
+   FOOTER GRID (4 / 2 / 2 / 4 / 3 Proportions & Responsive Operations)
+   ========================================================================== */
+
+.footer-main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.footer-col-brand {
+  grid-column: span 1;
+}
+
+.footer-col-links,
+.footer-col-services,
+.footer-col-operations,
+.footer-col-contact {
+  grid-column: span 1;
+}
+
+.footer-operations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .footer-main-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .group:hover .solvantra-icon-circle {
-    background-color: #b98a3e !important;
-    color: #ffffff !important;
-    transform: scale(1.05);
+  .footer-col-brand {
+    grid-column: span 2;
+  }
+  .footer-col-operations {
+    grid-column: span 2;
+  }
+  .footer-col-contact {
+    grid-column: span 2;
+  }
+  .footer-operations-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.625rem 1.5rem;
   }
 }
+
+@media (min-width: 1025px) {
+  .footer-main-grid {
+    grid-template-columns: 4fr 2fr 2fr 4fr 3fr;
+  }
+  .footer-col-brand {
+    grid-column: span 1;
+    padding-right: 1.5rem;
+  }
+  .footer-col-links,
+  .footer-col-services,
+  .footer-col-operations,
+  .footer-col-contact {
+    grid-column: span 1;
+  }
+  .footer-operations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+  .footer-operations-list a {
+    white-space: nowrap;
+  }
+}
+
