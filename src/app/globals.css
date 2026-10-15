@@ -280,6 +280,58 @@ nextjs-portal,
   color: var(--primary);
 }
 
+/* Dynamic Opacity Tints for All Sectors */
+[data-sector] {
+  /* Primary Opacity Tints */
+  --primary-90: color-mix(in srgb, var(--primary) 90%, transparent);
+  --primary-85: color-mix(in srgb, var(--primary) 85%, transparent);
+  --primary-80: color-mix(in srgb, var(--primary) 80%, transparent);
+  --primary-75: color-mix(in srgb, var(--primary) 75%, transparent);
+  --primary-70: color-mix(in srgb, var(--primary) 70%, transparent);
+  --primary-65: color-mix(in srgb, var(--primary) 65%, transparent);
+  --primary-60: color-mix(in srgb, var(--primary) 60%, transparent);
+  --primary-55: color-mix(in srgb, var(--primary) 55%, transparent);
+  --primary-50: color-mix(in srgb, var(--primary) 50%, transparent);
+  --primary-45: color-mix(in srgb, var(--primary) 45%, transparent);
+  --primary-35: color-mix(in srgb, var(--primary) 35%, transparent);
+  --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
+  --primary-25: color-mix(in srgb, var(--primary) 25%, transparent);
+  --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
+  --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
+  --primary-12: color-mix(in srgb, var(--primary) 12%, transparent);
+  --primary-10: color-mix(in srgb, var(--primary) 10%, transparent);
+  --primary-8: color-mix(in srgb, var(--primary) 8%, transparent);
+  --primary-6: color-mix(in srgb, var(--primary) 6%, transparent);
+  --primary-5: color-mix(in srgb, var(--primary) 5%, transparent);
+
+  /* On-Dark Opacity Tints */
+  --on-dark-90: color-mix(in srgb, var(--on-dark) 90%, transparent);
+  --on-dark-85: color-mix(in srgb, var(--on-dark) 85%, transparent);
+  --on-dark-80: color-mix(in srgb, var(--on-dark) 80%, transparent);
+  --on-dark-75: color-mix(in srgb, var(--on-dark) 75%, transparent);
+  --on-dark-70: color-mix(in srgb, var(--on-dark) 70%, transparent);
+  --on-dark-65: color-mix(in srgb, var(--on-dark) 65%, transparent);
+  --on-dark-60: color-mix(in srgb, var(--on-dark) 60%, transparent);
+  --on-dark-55: color-mix(in srgb, var(--on-dark) 55%, transparent);
+  --on-dark-50: color-mix(in srgb, var(--on-dark) 50%, transparent);
+  --on-dark-45: color-mix(in srgb, var(--on-dark) 45%, transparent);
+  --on-dark-35: color-mix(in srgb, var(--on-dark) 35%, transparent);
+  --on-dark-30: color-mix(in srgb, var(--on-dark) 30%, transparent);
+  --on-dark-25: color-mix(in srgb, var(--on-dark) 25%, transparent);
+  --on-dark-20: color-mix(in srgb, var(--on-dark) 20%, transparent);
+  --on-dark-15: color-mix(in srgb, var(--on-dark) 15%, transparent);
+  --on-dark-12: color-mix(in srgb, var(--on-dark) 12%, transparent);
+  --on-dark-10: color-mix(in srgb, var(--on-dark) 10%, transparent);
+  --on-dark-8: color-mix(in srgb, var(--on-dark) 8%, transparent);
+  --on-dark-6: color-mix(in srgb, var(--on-dark) 6%, transparent);
+  --on-dark-5: color-mix(in srgb, var(--on-dark) 5%, transparent);
+
+  /* Secondary, Accent & Highlight Tints */
+  --secondary-15: color-mix(in srgb, var(--secondary) 15%, transparent);
+  --accent-20: color-mix(in srgb, var(--accent) 20%, transparent);
+  --highlight-20: color-mix(in srgb, var(--highlight) 20%, transparent);
+}
+
 /* Headings inside sector pages inherit their section text color */
 [data-sector] h1,
 [data-sector] h2,
@@ -429,14 +481,33 @@ nextjs-portal,
 /* Sector Cards */
 .sector-card-light {
   background-color: var(--light);
+  color: var(--primary);
   border: 1px solid color-mix(in srgb, var(--primary) 12%, transparent);
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
+[data-sector] .sector-card-light h1,
+[data-sector] .sector-card-light h2,
+[data-sector] .sector-card-light h3,
+[data-sector] .sector-card-light h4,
+[data-sector] .sector-card-light h5,
+[data-sector] .sector-card-light h6 {
+  color: var(--primary);
+}
+
 .sector-card-dark {
   background-color: color-mix(in srgb, var(--on-dark) 6%, transparent);
+  color: var(--on-dark);
   border: 1px solid color-mix(in srgb, var(--on-dark) 15%, transparent);
   border-radius: 12px;
+}
+[data-sector] .sector-card-dark h1,
+[data-sector] .sector-card-dark h2,
+[data-sector] .sector-card-dark h3,
+[data-sector] .sector-card-dark h4,
+[data-sector] .sector-card-dark h5,
+[data-sector] .sector-card-dark h6 {
+  color: var(--on-dark);
 }
 
 /* ==========================================================================

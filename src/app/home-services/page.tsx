@@ -1334,12 +1334,12 @@ export default function HomeServicesPage() {
 
               {/* Right Column: Lifted Light Panel for Call-Out Cover */}
               <div className="lg:col-span-6">
-                <div className="sector-card-light p-7 sm:p-9 shadow-xl relative overflow-hidden">
+                <div className="sector-card-light bg-[var(--light)] text-[var(--primary)] p-7 sm:p-9 shadow-2xl relative overflow-hidden border border-[var(--primary-15)]">
                   <div className="flex items-center justify-between pb-3 mb-6 border-b border-[var(--primary-15)]">
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--primary-55)] font-semibold">
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--primary-65)] font-semibold">
                       RAPID CALL-OUT RESPONSE · ILLUSTRATIVE FLOW
                     </span>
-                    <span className="font-mono text-[11px] text-[var(--primary-55)]">24/7 ACTIVE</span>
+                    <span className="font-mono text-[11px] text-[var(--primary-65)] font-semibold">24/7 ACTIVE</span>
                   </div>
 
                   <h3 className="font-serif text-[22px] sm:text-[25px] font-normal text-[var(--primary)] leading-snug mb-6">
@@ -1355,8 +1355,8 @@ export default function HomeServicesPage() {
                           key={idx}
                           className={`p-3.5 rounded-[8px] border transition-all duration-300 flex items-center justify-between gap-3 ${
                             isActive
-                              ? "bg-[var(--primary)] text-[var(--on-dark)] border-[var(--accent)] shadow-sm translate-x-1"
-                              : "bg-[var(--primary-5)] text-[var(--primary-75)] border-[var(--primary-10)]"
+                              ? "bg-[var(--primary)] text-[var(--on-dark)] border-[var(--accent)] shadow-md translate-x-1"
+                              : "bg-white/70 text-[var(--primary)] border-[var(--primary-15)] hover:border-[var(--primary-35)]"
                           }`}
                         >
                           <div className="flex items-center gap-3">
@@ -1364,12 +1364,14 @@ export default function HomeServicesPage() {
                               className={`font-mono text-[12px] font-bold px-2 py-0.5 rounded ${
                                 isActive
                                   ? "bg-[var(--accent)] text-[var(--primary)]"
-                                  : "bg-[var(--primary-12)] text-[var(--primary-60)]"
+                                  : "bg-[var(--primary-10)] text-[var(--primary)]"
                               }`}
                             >
                               {step.num}
                             </span>
-                            <span className="text-[14px] font-medium">{step.text}</span>
+                            <span className={`text-[14px] font-medium ${isActive ? "text-[var(--on-dark)]" : "text-[var(--primary)]"}`}>
+                              {step.text}
+                            </span>
                           </div>
                           {isActive && (
                             <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-ping" />
