@@ -3,11 +3,35 @@
 import React, { useState } from "react";
 import { Check, ArrowRight, Loader2 } from "lucide-react";
 
-export default function FinalCTA() {
+export interface FinalCTAProps {
+  eyebrow?: string;
+  headline?: string;
+  subline?: string;
+  tagline?: string;
+  defaultSector?: string;
+  bgClassName?: string;
+  textClassName?: string;
+  buttonClassName?: string;
+  contactDetails?: React.ReactNode;
+  disclaimer?: string;
+}
+
+export default function FinalCTA({
+  eyebrow,
+  headline = "Ready to streamline your operations?",
+  subline = "Partner with dedicated specialists, precision SOPs, and seamless software integration built around your business.",
+  tagline,
+  defaultSector = "",
+  bgClassName = "bg-[var(--accent)]",
+  textClassName = "text-[var(--ink)]",
+  buttonClassName = "bg-[var(--ink)] text-[var(--bg)]",
+  contactDetails,
+  disclaimer,
+}: FinalCTAProps = {}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    sector: "",
+    sector: defaultSector,
     handoffMessage: "",
   });
 
@@ -83,7 +107,7 @@ export default function FinalCTA() {
     setFormData({
       name: "",
       email: "",
-      sector: "",
+      sector: defaultSector,
       handoffMessage: "",
     });
     setErrors({});
@@ -91,53 +115,71 @@ export default function FinalCTA() {
   };
 
   return (
-    <section className="w-full bg-[var(--accent)] text-[var(--ink)] py-16 md:py-24 lg:py-[112px] transition-colors">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* LEFT Column: Giant H2 (clamp 40-72px), 2-line subline, 3 reassurance points */}
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <h2 className="text-[clamp(40px,5.5vw,72px)] font-serif font-medium leading-[1.02] tracking-[-0.03em] text-[var(--ink)] mb-6">
-              Ready to streamline your operations?
-            </h2>
-
-            <p className="text-[17px] sm:text-[18px] text-[var(--ink-80)] leading-[1.6] max-w-[520px] mb-8 font-sans">
-              Partner with dedicated specialists, precision SOPs, and seamless software integration built around your business.
-            </p>
-
-            {/* 3 Reassurance Points from existing copy */}
-            <div className="space-y-4 max-w-lg">
-              <div className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-[var(--ink)] text-[var(--bg)] flex items-center justify-center shrink-0">
-                  <Check className="w-3 h-3 stroke-[3]" />
+    <>
+      <section className={`w-full ${bgClassName} ${textClassName} py-16 md:py-24 lg:py-[112px] transition-colors`}>
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* LEFT Column */}
+            <div className="lg:col-span-7 flex flex-col items-start">
+              {eyebrow && (
+                <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold mb-3 block opacity-90">
+                  {eyebrow}
                 </span>
-                <span className="text-[15px] font-medium text-[var(--ink)] font-sans">
-                  Dedicated pod trained on your brand voice and workflows
-                </span>
+              )}
+              <h2 className="text-[clamp(36px,5vw,68px)] font-serif font-medium leading-[1.04] tracking-[-0.03em] mb-4">
+                {headline}
+              </h2>
+
+              <p className="text-[17px] sm:text-[18px] opacity-85 leading-[1.6] max-w-[520px] mb-6 font-sans">
+                {subline}
+              </p>
+
+              {tagline && (
+                <p className="font-mono text-[14px] font-semibold tracking-wide mb-6 opacity-95">
+                  {tagline}
+                </p>
+              )}
+
+              {/* Reassurance Points */}
+              <div className="space-y-4 max-w-lg mb-4">
+                <div className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-current text-[var(--bg)] flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 stroke-[3]" />
+                  </span>
+                  <span className="text-[15px] font-medium font-sans">
+                    Dedicated pod trained on your practice workflows
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-current text-[var(--bg)] flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 stroke-[3]" />
+                  </span>
+                  <span className="text-[15px] font-medium font-sans">
+                    Direct integration with your EHR and clearinghouse systems
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-current text-[var(--bg)] flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 stroke-[3]" />
+                  </span>
+                  <span className="text-[15px] font-medium font-sans">
+                    Rigorous SLA oversight and regular revenue cycle telemetry
+                  </span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-[var(--ink)] text-[var(--bg)] flex items-center justify-center shrink-0">
-                  <Check className="w-3 h-3 stroke-[3]" />
-                </span>
-                <span className="text-[15px] font-medium text-[var(--ink)] font-sans">
-                  Direct integration with your existing CRM and software tools
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-[var(--ink)] text-[var(--bg)] flex items-center justify-center shrink-0">
-                  <Check className="w-3 h-3 stroke-[3]" />
-                </span>
-                <span className="text-[15px] font-medium text-[var(--ink)] font-sans">
-                  24/7 coverage with strict SLAs and supervisor QA governance
-                </span>
-              </div>
+              {contactDetails && (
+                <div className="mt-4 pt-6 border-t border-current/15 w-full">
+                  {contactDetails}
+                </div>
+              )}
             </div>
-          </div>
 
-          {/* RIGHT Column: Form card (bg fill, radius 16px, padding 32px, 1px ink border) */}
-          <div className="lg:col-span-5 w-full">
-            <div className="bg-[var(--bg)] rounded-[16px] p-6 sm:p-8 lg:p-[32px] border border-[var(--ink)] shadow-[0_12px_40px_rgba(51,36,25,0.12)] text-[var(--ink)]">
+            {/* RIGHT Column: Form card */}
+            <div className="lg:col-span-5 w-full">
+              <div className="bg-[var(--bg)] rounded-[16px] p-6 sm:p-8 lg:p-[32px] border border-[var(--ink)] shadow-[0_12px_40px_rgba(51,36,25,0.12)] text-[var(--ink)]">
               {isSuccess ? (
                 /* Success state replaces the form with a thank-you message */
                 <div className="py-6 flex flex-col items-start text-left">
@@ -298,15 +340,15 @@ export default function FinalCTA() {
                     )}
                   </div>
 
-                  {/* Full-width ink button with bg text */}
+                  {/* Submit button */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-[48px] rounded-[8px] bg-[var(--ink)] text-[var(--bg)] font-semibold text-[15px] hover:opacity-95 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)] focus-visible:ring-offset-2 transition-all cursor-pointer inline-flex items-center justify-center gap-2 mt-2 disabled:opacity-70"
+                    className={`w-full h-[48px] rounded-[8px] ${buttonClassName} font-semibold text-[15px] hover:opacity-95 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition-all cursor-pointer inline-flex items-center justify-center gap-2 mt-2 disabled:opacity-70`}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin text-[var(--accent)]" />
+                        <Loader2 className="w-4 h-4 animate-spin text-current" />
                         <span>Processing...</span>
                       </>
                     ) : (
@@ -320,5 +362,13 @@ export default function FinalCTA() {
         </div>
       </div>
     </section>
-  );
+    {disclaimer && (
+      <div className="bg-[var(--ink)] py-4 px-6 text-center border-t border-[rgba(248,241,229,0.08)]">
+        <p className="text-[13px] md:text-[14px] font-mono text-[var(--bg-55)] max-w-4xl mx-auto leading-relaxed">
+          {disclaimer}
+        </p>
+      </div>
+    )}
+  </>
+);
 }

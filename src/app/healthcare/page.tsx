@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   HeartPulse,
@@ -19,701 +19,754 @@ import {
   Activity,
   BarChart3,
   Check,
+  Building2,
+  Stethoscope,
+  Sparkles,
 } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
+import FinalCTA from "@/components/sections/FinalCTA";
 
 export default function HealthcarePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"rcm" | "homecare">("rcm");
 
-  // HEALTHCARE BRAND PALETTE
-  // Primary: #10243A
-  // Secondary: #174A7E
-  // Accent: #3B82F6
-  // Highlight: #67D5E8
-  // Light background: #F3F7FB
-  // Text on dark backgrounds: #FFFFFF
+  // Active step for 5-node claim lifecycle animation (0 to 4)
+  const [activeLifecycleNode, setActiveLifecycleNode] = useState(0);
 
-  const rcmWorkflow = [
+  // End-to-End Workflow active step (0 to 4)
+  const [selectedWorkflowStep, setSelectedWorkflowStep] = useState(0);
+
+  // Tab state for Dental & Medical RCM ("dental" | "medical")
+  const [activeRcmTab, setActiveRcmTab] = useState<"dental" | "medical">("dental");
+
+  // Claim lifecycle ticker in Hero (cycles 0 to 4)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveLifecycleNode((prev) => (prev + 1) % 5);
+    }, 2800);
+    return () => clearInterval(timer);
+  }, []);
+
+  const claimNodes = [
+    { name: "Register", desc: "Eligibility verification" },
+    { name: "Capture", desc: "Compliant charge capture" },
+    { name: "Submit", desc: "Claims scrubbing & submission" },
+    { name: "Follow up", desc: "Status tracking & resolution" },
+    { name: "Reconcile", desc: "Payment posting & AR balance" },
+  ];
+
+  // Section 2: Operating Principles
+  const principles = [
     {
-      step: "01",
-      title: "Register",
-      description: "Register the patient and verify insurance eligibility and active benefits.",
+      num: "01",
+      title: "Organized workflows",
+      desc: "Billing and revenue cycle operations from patient registration through final payment.",
+      icon: Activity,
     },
     {
-      step: "02",
-      title: "Capture",
-      description: "Confirm service details, clinical documentation, and compliant charge capture.",
+      num: "02",
+      title: "Claim accuracy",
+      desc: "Consistent follow-up and transparent reporting keep work visible.",
+      icon: FileCheck2,
     },
     {
-      step: "03",
-      title: "Submit",
-      description: "Prepare, scrub, and submit clean electronic claims to commercial and government payers.",
-    },
-    {
-      step: "04",
-      title: "Follow Up",
-      description: "Track status, resolve clearinghouse rejections, and actively follow up with payers.",
-    },
-    {
-      step: "05",
-      title: "Reconcile",
-      description: "Post payments, manage denials and outstanding AR, and balance the account ledger.",
+      num: "03",
+      title: "Continuous improvement",
+      desc: "Accuracy, transparency, data confidentiality, and process efficiency.",
+      icon: ShieldCheck,
     },
   ];
 
-  const dentalServices = [
+  // Section 3: End-to-End Workflow (5 Steps)
+  const workflowSteps = [
+    {
+      num: "01",
+      title: "Register",
+      summary: "Register the patient and verify insurance.",
+      detail:
+        "Comprehensive patient registration, insurance eligibility verification, benefit determination, and pre-authorization confirmation before treatment commences.",
+    },
+    {
+      num: "02",
+      title: "Capture",
+      summary: "Confirm service details, documentation, and charge capture.",
+      detail:
+        "Service detail validation against clinical documentation, fee schedule alignment, and accurate entry of all billable encounter items.",
+    },
+    {
+      num: "03",
+      title: "Submit",
+      summary: "Prepare, scrub, and submit the claim.",
+      detail:
+        "Rigorous clearinghouse rules engine scrubbing, timely electronic claim submission, and preliminary acknowledgment tracking.",
+    },
+    {
+      num: "04",
+      title: "Follow up",
+      summary: "Track status, resolve rejections, and follow up with payers.",
+      detail:
+        "Proactive status tracking, rapid resolution of clearinghouse edits and rejections, and disciplined follow-up on outstanding payer adjudication.",
+    },
+    {
+      num: "05",
+      title: "Reconcile",
+      summary: "Post payments, manage denials and AR, and reconcile the account.",
+      detail:
+        "Electronic remittance advice (ERA) and manual payment posting, secondary billing, structured denial appeals, and patient balance reconciliation.",
+    },
+  ];
+
+  // Section 4: Dental RCM Items
+  const dentalItems = [
     "Eligibility and benefits verification",
     "CDT procedure code and claim-detail review",
-    "Dental claim preparation and electronic submission",
+    "Dental claim preparation and submission",
     "Coordination of benefits support",
     "Rejection, denial, and dental AR follow-up",
     "Payment posting, reconciliation, and reporting",
   ];
 
-  const medicalServices = [
+  // Section 4: Medical RCM Items
+  const medicalItems = [
     "Patient eligibility and benefits verification",
     "Medical claim preparation and submission",
     "ICD-10-CM, CPT, and HCPCS claim-detail review as applicable",
-    "Claim status tracking and prompt follow-up",
-    "Denial management, appeal support, and aged AR management",
+    "Claim status tracking and follow-up",
+    "Denial management, appeal support, and outstanding AR management",
     "Payment posting, reconciliation, and revenue cycle reporting",
   ];
 
-  const rcmQualityChecks = [
+  // Section 5: Quality & Visibility Checkpoints
+  const qualityChecks = [
     "Validate patient, payer, provider, and service information before submission.",
     "Track corrections, recurring billing errors, denial categories, and appeal deadlines.",
-    "Maintain clear claim follow-up notes and disciplined escalation paths.",
+    "Maintain clear claim follow-up notes and escalation paths.",
     "Monitor claim submission, rejection, payment posting, AR aging, and operational productivity trends.",
     "Restrict access to authorized personnel and use approved systems and communication channels for patient information.",
   ];
 
-  const homeCareAudiences = [
-    "Home health agencies",
-    "Non-medical home care",
-    "Private duty nursing",
-    "Adult day care and respite",
-    "Nurse and caregiver registries",
-    "Disability and community support",
+  // Section 6: Why Solvantra (7 Rows)
+  const whySolvantraRows = [
+    "Structured end-to-end workflow",
+    "Dental and medical billing support",
+    "Focus on claim completeness and accuracy",
+    "Organized denial and AR follow-up",
+    "Clear claim status tracking",
+    "Reporting shaped to client requirements",
+    "Continuous workflow improvement",
   ];
 
-  const homeCareServices = [
-    { num: "01", title: "24/7 Intake Call Handling", desc: "Every intake call and referral answered live; details captured using your approved script." },
-    { num: "02", title: "Visit Scheduling", desc: "Visits scheduled strictly according to your agency rules and caregiver skill sets." },
-    { num: "03", title: "Shift Confirmations & Reminders", desc: "Pre-visit reminders and confirmations to eliminate forgotten shifts." },
-    { num: "04", title: "Call-Out & Gap Coverage", desc: "Handled from the first minute; replacement pool contacted in priority order; family told first." },
-    { num: "05", title: "Schedule Changes", desc: "Real-time updates synchronized across caregivers, families, and agency coordinators." },
-    { num: "06", title: "Family & Client Updates", desc: "Proactive communication ensuring families are never left wondering who is arriving." },
-    { num: "07", title: "Missed-Visit Follow-Up", desc: "Rapid tracking of late clock-ins to safeguard client safety and EVV billing compliance." },
-    { num: "08", title: "Credential & Document Reminders", desc: "Proactive tracking and reminders for license renewals and clinical certifications." },
-    { num: "09", title: "Reporting & QA", desc: "Transparent telemetry on call volume, shifts covered, response times, and quality metrics." },
-  ];
-
-  const callOutSteps = [
-    "Call-out received; on-call coordinator notified.",
-    "Check client requirements and care specifications.",
-    "Contact the replacement pool in your approved priority order.",
-    "Confirm the cover with the available caregiver.",
-    "Tell the family before they ever have to call.",
-    "Escalate if uncovered within your set target time.",
-  ];
-
-  const complianceBoundaries = [
-    {
-      title: "HIPAA Protocols",
-      desc: "Business Associate Agreement (BAA) in place; minimum necessary information accessed under strict role-based controls.",
-    },
-    {
-      title: "EVV Compliance",
-      desc: "Electronic Visit Verification monitored; late and missed clock-ins chased quickly to prevent Medicaid unbillable visits.",
-    },
-    {
-      title: "Medical Emergencies",
-      desc: "Caller immediately directed to contact emergency services (911); on-call clinician alerted at once per protocol.",
-    },
-    {
-      title: "Strict Clinical Boundaries",
-      desc: "Medication and care-plan questions routed directly to your clinical staff. Solvantra never provides medical advice or alters care plans.",
-    },
-  ];
+  // Smooth scroll helper
+  const scrollToWorkflow = () => {
+    const el = document.getElementById("rcm-workflow");
+    if (!el) return;
+    const yOffset = -90;
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
 
   return (
-    <>
-      <div className="flex flex-col w-full palette-healthcare" style={{ backgroundColor: "#F3F7FB", color: "#10243A" }}>
-        {/* =========================================================================
-            HERO SECTION (HEALTHCARE PALETTE)
-            Primary: #10243A | Secondary: #174A7E | Accent: #3B82F6 | Highlight: #67D5E8
-            Light Bg: #F3F7FB | Text on Dark: #FFFFFF
-            ========================================================================= */}
-        <section
-          className="relative w-full overflow-hidden pt-28 md:pt-36 pb-16 md:pb-24 border-b"
+    <div data-sector="health" className="flex flex-col w-full selection:bg-[var(--accent)] selection:text-white">
+      {/* =========================================================================
+          1. HERO (Dark Primary #10243A, no image)
+         ========================================================================= */}
+      <section className="relative w-full overflow-hidden bg-[var(--primary)] text-[var(--on-dark)] pt-32 md:pt-40 pb-20 md:pb-28 border-b-2 border-[var(--highlight)]">
+        {/* Fine grid background texture */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.05]"
           style={{
-            backgroundColor: "#10243A",
-            color: "#FFFFFF",
-            borderColor: "rgba(59, 130, 246, 0.25)",
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, var(--on-dark) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
           }}
-        >
-          {/* Cyan / Accent Ambient Glows */}
-          <div
-            className="absolute -top-20 -right-20 w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-20"
-            style={{ backgroundColor: "#3B82F6" }}
-          />
-          <div
-            className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-15"
-            style={{ backgroundColor: "#67D5E8" }}
-          />
+        />
 
-          <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="max-w-3xl">
-              <span
-                className="font-eyebrow text-xs uppercase tracking-[0.18em] font-semibold block mb-4"
-                style={{ color: "#67D5E8" }}
-              >
-                SOLVANTRA HEALTHCARE • REVENUE OPERATIONS &amp; CARE COORDINATION
+        {/* Ambient accent glow */}
+        <div
+          className="absolute -top-20 -right-20 w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-20"
+          style={{ backgroundColor: "var(--accent)" }}
+        />
+        <div
+          className="absolute bottom-10 left-10 w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-10"
+          style={{ backgroundColor: "var(--highlight)" }}
+        />
+
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            {/* Left 7 Columns */}
+            <div className="lg:col-span-7 space-y-6">
+              <span className="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.18em] font-semibold text-[var(--highlight)] block">
+                SOLVANTRA HEALTHCARE · DENTAL &amp; MEDICAL REVENUE CYCLE MANAGEMENT
               </span>
 
-              <h1 className="font-display-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.12] mb-6">
-                Revenue Operations &amp; Care Coordination,{" "}
-                <span className="italic" style={{ color: "#3B82F6" }}>
-                  Connected.
+              <h1 className="font-serif text-[42px] sm:text-[54px] md:text-[62px] font-normal leading-[1.08] tracking-tight text-[var(--on-dark)]">
+                Revenue operations,{" "}
+                <span className="italic font-serif text-[var(--highlight)]">
+                  connected.
                 </span>
               </h1>
 
-              <p
-                className="font-body-lg text-base sm:text-lg md:text-xl leading-relaxed mb-8 max-w-2xl"
-                style={{ color: "#FFFFFF", opacity: 0.92 }}
-              >
-                End-to-end revenue cycle management for dental practices and medical clinics, combined with 24/7 intake, caregiver scheduling, and visit coordination for home care agencies.
+              <p className="font-sans text-[17px] sm:text-[19px] md:text-[20px] leading-relaxed text-[var(--on-dark-85)] max-w-xl">
+                End-to-end revenue cycle management for dental practices and medical clinics.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-12">
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-3">
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg font-label-md text-sm transition-all duration-200 cursor-pointer shadow-lg hover:brightness-105"
-                  style={{
-                    backgroundColor: "#3B82F6",
-                    color: "#FFFFFF",
-                    fontWeight: 700,
-                  }}
+                  className="sector-btn-on-dark px-7 py-4 text-[15px] font-bold shadow-lg hover:brightness-105"
                 >
                   <span>Book a Discovery Call</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </button>
 
-                <div className="inline-flex items-center rounded-lg p-1 border" style={{ borderColor: "rgba(59, 130, 246, 0.4)", backgroundColor: "rgba(23, 74, 126, 0.4)" }}>
-                  <button
-                    onClick={() => setActiveTab("rcm")}
-                    className={`px-4 py-2 rounded-md text-xs font-label-md transition-all cursor-pointer ${
-                      activeTab === "rcm"
-                        ? "bg-[#3B82F6] text-white shadow-sm"
-                        : "text-[#67D5E8] hover:text-white"
-                    }`}
-                  >
-                    Revenue Cycle Management
-                  </button>
-                  <button
-                    onClick={() => setActiveTab("homecare")}
-                    className={`px-4 py-2 rounded-md text-xs font-label-md transition-all cursor-pointer ${
-                      activeTab === "homecare"
-                        ? "bg-[#3B82F6] text-white shadow-sm"
-                        : "text-[#67D5E8] hover:text-white"
-                    }`}
-                  >
-                    24/7 Home Care Scheduling
-                  </button>
-                </div>
-              </div>
-
-              {/* Credential Metrics Bar */}
-              <div
-                className="pt-6 border-t grid grid-cols-3 gap-4"
-                style={{ borderColor: "rgba(59, 130, 246, 0.25)" }}
-              >
-                <div>
-                  <span className="font-stat-numeral text-xl sm:text-2xl md:text-3xl font-bold block" style={{ color: "#67D5E8" }}>
-                    End-to-End
-                  </span>
-                  <span className="font-body-sm text-xs sm:text-sm" style={{ color: "#FFFFFF", opacity: 0.85 }}>
-                    Dental &amp; Medical RCM
-                  </span>
-                </div>
-                <div>
-                  <span className="font-stat-numeral text-xl sm:text-2xl md:text-3xl font-bold block" style={{ color: "#67D5E8" }}>
-                    24/7/365
-                  </span>
-                  <span className="font-body-sm text-xs sm:text-sm" style={{ color: "#FFFFFF", opacity: 0.85 }}>
-                    Caregiver Scheduling Desk
-                  </span>
-                </div>
-                <div>
-                  <span className="font-stat-numeral text-xl sm:text-2xl md:text-3xl font-bold block" style={{ color: "#67D5E8" }}>
-                    HIPAA &amp; EVV
-                  </span>
-                  <span className="font-body-sm text-xs sm:text-sm" style={{ color: "#FFFFFF", opacity: 0.85 }}>
-                    BAA &amp; Clean Audit Trail
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 1: THE TWO OPERATING PRINCIPLES
-            RCM & Home Care Scheduling Overview
-            ========================================================================= */}
-        <section className="w-full py-20 md:py-24 border-b" style={{ borderColor: "rgba(16, 36, 58, 0.12)" }}>
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* RCM Principle Box */}
-              <div
-                className="p-8 sm:p-10 rounded-2xl border shadow-sm flex flex-col justify-between"
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  borderColor: "rgba(23, 74, 126, 0.2)",
-                }}
-              >
-                <div>
-                  <span
-                    className="font-eyebrow text-xs uppercase tracking-[0.15em] font-bold block mb-2"
-                    style={{ color: "#174A7E" }}
-                  >
-                    DENTAL &amp; MEDICAL RCM
-                  </span>
-                  <h3 className="font-headline-sm text-2xl font-normal mb-3" style={{ color: "#10243A" }}>
-                    Clearer Revenue Operations Start With a Structured Process
-                  </h3>
-                  <p className="font-body-md text-sm sm:text-base leading-relaxed mb-6" style={{ color: "#174A7E" }}>
-                    Organized workflows make billing easier to follow, manage, and improve. We manage revenue cycle operations from patient registration through final payment reconciliation.
-                  </p>
-                  <ul className="space-y-2.5 font-body-sm text-xs leading-relaxed" style={{ color: "#10243A" }}>
-                    <li className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#3B82F6]" />
-                      <span><strong>Organized workflows:</strong> From patient registration through final payment.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#3B82F6]" />
-                      <span><strong>Claim accuracy:</strong> Consistent follow-up and transparent reporting keep work visible.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#3B82F6]" />
-                      <span><strong>Continuous improvement:</strong> Accuracy, transparency, data confidentiality, and process efficiency.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Home Care Principle Box */}
-              <div
-                className="p-8 sm:p-10 rounded-2xl border shadow-sm flex flex-col justify-between"
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  borderColor: "rgba(23, 74, 126, 0.2)",
-                }}
-              >
-                <div>
-                  <span
-                    className="font-eyebrow text-xs uppercase tracking-[0.15em] font-bold block mb-2"
-                    style={{ color: "#174A7E" }}
-                  >
-                    CARE AT HOME
-                  </span>
-                  <h3 className="font-headline-sm text-2xl font-normal mb-3" style={{ color: "#10243A" }}>
-                    Every Visit Scheduled. Every Family Reassured.
-                  </h3>
-                  <p className="font-body-md text-sm sm:text-base leading-relaxed mb-6" style={{ color: "#174A7E" }}>
-                    Your 24/7 scheduling desk for care at home. An always-on team takes intake calls, schedules visits, confirms shifts, and covers call-outs so your clinical team stays focused on care.
-                  </p>
-                  <div className="space-y-3 font-body-sm text-xs leading-relaxed" style={{ color: "#10243A" }}>
-                    <div className="p-3 rounded-lg" style={{ backgroundColor: "#F3F7FB" }}>
-                      <strong className="text-[#10243A]">A missed intake call is a lost client.</strong> Families call multiple agencies in a row; unanswered calls immediately move on.
-                    </div>
-                    <div className="p-3 rounded-lg" style={{ backgroundColor: "#F3F7FB" }}>
-                      <strong className="text-[#10243A]">A missed call-out is a family that loses trust.</strong> Last-minute call-outs are a leading cause of client attrition if not resolved promptly.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 2: REVENUE CYCLE MANAGEMENT (RCM)
-            5-Step Connected Workflow & Dental/Medical Detail
-            ========================================================================= */}
-        <section className="w-full py-24 border-b" style={{ borderColor: "rgba(16, 36, 58, 0.12)" }}>
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span
-                className="font-eyebrow text-xs uppercase tracking-[0.16em] font-bold block mb-2"
-                style={{ color: "#174A7E" }}
-              >
-                Revenue Cycle Operations
-              </span>
-              <h2 className="font-headline-lg text-3xl sm:text-4xl font-normal" style={{ color: "#10243A" }}>
-                One Connected Workflow from Registration to Reconciliation
-              </h2>
-              <p className="font-body-md text-sm sm:text-base mt-3" style={{ color: "#174A7E" }}>
-                Steps tailored by payer, practice management system, service type, and client agreement.
-              </p>
-            </div>
-
-            {/* 5-Step Workflow Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
-              {rcmWorkflow.map((step) => (
-                <div
-                  key={step.step}
-                  className="p-6 rounded-xl border shadow-sm flex flex-col justify-between"
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderColor: "rgba(23, 74, 126, 0.2)",
-                  }}
-                >
-                  <div>
-                    <span
-                      className="font-stat-numeral text-3xl font-bold block mb-3"
-                      style={{ color: "#3B82F6" }}
-                    >
-                      {step.step}
-                    </span>
-                    <h3 className="font-headline-sm text-xl font-semibold mb-2" style={{ color: "#10243A" }}>
-                      {step.title}
-                    </h3>
-                    <p className="font-body-sm text-xs leading-relaxed" style={{ color: "#174A7E" }}>
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Dental vs Medical Support Columns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {/* Dental RCM Support */}
-              <div
-                className="p-8 rounded-xl border shadow-sm"
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  borderColor: "rgba(23, 74, 126, 0.2)",
-                }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#10243A", color: "#67D5E8" }}>
-                    <Activity className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="font-eyebrow text-[10px] uppercase tracking-wider font-bold" style={{ color: "#174A7E" }}>
-                      Specialized Practice Support
-                    </span>
-                    <h3 className="font-headline-sm text-2xl font-semibold" style={{ color: "#10243A" }}>
-                      Dental RCM Support
-                    </h3>
-                  </div>
-                </div>
-                <p className="font-body-sm text-xs mb-6" style={{ color: "#174A7E" }}>
-                  Built around meticulous claim detail, procedure code review, and disciplined payer follow-up.
-                </p>
-                <ul className="space-y-3 font-body-sm text-xs leading-relaxed" style={{ color: "#10243A" }}>
-                  {dentalServices.map((srv, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#3B82F6]" />
-                      <span>{srv}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Medical RCM Support */}
-              <div
-                className="p-8 rounded-xl border shadow-sm"
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  borderColor: "rgba(23, 74, 126, 0.2)",
-                }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#10243A", color: "#67D5E8" }}>
-                    <Receipt className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="font-eyebrow text-[10px] uppercase tracking-wider font-bold" style={{ color: "#174A7E" }}>
-                      Clinical Practice Support
-                    </span>
-                    <h3 className="font-headline-sm text-2xl font-semibold" style={{ color: "#10243A" }}>
-                      Medical RCM Support
-                    </h3>
-                  </div>
-                </div>
-                <p className="font-body-sm text-xs mb-6" style={{ color: "#174A7E" }}>
-                  Structured medical billing with disciplined claim scrubbing, denial management, and AR recovery.
-                </p>
-                <ul className="space-y-3 font-body-sm text-xs leading-relaxed" style={{ color: "#10243A" }}>
-                  {medicalServices.map((srv, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#3B82F6]" />
-                      <span>{srv}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Quality & Visibility Checks Box */}
-            <div
-              className="p-8 sm:p-10 rounded-2xl border"
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderColor: "rgba(23, 74, 126, 0.25)",
-              }}
-            >
-              <h3 className="font-headline-sm text-xl font-semibold mb-4" style={{ color: "#10243A" }}>
-                Quality Checks Protect Accuracy &amp; Visibility
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {rcmQualityChecks.map((chk, i) => (
-                  <div key={i} className="flex items-start gap-2.5 font-body-sm text-xs leading-relaxed" style={{ color: "#174A7E" }}>
-                    <Check className="w-4 h-4 shrink-0 mt-0.5 text-[#3B82F6]" />
-                    <span>{chk}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 3: 24/7 HOME CARE SCHEDULING & COORDINATION
-            Nine Services, Call-Out Resolution, EVV, & Agencies Supported
-            ========================================================================= */}
-        <section
-          className="w-full py-24 text-surface-bright relative"
-          style={{ backgroundColor: "#10243A", color: "#FFFFFF" }}
-        >
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="max-w-3xl mb-16">
-              <span
-                className="font-eyebrow text-xs uppercase tracking-[0.16em] font-semibold block mb-2"
-                style={{ color: "#67D5E8" }}
-              >
-                Care at Home Operations
-              </span>
-              <h2 className="font-headline-lg text-3xl sm:text-4xl font-normal leading-tight">
-                Nine Services, From First Enquiry to Ongoing Coordination
-              </h2>
-              <p className="font-body-lg text-base sm:text-lg mt-3" style={{ color: "#FFFFFF", opacity: 0.9 }}>
-                Always-on intake, nurse and caregiver scheduling, and visit coordination for home care agencies.
-              </p>
-            </div>
-
-            {/* 9 Services Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-              {homeCareServices.map((srv) => (
-                <div
-                  key={srv.num}
-                  className="p-6 rounded-xl border flex flex-col justify-between"
-                  style={{
-                    backgroundColor: "#174A7E",
-                    borderColor: "rgba(59, 130, 246, 0.3)",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  <div>
-                    <span className="font-stat-numeral text-2xl font-bold block mb-2" style={{ color: "#67D5E8" }}>
-                      {srv.num}
-                    </span>
-                    <h3 className="font-headline-sm text-lg font-semibold mb-2" style={{ color: "#FFFFFF" }}>
-                      {srv.title}
-                    </h3>
-                    <p className="font-body-sm text-xs leading-relaxed" style={{ color: "#FFFFFF", opacity: 0.85 }}>
-                      {srv.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Call-Out Workflow & Audiences Split */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-              {/* Call-Out Protocol */}
-              <div
-                className="lg:col-span-7 p-8 rounded-2xl border"
-                style={{
-                  backgroundColor: "rgba(23, 74, 126, 0.5)",
-                  borderColor: "rgba(103, 213, 232, 0.3)",
-                }}
-              >
-                <span className="font-eyebrow text-xs uppercase tracking-wider block mb-2 font-bold" style={{ color: "#67D5E8" }}>
-                  RAPID GAP MITIGATION
-                </span>
-                <h3 className="font-headline-sm text-2xl font-normal mb-3" style={{ color: "#FFFFFF" }}>
-                  A Call-Out Becomes Cover Before the Family Has to Call
-                </h3>
-                <p className="font-body-sm text-xs mb-6" style={{ color: "#FFFFFF", opacity: 0.85 }}>
-                  Families leave when no one communicates. Our structured loop resolves open shifts rapidly:
-                </p>
-                <div className="space-y-3 font-body-sm text-xs">
-                  {callOutSteps.map((step, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <span className="w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5" style={{ backgroundColor: "#3B82F6", color: "#FFFFFF" }}>
-                        0{idx + 1}
-                      </span>
-                      <span style={{ color: "#FFFFFF", opacity: 0.9 }}>{step}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Agencies Built For */}
-              <div
-                className="lg:col-span-5 p-8 rounded-2xl border"
-                style={{
-                  backgroundColor: "rgba(23, 74, 126, 0.5)",
-                  borderColor: "rgba(103, 213, 232, 0.3)",
-                }}
-              >
-                <span className="font-eyebrow text-xs uppercase tracking-wider block mb-2 font-bold" style={{ color: "#67D5E8" }}>
-                  SECTORS SERVED
-                </span>
-                <h3 className="font-headline-sm text-2xl font-normal mb-4" style={{ color: "#FFFFFF" }}>
-                  Built for Agencies That Deliver Care at Home
-                </h3>
-                <ul className="space-y-3 font-body-sm text-xs">
-                  {homeCareAudiences.map((aud, i) => (
-                    <li key={i} className="flex items-center gap-2.5 pb-2.5 border-b last:border-b-0 last:pb-0" style={{ borderColor: "rgba(255, 255, 255, 0.1)" }}>
-                      <CheckCircle2 className="w-4 h-4 shrink-0 text-[#67D5E8]" />
-                      <span style={{ color: "#FFFFFF", opacity: 0.9 }}>{aud}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 4: COMPLIANCE, GOVERNANCE & CLEAR BOUNDARIES
-            HIPAA, EVV, & Clinical Boundaries
-            ========================================================================= */}
-        <section className="w-full py-24 border-b" style={{ borderColor: "rgba(16, 36, 58, 0.12)" }}>
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span
-                className="font-eyebrow text-xs uppercase tracking-[0.16em] font-bold block mb-2"
-                style={{ color: "#174A7E" }}
-              >
-                Governance &amp; Safeguards
-              </span>
-              <h2 className="font-headline-lg text-3xl sm:text-4xl font-normal" style={{ color: "#10243A" }}>
-                Careful With Every Record. Clear on Every Boundary.
-              </h2>
-              <p className="font-body-md text-sm sm:text-base mt-3" style={{ color: "#174A7E" }}>
-                You stay in control of all clinical decisions. We maintain the administrative discipline that keeps operations compliant.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              {complianceBoundaries.map((b, i) => (
-                <div
-                  key={i}
-                  className="p-7 rounded-xl border shadow-sm flex flex-col justify-between"
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderColor: "rgba(23, 74, 126, 0.2)",
-                  }}
-                >
-                  <div>
-                    <h3 className="font-headline-sm text-lg font-semibold mb-3" style={{ color: "#10243A" }}>
-                      {b.title}
-                    </h3>
-                    <p className="font-body-sm text-xs leading-relaxed" style={{ color: "#174A7E" }}>
-                      {b.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Strict Non-Clinical Scope Disclaimer Box */}
-            <div
-              className="p-6 rounded-xl border flex flex-col sm:flex-row items-center justify-between gap-4"
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderColor: "rgba(59, 130, 246, 0.3)",
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <ShieldCheck className="w-6 h-6 shrink-0 text-[#3B82F6]" />
-                <span className="font-body-md text-xs sm:text-sm text-[#10243A]">
-                  <strong>Strict Boundaries:</strong> Solvantra provides scheduling, coordination, and revenue cycle operational support only. We never provide medical advice or alter care plans without approval.
-                </span>
-              </div>
-              <span className="font-eyebrow text-[10px] uppercase tracking-wider shrink-0 font-bold text-[#174A7E]">
-                Operational Support Only
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 5: DISCOVERY CTA BANNER (HEALTHCARE PALETTE)
-            Primary: #10243A | Secondary: #174A7E | Accent: #3B82F6 | Text: #FFFFFF
-            ========================================================================= */}
-        <section
-          className="w-full py-20"
-          style={{ backgroundColor: "#10243A", color: "#FFFFFF" }}
-        >
-          <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-            <div
-              className="p-8 md:p-14 rounded-2xl border flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden"
-              style={{
-                backgroundColor: "#174A7E",
-                borderColor: "rgba(59, 130, 246, 0.35)",
-              }}
-            >
-              <div className="max-w-xl">
-                <span
-                  className="font-eyebrow text-xs uppercase tracking-[0.16em] block mb-2 font-bold"
-                  style={{ color: "#67D5E8" }}
-                >
-                  LET'S CONNECT
-                </span>
-                <h3 className="font-headline-lg text-2xl sm:text-3xl md:text-4xl font-normal mb-3" style={{ color: "#FFFFFF" }}>
-                  Dental &amp; Medical RCM. 24/7 Home Care Coordination.
-                </h3>
-                <p className="font-body-md text-sm leading-relaxed" style={{ color: "#FFFFFF", opacity: 0.9 }}>
-                  Book a short discovery call to discuss how Solvantra can support your revenue operations or home-care scheduling desk.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0 w-full md:w-auto">
                 <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-label-md text-sm transition-all duration-200 cursor-pointer shadow-lg hover:brightness-105"
-                  style={{
-                    backgroundColor: "#3B82F6",
-                    color: "#FFFFFF",
-                    fontWeight: 700,
-                  }}
+                  onClick={scrollToWorkflow}
+                  className="inline-flex items-center justify-center px-7 py-4 rounded-[8px] text-[15px] font-medium border border-[var(--on-dark-20)] hover:bg-[var(--on-dark-10)] text-[var(--on-dark)] transition-all cursor-pointer"
                 >
-                  <span>Book Discovery Call</span>
-                  <Calendar className="w-4 h-4" />
+                  <span>Explore the RCM Workflow</span>
                 </button>
               </div>
             </div>
 
-            <p className="text-[11px] text-center mt-6 font-body-sm" style={{ color: "#67D5E8", opacity: 0.8 }}>
-              Solvantra provides operational, billing, scheduling and coordination support only, not medical or legal advice.
+            {/* Right 5 Columns: Claim Lifecycle Card */}
+            <div className="lg:col-span-5 relative">
+              <div className="sector-card-dark p-6 sm:p-7 relative overflow-hidden backdrop-blur-md shadow-2xl border border-[var(--on-dark-12)]">
+                {/* Glow behind card */}
+                <div
+                  className="absolute -top-12 -right-12 w-44 h-44 rounded-full blur-2xl pointer-events-none opacity-25"
+                  style={{ backgroundColor: "var(--accent)" }}
+                />
+
+                <div className="flex items-center justify-between pb-4 mb-5 border-b border-[var(--on-dark-15)]">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--on-dark-65)] font-semibold">
+                    CLAIM LIFECYCLE · ILLUSTRATIVE
+                  </span>
+                  <div className="flex items-center gap-1.5 font-mono text-[11px] text-[var(--highlight)]">
+                    <span className="w-2 h-2 rounded-full bg-[var(--highlight)] animate-pulse" />
+                    <span>RCM PIPELINE</span>
+                  </div>
+                </div>
+
+                {/* 5-Node Vertical Tracker with travelling highlight indicator */}
+                <div className="relative pl-6 space-y-4 mb-6">
+                  {/* Vertical connecting line */}
+                  <div className="absolute left-[7px] top-2 bottom-2 w-[2px] bg-[var(--on-dark-15)] pointer-events-none" />
+
+                  {claimNodes.map((node, idx) => {
+                    const isActive = idx === activeLifecycleNode;
+                    return (
+                      <div key={idx} className="relative flex items-center justify-between text-[14px]">
+                        {/* Dot indicator */}
+                        <div
+                          className={`absolute -left-[24px] w-3.5 h-3.5 rounded-full transition-all duration-300 border-2 ${
+                            isActive
+                              ? "bg-[var(--highlight)] border-white scale-125 shadow-[0_0_8px_var(--highlight)]"
+                              : "bg-[var(--primary)] border-[var(--on-dark-35)]"
+                          }`}
+                        />
+                        <span
+                          className={`font-mono text-[13px] transition-colors ${
+                            isActive ? "text-[var(--highlight)] font-bold" : "text-[var(--on-dark-75)]"
+                          }`}
+                        >
+                          0{idx + 1} {node.name}
+                        </span>
+                        <span className="text-[12px] font-sans text-[var(--on-dark-55)]">
+                          {node.desc}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Two Sample Status Rows beneath */}
+                <div className="pt-4 border-t border-[var(--on-dark-12)] space-y-2.5 font-sans">
+                  <div className="p-2.5 rounded-[6px] bg-[var(--on-dark-5)] border border-[var(--on-dark-10)] flex items-center justify-between text-[13px]">
+                    <span className="text-[var(--on-dark-85)] font-medium">Claim submitted</span>
+                    <span className="font-mono text-[11px] text-[var(--highlight)] bg-[var(--highlight)]/15 px-2 py-0.5 rounded">
+                      Awaiting payer
+                    </span>
+                  </div>
+                  <div className="p-2.5 rounded-[6px] bg-[var(--on-dark-5)] border border-[var(--on-dark-10)] flex items-center justify-between text-[13px]">
+                    <span className="text-[var(--on-dark-85)] font-medium">Payment posted</span>
+                    <span className="font-mono text-[11px] text-[var(--highlight)] bg-[var(--highlight)]/15 px-2 py-0.5 rounded">
+                      Reconciled
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          2. OPERATING PRINCIPLE ("01 / THE OPERATING PRINCIPLE") Light #F3F7FB
+         ========================================================================= */}
+      <section className="sector-light py-20 md:py-28 border-b border-[var(--primary-15)]">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Left Sticky Header */}
+            <div className="lg:col-span-5 lg:sticky lg:top-36 self-start space-y-4">
+              <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold text-[var(--primary-55)] block">
+                01 / THE OPERATING PRINCIPLE
+              </span>
+              <h2 className="font-serif text-[34px] sm:text-[42px] font-normal leading-[1.12] text-[var(--primary)]">
+                Clearer revenue operations start with a structured process
+              </h2>
+              <p className="font-sans text-[16px] text-[var(--primary-80)] leading-relaxed pt-2">
+                Organized workflows make billing easier to follow, manage, and improve.
+              </p>
+            </div>
+
+            {/* Right: 3 Numbered Rows with Icons */}
+            <div className="lg:col-span-7 space-y-4">
+              {principles.map((pr) => {
+                const IconComp = pr.icon;
+                return (
+                  <div
+                    key={pr.num}
+                    className="p-7 rounded-[12px] border border-[var(--primary-15)] bg-white hover:bg-[var(--primary)] hover:text-[var(--on-dark)] transition-all duration-200 group flex items-start gap-6 shadow-sm"
+                  >
+                    <div className="w-12 h-12 rounded-[10px] bg-[var(--primary-5)] group-hover:bg-[var(--accent)] text-[var(--primary)] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
+                      <IconComp className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-3 mb-1">
+                        <span className="font-mono text-[12px] font-bold text-[var(--primary-45)] group-hover:text-[var(--highlight)]">
+                          {pr.num}
+                        </span>
+                        <h3 className="font-serif text-[20px] font-semibold text-[var(--primary)] group-hover:text-[var(--on-dark)]">
+                          {pr.title}
+                        </h3>
+                      </div>
+                      <p className="font-sans text-[15px] leading-relaxed text-[var(--primary-80)] group-hover:text-[var(--on-dark-80)]">
+                        {pr.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          3. END-TO-END WORKFLOW ("02 / END-TO-END WORKFLOW") Secondary 6% Tint
+         ========================================================================= */}
+      <section
+        id="rcm-workflow"
+        className="py-20 md:py-28 border-b border-[var(--primary-15)]"
+        style={{
+          backgroundColor: "color-mix(in srgb, var(--secondary) 6%, var(--light))",
+          color: "var(--primary)",
+        }}
+      >
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+          <div className="max-w-3xl mb-14">
+            <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold text-[var(--primary-55)] block mb-3">
+              02 / END-TO-END WORKFLOW
+            </span>
+            <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] font-normal leading-[1.12] text-[var(--primary)] mb-3">
+              One connected workflow from registration to reconciliation
+            </h2>
+            <p className="font-sans text-[16px] text-[var(--primary-75)]">
+              Steps vary by payer, practice system, service type, and client agreement.
             </p>
           </div>
-        </section>
-      </div>
 
+          {/* Stepper Navigation: Horizontal on Desktop, Vertical on Mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            {workflowSteps.map((st, idx) => {
+              const isSelected = selectedWorkflowStep === idx;
+              return (
+                <button
+                  key={st.num}
+                  onClick={() => setSelectedWorkflowStep(idx)}
+                  className={`p-5 rounded-[12px] border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                    isSelected
+                      ? "bg-[var(--primary)] text-[var(--on-dark)] border-[var(--accent)] shadow-md"
+                      : "bg-white text-[var(--primary)] border-[var(--primary-15)] hover:border-[var(--primary-35)]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-[13px] font-bold opacity-60">
+                      STEP {st.num}
+                    </span>
+                    <div
+                      className={`w-8 h-8 rounded-[6px] flex items-center justify-center ${
+                        isSelected ? "bg-[var(--accent)] text-white" : "bg-[var(--primary-5)] text-[var(--primary-60)]"
+                      }`}
+                    >
+                      <Check className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-[18px] font-semibold mb-1">
+                      {st.title}
+                    </h3>
+                    <p
+                      className={`text-[13px] font-sans leading-snug line-clamp-2 ${
+                        isSelected ? "text-[var(--on-dark-80)]" : "text-[var(--primary-70)]"
+                      }`}
+                    >
+                      {st.summary}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Detailed Context Panel Below for Selected Step */}
+          <div className="sector-card-light p-8 shadow-sm border border-[var(--primary-15)] bg-white">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="px-2.5 py-0.5 rounded font-mono text-[11px] uppercase font-bold bg-[var(--primary)] text-white">
+                STEP {workflowSteps[selectedWorkflowStep].num}
+              </span>
+              <h4 className="font-serif text-[22px] font-semibold text-[var(--primary)]">
+                {workflowSteps[selectedWorkflowStep].title} — Operational Detail
+              </h4>
+            </div>
+            <p className="font-sans text-[15px] sm:text-[16px] text-[var(--primary-80)] leading-relaxed max-w-3xl">
+              {workflowSteps[selectedWorkflowStep].detail}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          4. DENTAL & MEDICAL RCM ("03 / RCM SUPPORT") Light #F3F7FB
+         ========================================================================= */}
+      <section className="sector-light py-20 md:py-28 border-b border-[var(--primary-15)]">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold text-[var(--primary-55)] block mb-3">
+                03 / RCM SUPPORT
+              </span>
+              <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] font-normal leading-[1.12] text-[var(--primary)]">
+                Dental &amp; Medical Revenue Operations
+              </h2>
+            </div>
+
+            {/* Accessible Tab Controls */}
+            <div
+              role="tablist"
+              aria-label="RCM Practice Types"
+              className="inline-flex p-1 rounded-[8px] bg-[var(--primary-5)] border border-[var(--primary-15)] self-start md:self-auto"
+            >
+              <button
+                role="tab"
+                id="tab-dental"
+                aria-selected={activeRcmTab === "dental"}
+                aria-controls="panel-dental"
+                onClick={() => setActiveRcmTab("dental")}
+                className={`px-5 py-2 rounded-[6px] font-mono text-[13px] font-semibold transition-all cursor-pointer ${
+                  activeRcmTab === "dental"
+                    ? "bg-[var(--primary)] text-[var(--on-dark)] shadow-sm"
+                    : "text-[var(--primary-70)] hover:text-[var(--primary)]"
+                }`}
+              >
+                Dental RCM
+              </button>
+              <button
+                role="tab"
+                id="tab-medical"
+                aria-selected={activeRcmTab === "medical"}
+                aria-controls="panel-medical"
+                onClick={() => setActiveRcmTab("medical")}
+                className={`px-5 py-2 rounded-[6px] font-mono text-[13px] font-semibold transition-all cursor-pointer ${
+                  activeRcmTab === "medical"
+                    ? "bg-[var(--primary)] text-[var(--on-dark)] shadow-sm"
+                    : "text-[var(--primary-70)] hover:text-[var(--primary)]"
+                }`}
+              >
+                Medical RCM
+              </button>
+            </div>
+          </div>
+
+          {/* Tab Content Panel (2x3 ruled grid with icons) */}
+          <div className="sector-card-light p-8 sm:p-10 shadow-sm border border-[var(--primary-15)] bg-white min-h-[380px] flex flex-col justify-between">
+            {activeRcmTab === "dental" ? (
+              <div id="panel-dental" role="tabpanel" aria-labelledby="tab-dental" className="space-y-8 animate-in fade-in duration-200">
+                <div>
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--secondary)] font-bold block mb-2">
+                    DENTAL RCM SUPPORT
+                  </span>
+                  <h3 className="font-serif text-[24px] sm:text-[28px] font-normal text-[var(--primary)]">
+                    Built around claim detail and follow-up
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans">
+                  {dentalItems.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] flex items-start gap-3"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                      <span className="text-[14px] text-[var(--primary-85)] font-medium leading-snug">
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div id="panel-medical" role="tabpanel" aria-labelledby="tab-medical" className="space-y-8 animate-in fade-in duration-200">
+                <div>
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--secondary)] font-bold block mb-2">
+                    MEDICAL RCM SUPPORT
+                  </span>
+                  <h3 className="font-serif text-[24px] sm:text-[28px] font-normal text-[var(--primary)]">
+                    Medical RCM support with disciplined claim management
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans">
+                  {medicalItems.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] flex items-start gap-3"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                      <span className="text-[14px] text-[var(--primary-85)] font-medium leading-snug">
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Illustrative Code Systems Strip beneath */}
+            <div className="pt-6 mt-8 border-t border-[var(--primary-12)] flex flex-wrap items-center justify-between gap-4 font-mono text-[12px] text-[var(--primary-65)]">
+              <span className="font-bold uppercase tracking-wider">
+                CODE SYSTEMS · ILLUSTRATIVE:
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
+                  Dental: CDT
+                </span>
+                <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
+                  Medical: ICD-10-CM
+                </span>
+                <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
+                  CPT
+                </span>
+                <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
+                  HCPCS
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          5. QUALITY & VISIBILITY (Dark Secondary #174A7E) ("04 / QUALITY AND VISIBILITY")
+         ========================================================================= */}
+      <section className="sector-dark-secondary py-20 md:py-28 relative">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+          <div className="max-w-2xl mb-14">
+            <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold text-[var(--highlight)] block mb-3">
+              04 / QUALITY AND VISIBILITY
+            </span>
+            <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] font-normal leading-[1.12] text-[var(--on-dark)]">
+              Quality checks protect accuracy and visibility
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+            {/* Left: 5 Numbered Check Rows */}
+            <div className="lg:col-span-7 space-y-4">
+              {qualityChecks.map((checkText, idx) => (
+                <div
+                  key={idx}
+                  className="sector-card-dark p-4 sm:p-5 flex items-start gap-4 backdrop-blur-sm"
+                >
+                  <span className="w-6 h-6 rounded-full bg-[var(--highlight)] text-[var(--primary)] font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    {idx + 1}
+                  </span>
+                  <p className="font-sans text-[15px] leading-relaxed text-[var(--on-dark-90)]">
+                    {checkText}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Right: Illustrative Monitoring Card with Mini Bars */}
+            <div className="lg:col-span-5">
+              <div className="sector-card-dark p-7 sm:p-8 backdrop-blur-md border border-[var(--on-dark-15)] shadow-xl">
+                <div className="flex items-center justify-between pb-3 mb-6 border-b border-[var(--on-dark-15)]">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--highlight)] font-semibold">
+                    PIPELINE TELEMETRY · ILLUSTRATIVE
+                  </span>
+                  <span className="font-mono text-[11px] text-[var(--on-dark-60)]">RCM MONITOR</span>
+                </div>
+
+                <div className="space-y-5 font-mono text-[12px]">
+                  <div>
+                    <div className="flex justify-between mb-1.5 text-[var(--on-dark-85)]">
+                      <span>Submission</span>
+                      <span className="text-[var(--highlight)]">Active</span>
+                    </div>
+                    <div className="w-full h-2.5 rounded-full bg-[var(--on-dark-10)] overflow-hidden">
+                      <div className="h-full bg-[var(--highlight)] rounded-full w-[88%] animate-pulse" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between mb-1.5 text-[var(--on-dark-85)]">
+                      <span>Rejection</span>
+                      <span className="text-[var(--highlight)]">Controlled</span>
+                    </div>
+                    <div className="w-full h-2.5 rounded-full bg-[var(--on-dark-10)] overflow-hidden">
+                      <div className="h-full bg-[var(--accent)] rounded-full w-[16%]" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between mb-1.5 text-[var(--on-dark-85)]">
+                      <span>Payment posting</span>
+                      <span className="text-[var(--highlight)]">Synchronized</span>
+                    </div>
+                    <div className="w-full h-2.5 rounded-full bg-[var(--on-dark-10)] overflow-hidden">
+                      <div className="h-full bg-[var(--highlight)] rounded-full w-[94%]" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between mb-1.5 text-[var(--on-dark-85)]">
+                      <span>AR aging</span>
+                      <span className="text-[var(--highlight)]">Monitored</span>
+                    </div>
+                    <div className="w-full h-2.5 rounded-full bg-[var(--on-dark-10)] overflow-hidden">
+                      <div className="h-full bg-[var(--accent)] rounded-full w-[24%]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-[var(--on-dark-10)] text-[11px] font-sans text-[var(--on-dark-60)]">
+                  Continuous status updates, clearinghouse rejection scrubs, and supervisor oversight.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6. WHY SOLVANTRA ("05 / WHY SOLVANTRA") Light #F3F7FB
+         ========================================================================= */}
+      <section className="sector-light py-20 md:py-28 border-b border-[var(--primary-15)]">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Left Sticky Header */}
+            <div className="lg:col-span-5 lg:sticky lg:top-36 self-start space-y-4">
+              <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold text-[var(--primary-55)] block">
+                05 / WHY SOLVANTRA
+              </span>
+              <h2 className="font-serif text-[34px] sm:text-[42px] font-normal leading-[1.12] text-[var(--primary)]">
+                A process-driven partner for day-to-day RCM operations
+              </h2>
+              <p className="font-sans text-[16px] text-[var(--primary-80)] leading-relaxed pt-2">
+                Structured support for the work that keeps revenue operations moving.
+              </p>
+            </div>
+
+            {/* Right: 7 Numbered Rows */}
+            <div className="lg:col-span-7 space-y-3">
+              {whySolvantraRows.map((text, idx) => (
+                <div
+                  key={idx}
+                  className="p-5 rounded-[10px] border border-[var(--primary-15)] bg-white hover:bg-[var(--primary)] hover:text-[var(--on-dark)] transition-all duration-200 group flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-[13px] font-bold text-[var(--primary-45)] group-hover:text-[var(--highlight)]">
+                      0{idx + 1}
+                    </span>
+                    <span className="font-serif text-[18px] font-medium text-[var(--primary)] group-hover:text-[var(--on-dark)]">
+                      {text}
+                    </span>
+                  </div>
+                  <Check className="w-4 h-4 text-transparent group-hover:text-[var(--highlight)] transition-colors" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          7. CROSS-LINK BAND (Highlight 20% Tint, Slim)
+         ========================================================================= */}
+      <section
+        className="w-full py-6 px-6 border-b border-[var(--primary-15)] transition-colors"
+        style={{
+          backgroundColor: "color-mix(in srgb, var(--highlight) 20%, var(--light))",
+          color: "var(--primary)",
+        }}
+      >
+        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-[14px] md:text-[15px]">
+          <span className="text-[var(--primary-90)] font-medium text-center sm:text-left">
+            Home care agency? Nurse and caregiver scheduling lives on our Home Services page.
+          </span>
+          <Link
+            href="/home-services#home-care"
+            className="group inline-flex items-center gap-1.5 font-mono text-[13px] font-bold text-[var(--secondary)] hover:text-[var(--primary)] underline-offset-4 hover:underline shrink-0"
+          >
+            <span>See Home Care &amp; Nursing</span>
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          8. FINAL CTA (Highlight #67D5E8 Background, Primary Text, Primary Button)
+         ========================================================================= */}
+      <FinalCTA
+        bgClassName="bg-[var(--highlight)]"
+        textClassName="text-[var(--primary)]"
+        buttonClassName="bg-[var(--primary)] text-white hover:brightness-110"
+        eyebrow="LET'S CONNECT"
+        headline="Let's connect."
+        subline="Dental & Medical Revenue Cycle Management."
+        tagline="End-to-end RCM, from patient registration to final payment."
+        defaultSector="Healthcare"
+        contactDetails={
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[14px] font-sans">
+            <div>
+              <span className="font-mono text-[11px] uppercase tracking-wider block opacity-70 mb-0.5">
+                Direct Operations Email
+              </span>
+              <a
+                href="mailto:solutions@solvantra.com"
+                className="font-semibold underline-offset-2 hover:underline"
+              >
+                solutions@solvantra.com
+              </a>
+            </div>
+            <div>
+              <span className="font-mono text-[11px] uppercase tracking-wider block opacity-70 mb-0.5">
+                Global Client Desk
+              </span>
+              <span className="font-semibold">+1 (800) 584-9271</span>
+            </div>
+          </div>
+        }
+        disclaimer="Solvantra provides operational, billing, scheduling and coordination support only, not medical or legal advice."
+      />
+
+      {/* Consultation Modal Triggered from Buttons */}
       <ConsultationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        defaultService="Healthcare & RCM Operations"
+        defaultService="Healthcare RCM"
       />
-    </>
+    </div>
   );
 }
