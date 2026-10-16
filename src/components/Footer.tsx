@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { SITE_CONTACT } from "@/lib/site";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -122,23 +123,28 @@ export default function Footer() {
                   Direct Operations Email
                 </span>
                 <a
-                  href="mailto:solutions@solvantra.com"
+                  href={`mailto:${SITE_CONTACT.email}`}
                   className="text-[var(--bg-75)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
                 >
-                  solutions@solvantra.com
+                  {SITE_CONTACT.email}
                 </a>
               </div>
               <div>
                 <span className="block font-mono text-[14px] text-[var(--bg-55)] uppercase tracking-wider mb-0.5">
                   Global Client Desk
                 </span>
-                <span className="text-[var(--bg-75)]">+1 (800) 584-9271</span>
+                <a
+                  href={`tel:${SITE_CONTACT.phoneTel}`}
+                  className="text-[var(--bg-75)] hover:text-[var(--bg)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+                >
+                  {SITE_CONTACT.phone}
+                </a>
               </div>
               <div>
                 <span className="block font-mono text-[14px] text-[var(--bg-55)] uppercase tracking-wider mb-0.5">
                   Availability
                 </span>
-                <span className="text-[var(--bg-70)]">24/7 Operations</span>
+                <span className="text-[var(--bg-70)]">{SITE_CONTACT.availability}</span>
               </div>
             </div>
           </div>

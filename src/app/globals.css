@@ -70,8 +70,26 @@ nextjs-portal,
 [data-nextjs-toast],
 [data-nextjs-dev-overlay],
 #__next-build-watcher,
-[data-nextjs-badge] {
+[data-nextjs-badge],
+[data-nextjs-dev-indicator],
+[data-nextjs-indicator],
+[data-next-badge] {
   display: none !important;
+}
+
+/* Form autofill: strictly adhere to brand colors (#332419 ink and #f8f1e5 bg) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg) inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 @keyframes fadeUpOnce {
@@ -94,6 +112,29 @@ nextjs-portal,
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-modal-in {
+  animation: modalIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-modal-in {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }
 
