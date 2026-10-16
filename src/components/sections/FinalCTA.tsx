@@ -22,9 +22,9 @@ export default function FinalCTA({
   subline = "Partner with dedicated specialists, precision SOPs, and seamless software integration built around your business.",
   tagline,
   defaultSector = "",
-  bgClassName = "bg-[var(--accent)]",
+  bgClassName = "bg-[color-mix(in_srgb,var(--accent)_8%,var(--bg))]",
   textClassName = "text-[var(--ink)]",
-  buttonClassName = "bg-[var(--ink)] text-[var(--bg)]",
+  buttonClassName = "btn-solvantra-primary",
   contactDetails,
   disclaimer,
 }: FinalCTAProps = {}) {
@@ -116,26 +116,44 @@ export default function FinalCTA({
 
   return (
     <>
-      <section className={`w-full ${bgClassName} ${textClassName} py-16 md:py-24 lg:py-[112px] transition-colors`}>
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
+      <section className={`w-full ${bgClassName} ${textClassName} py-16 md:py-24 lg:py-[112px] border-t border-b border-[rgba(185,138,62,0.25)] relative overflow-hidden transition-colors`}>
+        {/* Subtle fine grid texture */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none select-none z-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(51, 36, 25, 0.04) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(51, 36, 25, 0.04) 1px, transparent 1px)
+            `,
+            backgroundSize: "48px 48px",
+            maskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%)",
+          }}
+        />
+
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* LEFT Column */}
             <div className="lg:col-span-7 flex flex-col items-start">
               {eyebrow && (
-                <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold mb-3 block opacity-90">
-                  {eyebrow}
-                </span>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
+                  <span className="font-mono text-[13px] uppercase tracking-[0.14em] text-[var(--ink-65)] font-semibold">
+                    {eyebrow}
+                  </span>
+                </div>
               )}
-              <h2 className="text-[clamp(36px,5vw,68px)] font-serif font-medium leading-[1.04] tracking-[-0.03em] mb-4">
+              <h2 className="text-[clamp(36px,5vw,60px)] font-serif font-medium text-[var(--ink)] leading-[1.04] tracking-[-0.03em] mb-4">
                 {headline}
               </h2>
 
-              <p className="text-[17px] sm:text-[18px] opacity-85 leading-[1.6] max-w-[520px] mb-6 font-sans">
+              <p className="text-[17px] sm:text-[18px] text-[var(--ink-80)] leading-[1.6] max-w-[520px] mb-6 font-sans">
                 {subline}
               </p>
 
               {tagline && (
-                <p className="font-mono text-[14px] font-semibold tracking-wide mb-6 opacity-95">
+                <p className="font-mono text-[14px] font-semibold text-[var(--ink)] tracking-wide mb-6">
                   {tagline}
                 </p>
               )}
@@ -143,35 +161,35 @@ export default function FinalCTA({
               {/* Reassurance Points */}
               <div className="space-y-4 max-w-lg mb-4">
                 <div className="flex items-center gap-3">
-                  <span className="w-5 h-5 rounded-full bg-current text-[var(--bg)] flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 stroke-[3]" />
+                  <span className="w-6 h-6 rounded-full bg-[var(--accent-14)] text-[var(--accent)] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                   </span>
-                  <span className="text-[15px] font-medium font-sans">
+                  <span className="text-[15px] font-medium text-[var(--ink)] font-sans">
                     Dedicated pod trained on your practice workflows
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="w-5 h-5 rounded-full bg-current text-[var(--bg)] flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 stroke-[3]" />
+                  <span className="w-6 h-6 rounded-full bg-[var(--accent-14)] text-[var(--accent)] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                   </span>
-                  <span className="text-[15px] font-medium font-sans">
+                  <span className="text-[15px] font-medium text-[var(--ink)] font-sans">
                     Direct integration with your EHR and clearinghouse systems
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="w-5 h-5 rounded-full bg-current text-[var(--bg)] flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 stroke-[3]" />
+                  <span className="w-6 h-6 rounded-full bg-[var(--accent-14)] text-[var(--accent)] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                   </span>
-                  <span className="text-[15px] font-medium font-sans">
+                  <span className="text-[15px] font-medium text-[var(--ink)] font-sans">
                     Rigorous SLA oversight and regular revenue cycle telemetry
                   </span>
                 </div>
               </div>
 
               {contactDetails && (
-                <div className="mt-4 pt-6 border-t border-current/15 w-full">
+                <div className="mt-4 pt-6 border-t border-[rgba(51,36,25,0.12)] w-full">
                   {contactDetails}
                 </div>
               )}
@@ -179,7 +197,7 @@ export default function FinalCTA({
 
             {/* RIGHT Column: Form card */}
             <div className="lg:col-span-5 w-full">
-              <div className="bg-[var(--bg)] rounded-[16px] p-6 sm:p-8 lg:p-[32px] border border-[var(--ink)] shadow-[0_12px_40px_rgba(51,36,25,0.12)] text-[var(--ink)]">
+              <div className="bg-[var(--bg)] rounded-[16px] p-6 sm:p-8 lg:p-[32px] border border-[var(--ink-12)] shadow-[0_12px_40px_rgba(51,36,25,0.06)] text-[var(--ink)]">
               {isSuccess ? (
                 /* Success state replaces the form with a thank-you message */
                 <div className="py-6 flex flex-col items-start text-left">
@@ -189,8 +207,9 @@ export default function FinalCTA({
                   <h3 className="text-[26px] font-serif font-medium text-[var(--ink)] mb-2.5">
                     Consultation Booked
                   </h3>
+                  {/* TODO: confirm with client */}
                   <p className="text-[15px] text-[var(--ink-80)] leading-[1.65] font-sans mb-6">
-                    Thank you for reaching out. A senior solutions architect will review your operational requirements and connect with you within 2 business hours.
+                    Thank you for reaching out. We&apos;ll reply as soon as we can to review your operational requirements and connect with you.
                   </p>
                   <button
                     type="button"
@@ -221,9 +240,9 @@ export default function FinalCTA({
                         setFormData({ ...formData, name: e.target.value });
                         if (errors.name) setErrors({ ...errors, name: undefined });
                       }}
-                      className={`w-full h-[48px] px-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] placeholder:text-[rgba(51,36,25,0.40)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans ${
+                      className={`w-full h-[50px] px-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] placeholder:text-[rgba(51,36,25,0.50)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans ${
                         errors.name
-                          ? "border-[var(--ink)] ring-2 ring-[var(--ink)]"
+                          ? "border-[var(--ink)] ring-2 ring-[var(--accent)]"
                           : "border-[rgba(51,36,25,0.25)]"
                       }`}
                     />
@@ -251,9 +270,9 @@ export default function FinalCTA({
                         setFormData({ ...formData, email: e.target.value });
                         if (errors.email) setErrors({ ...errors, email: undefined });
                       }}
-                      className={`w-full h-[48px] px-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] placeholder:text-[rgba(51,36,25,0.40)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans ${
+                      className={`w-full h-[50px] px-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] placeholder:text-[rgba(51,36,25,0.50)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans ${
                         errors.email
-                          ? "border-[var(--ink)] ring-2 ring-[var(--ink)]"
+                          ? "border-[var(--ink)] ring-2 ring-[var(--accent)]"
                           : "border-[rgba(51,36,25,0.25)]"
                       }`}
                     />
@@ -280,9 +299,9 @@ export default function FinalCTA({
                           setFormData({ ...formData, sector: e.target.value });
                           if (errors.sector) setErrors({ ...errors, sector: undefined });
                         }}
-                        className={`w-full h-[48px] px-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans cursor-pointer appearance-none ${
+                        className={`w-full h-[50px] px-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans cursor-pointer appearance-none ${
                           errors.sector
-                            ? "border-[var(--ink)] ring-2 ring-[var(--ink)]"
+                            ? "border-[var(--ink)] ring-2 ring-[var(--accent)]"
                             : "border-[rgba(51,36,25,0.25)]"
                         }`}
                       >
@@ -327,9 +346,9 @@ export default function FinalCTA({
                         if (errors.handoffMessage)
                           setErrors({ ...errors, handoffMessage: undefined });
                       }}
-                      className={`w-full min-h-[90px] p-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] placeholder:text-[rgba(51,36,25,0.40)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans resize-y ${
+                      className={`w-full min-h-[90px] p-3.5 rounded-[8px] bg-[var(--bg)] border text-[15px] text-[var(--ink)] placeholder:text-[rgba(51,36,25,0.50)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all font-sans resize-y ${
                         errors.handoffMessage
-                          ? "border-[var(--ink)] ring-2 ring-[var(--ink)]"
+                          ? "border-[var(--ink)] ring-2 ring-[var(--accent)]"
                           : "border-[rgba(51,36,25,0.25)]"
                       }`}
                     />
@@ -344,7 +363,7 @@ export default function FinalCTA({
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full h-[48px] rounded-[8px] ${buttonClassName} font-semibold text-[15px] hover:opacity-95 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition-all cursor-pointer inline-flex items-center justify-center gap-2 mt-2 disabled:opacity-70`}
+                    className={`w-full h-[50px] rounded-[8px] ${buttonClassName} font-semibold text-[15px] hover:opacity-95 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition-all cursor-pointer inline-flex items-center justify-center gap-2 mt-2 disabled:opacity-70`}
                   >
                     {isSubmitting ? (
                       <>
