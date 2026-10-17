@@ -107,7 +107,7 @@ export default function Hero() {
         {/* 3. Decorative overlapping rings behind cards */}
         <div
           aria-hidden="true"
-          className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none z-0 hidden sm:block overflow-visible"
+          className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none z-0 hidden lg:block overflow-visible"
         >
           {/* Large 600px ring (1px accent border at 35%, slightly clipped off right edge) */}
           <div className="w-[600px] h-[600px] rounded-full border border-[rgba(185,138,62,0.35)] absolute -right-28 top-1/2 -translate-y-1/2" />
@@ -161,9 +161,9 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Right Column (5 cols): Layered cluster of 3 overlapping bordered cards */}
+            {/* Right Column (5 cols): Layered cluster of 3 overlapping bordered cards (Hidden on mobile resolution, visible on desktop lg+) */}
             {/* TODO: confirm with client: live queue workflow categories and SLAs */}
-            <div className="lg:col-span-5 w-full relative pt-6 pb-12 sm:pb-10 pl-2 pr-2 sm:pr-4">
+            <div className="hidden lg:block lg:col-span-5 w-full relative pt-6 pb-12 sm:pb-10 pl-2 pr-2 sm:pr-4">
               {/* Relative container for the 3 layered cards */}
               <div className="relative z-10 w-full max-w-[460px] mx-auto lg:max-w-none">
                 {/* CARD C: Small round "now" chip (top-right overlapping) */}
