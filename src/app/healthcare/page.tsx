@@ -35,8 +35,8 @@ export default function HealthcarePage() {
   // End-to-End Workflow active step (0 to 4)
   const [selectedWorkflowStep, setSelectedWorkflowStep] = useState(0);
 
-  // Tab state for Dental & Medical RCM ("dental" | "medical")
-  const [activeRcmTab, setActiveRcmTab] = useState<"dental" | "medical">("dental");
+  // Tab state for Medical & Dental RCM ("medical" | "dental")
+  const [activeRcmTab, setActiveRcmTab] = useState<"medical" | "dental">("medical");
 
   // Claim lifecycle ticker in Hero (cycles 0 to 4)
   useEffect(() => {
@@ -437,7 +437,7 @@ export default function HealthcarePage() {
       </section>
 
       {/* =========================================================================
-          4. DENTAL & MEDICAL RCM ("03 / RCM SUPPORT") Light #F3F7FB
+          4. MEDICAL & DENTAL RCM ("03 / RCM SUPPORT") Light #F3F7FB
          ========================================================================= */}
       <section className="sector-light py-20 md:py-28 border-b border-[var(--primary-15)]">
         <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
@@ -447,7 +447,7 @@ export default function HealthcarePage() {
                 03 / RCM SUPPORT
               </span>
               <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] font-normal leading-[1.12] text-[var(--primary)]">
-                Dental &amp; Medical Revenue Operations
+                Medical &amp; Dental Revenue Operations
               </h2>
             </div>
 
@@ -457,20 +457,6 @@ export default function HealthcarePage() {
               aria-label="RCM Practice Types"
               className="inline-flex p-1 rounded-[8px] bg-[var(--primary-5)] border border-[var(--primary-15)] self-start md:self-auto"
             >
-              <button
-                role="tab"
-                id="tab-dental"
-                aria-selected={activeRcmTab === "dental"}
-                aria-controls="panel-dental"
-                onClick={() => setActiveRcmTab("dental")}
-                className={`px-5 py-2 rounded-[6px] font-mono text-[13px] font-semibold transition-all cursor-pointer ${
-                  activeRcmTab === "dental"
-                    ? "bg-[var(--primary)] text-[var(--on-dark)] shadow-sm"
-                    : "text-[var(--primary-70)] hover:text-[var(--primary)]"
-                }`}
-              >
-                Dental RCM
-              </button>
               <button
                 role="tab"
                 id="tab-medical"
@@ -485,37 +471,26 @@ export default function HealthcarePage() {
               >
                 Medical RCM
               </button>
+              <button
+                role="tab"
+                id="tab-dental"
+                aria-selected={activeRcmTab === "dental"}
+                aria-controls="panel-dental"
+                onClick={() => setActiveRcmTab("dental")}
+                className={`px-5 py-2 rounded-[6px] font-mono text-[13px] font-semibold transition-all cursor-pointer ${
+                  activeRcmTab === "dental"
+                    ? "bg-[var(--primary)] text-[var(--on-dark)] shadow-sm"
+                    : "text-[var(--primary-70)] hover:text-[var(--primary)]"
+                }`}
+              >
+                Dental RCM
+              </button>
             </div>
           </div>
 
           {/* Tab Content Panel (2x3 ruled grid with icons) */}
           <div className="sector-card-light p-8 sm:p-10 shadow-sm border border-[var(--primary-15)] bg-white min-h-[380px] flex flex-col justify-between">
-            {activeRcmTab === "dental" ? (
-              <div id="panel-dental" role="tabpanel" aria-labelledby="tab-dental" className="space-y-8 animate-in fade-in duration-200">
-                <div>
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--secondary)] font-bold block mb-2">
-                    DENTAL RCM SUPPORT
-                  </span>
-                  <h3 className="font-serif text-[24px] sm:text-[28px] font-normal text-[var(--primary)]">
-                    Built around claim detail and follow-up
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans">
-                  {dentalItems.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] flex items-start gap-3"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
-                      <span className="text-[14px] text-[var(--primary-85)] font-medium leading-snug">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : (
+            {activeRcmTab === "medical" ? (
               <div id="panel-medical" role="tabpanel" aria-labelledby="tab-medical" className="space-y-8 animate-in fade-in duration-200">
                 <div>
                   <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--secondary)] font-bold block mb-2">
@@ -540,6 +515,31 @@ export default function HealthcarePage() {
                   ))}
                 </div>
               </div>
+            ) : (
+              <div id="panel-dental" role="tabpanel" aria-labelledby="tab-dental" className="space-y-8 animate-in fade-in duration-200">
+                <div>
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--secondary)] font-bold block mb-2">
+                    DENTAL RCM SUPPORT
+                  </span>
+                  <h3 className="font-serif text-[24px] sm:text-[28px] font-normal text-[var(--primary)]">
+                    Built around claim detail and follow-up
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans">
+                  {dentalItems.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] flex items-start gap-3"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                      <span className="text-[14px] text-[var(--primary-85)] font-medium leading-snug">
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
 
             {/* Illustrative Code Systems Strip beneath */}
@@ -549,9 +549,6 @@ export default function HealthcarePage() {
               </span>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
-                  Dental: CDT
-                </span>
-                <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
                   Medical: ICD-10-CM
                 </span>
                 <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
@@ -559,6 +556,9 @@ export default function HealthcarePage() {
                 </span>
                 <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
                   HCPCS
+                </span>
+                <span className="px-2.5 py-1 rounded bg-[var(--primary-5)] border border-[var(--primary-15)] font-semibold text-[var(--primary)]">
+                  Dental: CDT
                 </span>
               </div>
             </div>
@@ -726,17 +726,9 @@ export default function HealthcarePage() {
       </section>
 
       {/* =========================================================================
-          8. FINAL CTA (Highlight #67D5E8 Background, Primary Text, Primary Button)
+          8. FINAL CTA (Themed shared component)
          ========================================================================= */}
       <FinalCTA
-        bgClassName="bg-[var(--highlight)]"
-        textClassName="text-[var(--primary)]"
-        buttonClassName="bg-[var(--primary)] text-white hover:brightness-110"
-        eyebrow="LET'S CONNECT"
-        headline="Let's connect."
-        subline="Dental & Medical Revenue Cycle Management."
-        tagline="End-to-end RCM, from patient registration to final payment."
-        defaultSector="Healthcare"
         contactDetails={
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[14px] font-sans">
             <div>
@@ -758,7 +750,6 @@ export default function HealthcarePage() {
             </div>
           </div>
         }
-        disclaimer="Solvantra provides operational, billing, scheduling and coordination support only, not medical or legal advice."
       />
 
       {/* Consultation Modal Triggered from Buttons */}

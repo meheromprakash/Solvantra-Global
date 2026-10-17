@@ -42,6 +42,13 @@
   --bg-12: rgba(248, 241, 229, 0.12);
   --bg-10: rgba(248, 241, 229, 0.10);
   --bg-8: rgba(248, 241, 229, 0.08);
+
+  /* Final CTA Component Theme Variables (Default pages) */
+  --cta-bg: var(--accent);
+  --cta-ink: var(--ink);
+  --cta-btn-bg: var(--ink);
+  --cta-btn-ink: var(--bg);
+  --cta-card-bg: var(--bg);
 }
 
 @layer base {
@@ -291,6 +298,13 @@ select:-webkit-autofill:focus {
   --light: #F5F2E9;
   --on-dark: #F8F5EC;
 
+  /* Final CTA Theme Variables */
+  --cta-bg: var(--accent);
+  --cta-ink: var(--primary);
+  --cta-btn-bg: var(--primary);
+  --cta-btn-ink: var(--light);
+  --cta-card-bg: var(--light);
+
   background-color: var(--light);
   color: var(--primary);
 }
@@ -304,6 +318,13 @@ select:-webkit-autofill:focus {
   --light: #F4F1EA;
   --on-dark: #FAF8F4;
 
+  /* Final CTA Theme Variables */
+  --cta-bg: var(--accent);
+  --cta-ink: var(--primary);
+  --cta-btn-bg: var(--primary);
+  --cta-btn-ink: var(--light);
+  --cta-card-bg: var(--light);
+
   background-color: var(--light);
   color: var(--primary);
 }
@@ -312,10 +333,17 @@ select:-webkit-autofill:focus {
 [data-sector="health"] {
   --primary: #10243A;
   --secondary: #174A7E;
-  --accent: #3B82F6;
+  --accent: #67D5E8;
   --highlight: #67D5E8;
   --light: #F3F7FB;
   --on-dark: #FFFFFF;
+
+  /* Final CTA Theme Variables */
+  --cta-bg: var(--highlight);
+  --cta-ink: var(--primary);
+  --cta-btn-bg: var(--primary);
+  --cta-btn-ink: var(--light);
+  --cta-card-bg: var(--light);
 
   background-color: var(--light);
   color: var(--primary);
@@ -369,6 +397,7 @@ select:-webkit-autofill:focus {
 
   /* Secondary, Accent & Highlight Tints */
   --secondary-15: color-mix(in srgb, var(--secondary) 15%, transparent);
+  --accent-35: color-mix(in srgb, var(--accent) 35%, transparent);
   --accent-20: color-mix(in srgb, var(--accent) 20%, transparent);
   --highlight-20: color-mix(in srgb, var(--highlight) 20%, transparent);
 }
@@ -620,6 +649,49 @@ select:-webkit-autofill:focus {
   }
   .footer-operations-list a {
     white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
+   NAVBAR & FOOTER SECTOR THEME TRANSITIONS
+   ========================================================================== */
+.site-header,
+.site-header a,
+.site-header button,
+.site-header span,
+.site-header svg,
+.site-footer,
+.site-footer a,
+.site-footer button,
+.site-footer span,
+.site-footer p,
+.site-footer h4,
+.final-cta-section,
+.final-cta-card,
+.final-cta-card input,
+.final-cta-card textarea,
+.final-cta-card button {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, text-decoration-color 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header a,
+  .site-header button,
+  .site-header span,
+  .site-header svg,
+  .site-footer,
+  .site-footer a,
+  .site-footer button,
+  .site-footer span,
+  .site-footer p,
+  .site-footer h4,
+  .final-cta-section,
+  .final-cta-card,
+  .final-cta-card input,
+  .final-cta-card textarea,
+  .final-cta-card button {
+    transition: none !important;
   }
 }
 

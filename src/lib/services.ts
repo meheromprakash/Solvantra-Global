@@ -29,8 +29,34 @@ export interface OperationItem {
 
 export const SERVICES: ServiceItem[] = [
   {
-    slug: "real-estate",
+    slug: "healthcare",
     num: "01",
+    title: "Healthcare",
+    audience: "Dental & medical clinics",
+    description:
+      "Dental and medical revenue cycle management, clean claims processing, status tracking, and disciplined denial and accounts receivable resolution.",
+    includedItems: [
+      "Eligibility & Benefits Verification",
+      "Claim Preparation & Submission",
+      "Denial & AR Follow-up",
+    ],
+    workflow: [
+      { step: "01", label: "Intake", sublabel: "Patient registration" },
+      { step: "02", label: "Verify Eligibility", sublabel: "Payer confirmed" },
+      { step: "03", label: "Claim", sublabel: "Clean submission" },
+      { step: "04", label: "Resolution", sublabel: "AR reconciled" },
+    ],
+    linkLabel: "Explore Healthcare Pod",
+    href: "/healthcare",
+    operationsTags: [
+      "Claims & Revenue Operations",
+      "Compliance & Process Admin",
+      "Dedicated Operational Pods",
+    ],
+  },
+  {
+    slug: "real-estate",
+    num: "02",
     title: "Real Estate",
     audience: "Estate agents, lettings, and property managers",
     description:
@@ -57,7 +83,7 @@ export const SERVICES: ServiceItem[] = [
   },
   {
     slug: "home-services",
-    num: "02",
+    num: "03",
     title: "Home Services",
     audience: "HVAC, plumbing, electrical, field trades and home care agencies",
     description:
@@ -79,32 +105,6 @@ export const SERVICES: ServiceItem[] = [
       "24/7 Call & Chat Support",
       "Intelligent Scheduling & Dispatch",
       "Administrative Support",
-    ],
-  },
-  {
-    slug: "healthcare",
-    num: "03",
-    title: "Healthcare",
-    audience: "Dental & medical clinics",
-    description:
-      "Dental and medical revenue cycle management, clean claims processing, status tracking, and disciplined denial and accounts receivable resolution.",
-    includedItems: [
-      "Eligibility & Benefits Verification",
-      "Claim Preparation & Submission",
-      "Denial & AR Follow-up",
-    ],
-    workflow: [
-      { step: "01", label: "Intake", sublabel: "Patient registration" },
-      { step: "02", label: "Verify Eligibility", sublabel: "Payer confirmed" },
-      { step: "03", label: "Claim", sublabel: "Clean submission" },
-      { step: "04", label: "Resolution", sublabel: "AR reconciled" },
-    ],
-    linkLabel: "Explore Healthcare Pod",
-    href: "/healthcare",
-    operationsTags: [
-      "Claims & Revenue Operations",
-      "Compliance & Process Admin",
-      "Dedicated Operational Pods",
     ],
   },
 ];

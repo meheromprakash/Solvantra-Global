@@ -438,7 +438,8 @@ export default function HomeServicesPage() {
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-[var(--on-dark-10)] flex items-center justify-between text-[11px] font-mono text-[var(--on-dark-55)]">
-                  <span>SYSTEM: SERVICETITAN / JOBSITE</span>
+                  {/* TODO: confirm with client */}
+                  <span>SYSTEM: YOUR FIELD SERVICE SOFTWARE</span>
                   <span>SYNC: REAL-TIME</span>
                 </div>
               </div>
@@ -1638,15 +1639,6 @@ export default function HomeServicesPage() {
           14. FINAL CTA (SHARED HOMEPAGE CTA COMPONENT)
          ========================================================================= */}
       <FinalCTA />
-
-      {/* Legal Disclaimer Footnote */}
-      <div className="bg-[var(--ink)] py-5 px-6 text-center border-t border-[rgba(248,241,229,0.08)]">
-        <p className="text-[14px] font-mono text-[var(--bg-55)] max-w-4xl mx-auto leading-relaxed">
-          Solvantra provides operational intake, scheduling, coordination, and follow-through support
-          for home services and home care agencies. We do not provide clinical judgment, medical diagnosis,
-          or legal advice.
-        </p>
-      </div>
 
       {/* Consultation Modal Triggered from Buttons */}
       <ConsultationModal

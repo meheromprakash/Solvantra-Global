@@ -3,6 +3,7 @@ import { EB_Garamond, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SectorLayoutWrapper from "@/components/layout/SectorLayoutWrapper";
 
 const ebGaramond = EB_Garamond({
   subsets: ["latin"],
@@ -51,9 +52,11 @@ export default function RootLayout({
       className={`${ebGaramond.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--ink)] font-sans antialiased selection:bg-[var(--accent)] selection:text-[var(--ink)]">
-        <Header />
-        <main className="flex-1 w-full pt-[72px]">{children}</main>
-        <Footer />
+        <SectorLayoutWrapper>
+          <Header />
+          <main className="flex-1 w-full pt-[72px]">{children}</main>
+          <Footer />
+        </SectorLayoutWrapper>
       </body>
     </html>
   );

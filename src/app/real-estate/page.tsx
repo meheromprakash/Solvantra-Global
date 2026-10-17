@@ -1649,14 +1649,6 @@ export default function RealEstatePage() {
          ========================================================================= */}
       <FinalCTA />
 
-      {/* Legal Disclaimer Footnote from Source */}
-      <div className="bg-[var(--ink)] py-5 px-6 text-center border-t border-[rgba(248,241,229,0.08)]">
-        <p className="text-[14px] font-mono text-[var(--bg-55)] max-w-4xl mx-auto leading-relaxed">
-          Solvantra supports your compliance processes and does not provide legal advice. Your agency
-          remains responsible for meeting its legal obligations.
-        </p>
-      </div>
-
       {/* Consultation Modal Triggered from Buttons */}
       <ConsultationModal
         isOpen={isModalOpen}

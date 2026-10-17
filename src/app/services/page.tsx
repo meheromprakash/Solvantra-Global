@@ -228,10 +228,10 @@ export default function ServicesPage() {
          ========================================================================= */}
       <div className="w-full flex flex-col">
         {/* ---------------------------------------------------------------------
-            BLOCK 1: REAL ESTATE (Background: bg)
+            BLOCK 1: HEALTHCARE (Background: bg)
            --------------------------------------------------------------------- */}
         <section
-          id="real-estate"
+          id={SERVICES[0].slug}
           className="w-full py-20 lg:py-28 bg-[var(--bg)] border-b border-[var(--ink-15)] relative min-h-[640px] flex items-center"
         >
           <div className="max-w-[1200px] mx-auto px-6 lg:px-10 w-full">
@@ -254,7 +254,7 @@ export default function ServicesPage() {
               {/* Left Rail (cols 1-5, sticky desktop) */}
               <div className="lg:col-span-5 lg:sticky lg:top-28 flex flex-col items-start">
                 <span className="font-mono text-[84px] lg:text-[96px] font-bold text-[rgba(51,36,25,0.18)] leading-none select-none -mb-2">
-                  01
+                  {SERVICES[0].num}
                 </span>
 
                 <div className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--ink-20)] bg-[var(--ink-6)] text-[var(--ink-80)] mb-4 inline-block">
@@ -262,7 +262,7 @@ export default function ServicesPage() {
                 </div>
 
                 <h2 className="text-[38px] sm:text-[48px] lg:text-[56px] font-serif font-medium leading-[1.04] text-[var(--ink)] mb-4">
-                  Real Estate
+                  {SERVICES[0].title}
                 </h2>
 
                 {/* TODO: confirm with client */}
@@ -315,7 +315,7 @@ export default function ServicesPage() {
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
                       {SERVICES[0].workflow.map((node) => {
-                        const IconComp = WORKFLOW_ICONS[node.label] || Headphones;
+                        const IconComp = WORKFLOW_ICONS[node.label] || ShieldCheck;
                         return (
                           <div
                             key={node.step}
@@ -366,10 +366,10 @@ export default function ServicesPage() {
         </section>
 
         {/* ---------------------------------------------------------------------
-            BLOCK 2: HOME SERVICES (Background: accent at 8% tint over bg)
+            BLOCK 2: REAL ESTATE (Background: accent at 8% tint over bg)
            --------------------------------------------------------------------- */}
         <section
-          id="home-services"
+          id={SERVICES[1].slug}
           className="w-full py-20 lg:py-28 border-b border-[var(--ink-15)] relative min-h-[640px] flex items-center"
           style={{
             backgroundColor: "color-mix(in srgb, var(--accent) 8%, var(--bg))",
@@ -418,7 +418,7 @@ export default function ServicesPage() {
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
                       {SERVICES[1].workflow.map((node) => {
-                        const IconComp = WORKFLOW_ICONS[node.label] || PhoneCall;
+                        const IconComp = WORKFLOW_ICONS[node.label] || Headphones;
                         return (
                           <div
                             key={node.step}
@@ -465,7 +465,7 @@ export default function ServicesPage() {
               {/* Text RIGHT (cols 8-12, sticky desktop) */}
               <div className="lg:col-start-8 lg:col-span-5 lg:sticky lg:top-28 flex flex-col items-start order-1 lg:order-2">
                 <span className="font-mono text-[84px] lg:text-[96px] font-bold text-[rgba(51,36,25,0.18)] leading-none select-none -mb-2">
-                  02
+                  {SERVICES[1].num}
                 </span>
 
                 <div className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--ink-20)] bg-[rgba(248,241,229,0.7)] text-[var(--ink-80)] mb-4 inline-block">
@@ -473,7 +473,7 @@ export default function ServicesPage() {
                 </div>
 
                 <h2 className="text-[38px] sm:text-[48px] lg:text-[56px] font-serif font-medium leading-[1.04] text-[var(--ink)] mb-4">
-                  Home Services
+                  {SERVICES[1].title}
                 </h2>
 
                 {/* TODO: confirm with client */}
@@ -504,10 +504,10 @@ export default function ServicesPage() {
         </section>
 
         {/* ---------------------------------------------------------------------
-            BLOCK 3: HEALTHCARE (Background: ink with bg text, panel inverted)
+            BLOCK 3: HOME SERVICES (Background: ink with bg text, panel inverted)
            --------------------------------------------------------------------- */}
         <section
-          id="healthcare"
+          id={SERVICES[2].slug}
           className="w-full py-20 lg:py-28 bg-[var(--ink)] text-[var(--bg)] border-b border-[rgba(185,138,62,0.25)] relative min-h-[640px] flex items-center"
         >
           <div className="max-w-[1200px] mx-auto px-6 lg:px-10 w-full">
@@ -530,7 +530,7 @@ export default function ServicesPage() {
               {/* Left Rail (cols 1-5, sticky desktop) */}
               <div className="lg:col-span-5 lg:sticky lg:top-28 flex flex-col items-start">
                 <span className="font-mono text-[84px] lg:text-[96px] font-bold text-[rgba(248,241,229,0.18)] leading-none select-none -mb-2">
-                  03
+                  {SERVICES[2].num}
                 </span>
 
                 <div className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--bg-20)] bg-[var(--bg-8)] text-[var(--bg-75)] mb-4 inline-block">
@@ -538,7 +538,7 @@ export default function ServicesPage() {
                 </div>
 
                 <h2 className="text-[38px] sm:text-[48px] lg:text-[56px] font-serif font-medium leading-[1.04] text-[var(--bg)] mb-4">
-                  Healthcare
+                  {SERVICES[2].title}
                 </h2>
 
                 {/* TODO: confirm with client */}
@@ -590,7 +590,7 @@ export default function ServicesPage() {
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
                       {SERVICES[2].workflow.map((node) => {
-                        const IconComp = WORKFLOW_ICONS[node.label] || UserCheck;
+                        const IconComp = WORKFLOW_ICONS[node.label] || PhoneCall;
                         return (
                           <div
                             key={node.step}
