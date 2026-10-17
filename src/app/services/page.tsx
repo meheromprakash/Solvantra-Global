@@ -45,16 +45,7 @@ export default function ServicesPage() {
   const scrollToElement = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+      el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -307,10 +298,10 @@ export default function ServicesPage() {
                     {/* Connecting track line: starts at center of col 1 (12.5%) and ends at center of col 4 (87.5%) */}
                     <div
                       aria-hidden="true"
-                      className="hidden sm:block absolute top-[24px] left-[12.5%] right-[12.5%] h-[2px] bg-[rgba(185,138,62,0.30)] pointer-events-none select-none z-0 -translate-y-1/2"
+                      className="hidden sm:block absolute top-[24px] left-[12.5%] right-[12.5%] h-[2px] bg-[rgba(185,138,62,0.30)] pointer-events-none select-none z-0 -translate-y-1/2 [container-type:inline-size]"
                     >
                       {/* Traveling accent dot */}
-                      <div className="animated-travel-dot absolute -top-[3px] w-2 h-2 rounded-full bg-[var(--accent)] shadow-sm" />
+                      <div className="animated-travel-dot absolute -top-[3px] left-0 w-2 h-2 rounded-full bg-[var(--accent)] shadow-sm" />
                     </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
@@ -410,10 +401,10 @@ export default function ServicesPage() {
                     {/* Connecting track line: starts at center of col 1 (12.5%) and ends at center of col 4 (87.5%) */}
                     <div
                       aria-hidden="true"
-                      className="hidden sm:block absolute top-[24px] left-[12.5%] right-[12.5%] h-[2px] bg-[rgba(185,138,62,0.30)] pointer-events-none select-none z-0 -translate-y-1/2"
+                      className="hidden sm:block absolute top-[24px] left-[12.5%] right-[12.5%] h-[2px] bg-[rgba(185,138,62,0.30)] pointer-events-none select-none z-0 -translate-y-1/2 [container-type:inline-size]"
                     >
                       {/* Traveling accent dot */}
-                      <div className="animated-travel-dot absolute -top-[3px] w-2 h-2 rounded-full bg-[var(--accent)] shadow-sm" />
+                      <div className="animated-travel-dot absolute -top-[3px] left-0 w-2 h-2 rounded-full bg-[var(--accent)] shadow-sm" />
                     </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
@@ -582,10 +573,10 @@ export default function ServicesPage() {
                     {/* Connecting track line: starts at center of col 1 (12.5%) and ends at center of col 4 (87.5%) */}
                     <div
                       aria-hidden="true"
-                      className="hidden sm:block absolute top-[24px] left-[12.5%] right-[12.5%] h-[2px] bg-[rgba(185,138,62,0.40)] pointer-events-none select-none z-0 -translate-y-1/2"
+                      className="hidden sm:block absolute top-[24px] left-[12.5%] right-[12.5%] h-[2px] bg-[rgba(185,138,62,0.40)] pointer-events-none select-none z-0 -translate-y-1/2 [container-type:inline-size]"
                     >
                       {/* Traveling accent dot */}
-                      <div className="animated-travel-dot absolute -top-[3px] w-2 h-2 rounded-full bg-[var(--accent)] shadow-sm" />
+                      <div className="animated-travel-dot absolute -top-[3px] left-0 w-2 h-2 rounded-full bg-[var(--accent)] shadow-sm" />
                     </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
@@ -725,29 +716,39 @@ export default function ServicesPage() {
                   </button>
 
                   {/* Expandable Deliverables Checklist */}
-                  {isOpen && (
-                    <div className="px-3 pb-5 pt-1 border-t border-[var(--bg-12)] animate-fadeIn">
-                      <p className="block md:hidden text-[14px] leading-[1.5] font-sans text-[var(--bg-75)] mb-3">
-                        {op.description}
-                      </p>
-                      <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--bg-60)] font-semibold block mb-3">
-                        Key Deliverables Included:
-                      </span>
-                      <ul className="space-y-2.5">
-                        {op.deliverables.map((item, dIdx) => (
-                          <li
-                            key={dIdx}
-                            className="flex items-start gap-2.5 text-[14px] sm:text-[15px] font-sans text-[var(--bg-80)]"
-                          >
-                            <span className="w-4 h-4 rounded-full bg-[rgba(185,138,62,0.25)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5">
-                              <Check className="w-3 h-3 stroke-[3]" />
-                            </span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  <div
+                    className={`grid transition-[grid-template-rows] duration-250 ease-out ${
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div
+                        className={`px-3 pb-5 pt-1 border-t border-[var(--bg-12)] transition-all duration-250 ease-out ${
+                          isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                        }`}
+                      >
+                        <p className="block md:hidden text-[14px] leading-[1.5] font-sans text-[var(--bg-75)] mb-3">
+                          {op.description}
+                        </p>
+                        <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--bg-60)] font-semibold block mb-3">
+                          Key Deliverables Included:
+                        </span>
+                        <ul className="space-y-2.5">
+                          {op.deliverables.map((item, dIdx) => (
+                            <li
+                              key={dIdx}
+                              className="flex items-start gap-2.5 text-[14px] sm:text-[15px] font-sans text-[var(--bg-80)]"
+                            >
+                              <span className="w-4 h-4 rounded-full bg-[rgba(185,138,62,0.25)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5">
+                                <Check className="w-3 h-3 stroke-[3]" />
+                              </span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}
@@ -770,7 +771,7 @@ export default function ServicesPage() {
       <style jsx>{`
         @keyframes travelHorizontal {
           0% {
-            left: 0%;
+            transform: translateX(0);
             opacity: 0;
           }
           10% {
@@ -780,12 +781,13 @@ export default function ServicesPage() {
             opacity: 1;
           }
           100% {
-            left: 100%;
+            transform: translateX(calc(100cqi - 8px));
             opacity: 0;
           }
         }
         .animated-travel-dot {
           animation: travelHorizontal 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          will-change: transform, opacity;
         }
         @media (prefers-reduced-motion: reduce) {
           .animated-travel-dot {

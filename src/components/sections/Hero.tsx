@@ -32,8 +32,10 @@ export default function Hero() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tickets, setTickets] = useState<QueueTicket[]>(INITIAL_TICKETS);
   const counterRef = useRef(8493);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const isHeroVisible = useRef(true);
 
-  // Cycling Live Queue animation every 3s (respects prefers-reduced-motion)
+  // Cycling Live Queue animation every 3s (respects prefers-reduced-motion, tab visibility, and viewport visibility)
   useEffect(() => {
     const prefersReducedMotion =
       typeof window !== "undefined" &&
@@ -41,7 +43,18 @@ export default function Hero() {
 
     if (prefersReducedMotion) return;
 
+    // Observe hero visibility
+    const observer = new IntersectionObserver(([entry]) => {
+      isHeroVisible.current = entry.isIntersecting;
+    });
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
     const interval = setInterval(() => {
+      if (document.hidden || !isHeroVisible.current) return;
+
       const currentCount = counterRef.current++;
       const nextId = `#OP-${currentCount}`;
       const label = TICKET_LABELS[currentCount % TICKET_LABELS.length];
@@ -63,12 +76,18 @@ export default function Hero() {
       ]);
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <>
-      <section className="w-full min-h-[88vh] flex flex-col justify-center pt-8 md:pt-14 pb-16 md:pb-24 bg-[var(--bg)] relative overflow-hidden animate-fade-up">
+      <section
+        ref={heroRef}
+        className="w-full min-h-[88vh] flex flex-col justify-center pt-8 md:pt-14 pb-16 md:pb-24 bg-[var(--bg)] relative overflow-hidden"
+      >
         {/* 1. Full-bleed fine grid pattern (1px lines, ink at 6%, 48px squares) masked to fade out toward edges & bottom */}
         <div
           aria-hidden="true"

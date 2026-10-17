@@ -180,36 +180,40 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
   // Home Services: dynamic preselect if visitor is viewing #home-care
   useEffect(() => {
     if (sectorType === "home") {
-      const evaluateHomeCare = () => {
-        const hash = window.location.hash;
-        if (hash === "#home-care") {
+      const evaluateHash = () => {
+        if (window.location.hash === "#home-care") {
           setFormData((prev) =>
             prev.sector === "Home Services (field trades)" || !prev.sector
               ? { ...prev, sector: "Home Services (home care & nursing)" }
               : prev
           );
-          return;
-        }
-
-        const el = document.getElementById("home-care");
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= 0) {
-            setFormData((prev) =>
-              prev.sector === "Home Services (field trades)" || !prev.sector
-                ? { ...prev, sector: "Home Services (home care & nursing)" }
-                : prev
-            );
-          }
         }
       };
 
-      evaluateHomeCare();
-      window.addEventListener("scroll", evaluateHomeCare, { passive: true });
-      window.addEventListener("hashchange", evaluateHomeCare);
+      evaluateHash();
+      window.addEventListener("hashchange", evaluateHash);
+
+      const el = document.getElementById("home-care");
+      let observer: IntersectionObserver | null = null;
+      if (el) {
+        observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setFormData((prev) =>
+                prev.sector === "Home Services (field trades)" || !prev.sector
+                  ? { ...prev, sector: "Home Services (home care & nursing)" }
+                  : prev
+              );
+            }
+          },
+          { rootMargin: "0px 0px -50% 0px" }
+        );
+        observer.observe(el);
+      }
+
       return () => {
-        window.removeEventListener("scroll", evaluateHomeCare);
-        window.removeEventListener("hashchange", evaluateHomeCare);
+        window.removeEventListener("hashchange", evaluateHash);
+        observer?.disconnect();
       };
     }
   }, [sectorType]);

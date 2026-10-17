@@ -654,11 +654,11 @@ export default function AboutPage() {
 
                     <div
                       id={`value-content-${val.num}`}
-                      className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
-                        isOpen ? "grid-rows-[1fr] opacity-100 pb-5" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                      className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none ${
+                        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 pointer-events-none"
                       }`}
                     >
-                      <div className="overflow-hidden px-2 pt-1 space-y-2">
+                      <div className="overflow-hidden px-2 pt-1 pb-5 space-y-2">
                         <div className="flex items-center gap-2.5 text-[var(--accent)]">
                           <IconComp className="w-4 h-4 stroke-[2]" />
                           <p className="text-[14px] font-semibold font-sans text-[var(--ink)]">
@@ -904,6 +904,11 @@ export default function AboutPage() {
         }
         .animate-venn-drift {
           animation: vennDrift 30s ease-in-out infinite alternate;
+        }
+        @media (max-width: 767px) {
+          .animate-venn-drift {
+            animation: none !important;
+          }
         }
         @media (prefers-reduced-motion: reduce) {
           .animate-venn-drift {

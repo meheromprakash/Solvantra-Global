@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SectorLayoutWrapper from "@/components/layout/SectorLayoutWrapper";
+import MotionProvider from "@/components/motion/MotionProvider";
+import PageTransition from "@/components/motion/PageTransition";
 
 const ebGaramond = EB_Garamond({
   subsets: ["latin"],
@@ -52,11 +54,15 @@ export default function RootLayout({
       className={`${ebGaramond.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--ink)] font-sans antialiased selection:bg-[var(--accent)] selection:text-[var(--ink)]">
-        <SectorLayoutWrapper>
-          <Header />
-          <main className="flex-1 w-full pt-[72px]">{children}</main>
-          <Footer />
-        </SectorLayoutWrapper>
+        <MotionProvider>
+          <SectorLayoutWrapper>
+            <Header />
+            <main className="flex-1 w-full pt-[72px]">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Footer />
+          </SectorLayoutWrapper>
+        </MotionProvider>
       </body>
     </html>
   );

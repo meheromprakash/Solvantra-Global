@@ -17,8 +17,16 @@ export default function Header() {
   const isSector = Boolean(sector);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 8);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isOver = window.scrollY > 8;
+          setScrolled((prev) => (prev !== isOver ? isOver : prev));
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -69,16 +77,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`site-header fixed top-0 left-0 right-0 z-40 h-[72px] ${
+        className={`site-header fixed top-0 left-0 right-0 z-40 h-[72px] transition-colors duration-200 ${
           isSector
-            ? `bg-[var(--primary)] ${
-                scrolled
-                  ? "border-b border-[color-mix(in_srgb,var(--accent)_35%,transparent)]"
-                  : "border-b border-[color-mix(in_srgb,var(--on-dark)_12%,transparent)]"
-              }`
-            : `backdrop-blur-md ${
-                scrolled ? "border-b border-[var(--ink-12)]" : "border-b-0"
-              }`
+            ? "bg-[var(--primary)]"
+            : "backdrop-blur-md"
         }`}
         style={
           isSector
@@ -88,6 +90,20 @@ export default function Header() {
               }
         }
       >
+        {/* Opacity-only border reveal on scroll (prevents 1px layout shift) */}
+        <div
+          aria-hidden="true"
+          className={`absolute bottom-0 left-0 right-0 h-px pointer-events-none transition-opacity duration-200 ${
+            isSector
+              ? scrolled
+                ? "bg-[color-mix(in_srgb,var(--accent)_35%,transparent)] opacity-100"
+                : "bg-[color-mix(in_srgb,var(--on-dark)_12%,transparent)] opacity-80"
+              : scrolled
+              ? "bg-[var(--ink-12)] opacity-100"
+              : "opacity-0"
+          }`}
+        />
+
         <div className="h-[72px] max-w-[1200px] mx-auto px-6 lg:px-10 flex items-center justify-between gap-4">
           {/* Logo & Wordmark Left */}
           <Link
@@ -140,12 +156,15 @@ export default function Header() {
           {/* Mobile Hamburger Button (visible under 900px) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`min-[900px]:hidden p-2 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded ${
+            className={`min-[900px]:hidden p-2 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded transition-transform duration-200 motion-reduce:transition-none ${
+              mobileMenuOpen ? "rotate-90" : "rotate-0"
+            } ${
               isSector
                 ? "text-[var(--on-dark)] hover:text-[var(--accent)] focus-visible:ring-offset-[var(--primary)]"
                 : "text-[var(--ink)] hover:text-[var(--accent)]"
             }`}
             aria-label="Toggle Navigation Menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? (
               <X className="w-6 h-6 stroke-[1.5]" />
@@ -158,7 +177,7 @@ export default function Header() {
         {/* Mobile Navigation Dropdown (Under 900px) */}
         {mobileMenuOpen && (
           <div
-            className={`min-[900px]:hidden shadow-lg animate-fadeIn ${
+            className={`min-[900px]:hidden shadow-lg mobile-nav-enter ${
               isSector
                 ? "bg-[var(--primary)] border-b border-[color-mix(in_srgb,var(--on-dark)_12%,transparent)]"
                 : "bg-[var(--bg)] border-b border-[var(--ink-12)]"
@@ -170,12 +189,12 @@ export default function Header() {
                   key={item.path}
                   href={item.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={getMobileLinkClass(item.path)}
+                  className={`mobile-nav-item ${getMobileLinkClass(item.path)}`}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="p-6">
+              <div className="p-6 mobile-nav-item">
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}

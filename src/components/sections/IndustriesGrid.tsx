@@ -105,8 +105,10 @@ export default function IndustriesGrid() {
   const [activeTab, setActiveTab] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isSectionVisible = useRef(true);
 
-  // Auto-advance tabs every 8s until user interacts
+  // Auto-advance tabs every 8s until user interacts (respects tab & viewport visibility)
   useEffect(() => {
     if (userInteracted) return;
 
@@ -116,11 +118,23 @@ export default function IndustriesGrid() {
 
     if (prefersReducedMotion) return;
 
+    const observer = new IntersectionObserver(([entry]) => {
+      isSectionVisible.current = entry.isIntersecting;
+    });
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
     const timer = setInterval(() => {
+      if (document.hidden || !isSectionVisible.current) return;
       setActiveTab((prev) => (prev + 1) % SECTORS.length);
     }, 8000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      observer.disconnect();
+    };
   }, [userInteracted]);
 
   const handleSelectTab = (index: number) => {
@@ -154,7 +168,7 @@ export default function IndustriesGrid() {
   const current = SECTORS[activeTab];
 
   return (
-    <section className="w-full py-16 md:py-24 bg-[var(--ink)] text-[var(--bg)] border-t border-[rgba(185,138,62,0.30)] relative overflow-hidden">
+    <section ref={sectionRef} className="w-full py-16 md:py-24 bg-[var(--ink)] text-[var(--bg)] border-t border-[rgba(185,138,62,0.30)] relative overflow-hidden">
       {/* 1. Fine grid pattern in bg at 5% */}
       <div
         aria-hidden="true"
@@ -180,7 +194,7 @@ export default function IndustriesGrid() {
 
       <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
         {/* Header: Left aligned on a 12-col grid (cols 1-3 mono label, cols 4-12 H2 + subtext) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12 lg:mb-16">
+        <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12 lg:mb-16">
           <div className="lg:col-span-3">
             <div className="flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--bg-55)]">
               <span className="text-[var(--accent)] font-bold">01</span>
@@ -220,7 +234,7 @@ export default function IndustriesGrid() {
         </div>
 
         {/* Desktop Two-Column Layout (cols 1-4 tabs, cols 5-12 panel) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           {/* LEFT: 3 Vertical Tab Buttons (cols 1-4) */}
           <div
             role="tablist"
@@ -284,100 +298,103 @@ export default function IndustriesGrid() {
             id={`panel-${current.id}`}
             role="tabpanel"
             aria-labelledby={`tab-${current.id}`}
-            className="lg:col-span-8 bg-[var(--bg)] border border-[var(--ink-15)] rounded-[16px] p-6 sm:p-8 lg:p-10 flex flex-col justify-between shadow-[0_24px_60px_rgba(51,36,25,0.40)] min-h-[480px] lg:min-h-[520px] transition-all duration-300 relative z-10 text-[var(--ink)]"
+            className="lg:col-span-8 bg-[var(--bg)] border border-[var(--ink-15)] rounded-[16px] p-6 sm:p-8 lg:p-10 flex flex-col justify-between shadow-[0_24px_60px_rgba(51,36,25,0.40)] min-h-[480px] lg:min-h-[520px] transition-all duration-300 relative z-10 text-[var(--ink)] overflow-hidden"
           >
-            <div>
-              {/* 1) Top: Description (max 3 lines) */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--ink-15)]">
-                  <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)]">
-                    Domain Architecture — {current.title}
-                  </span>
-                  <span className="font-mono text-[14px] text-[var(--ink-65)] uppercase tracking-wider border border-[var(--ink-15)] px-2 py-0.5 rounded-[4px]">
-                    Illustrative workflow
-                  </span>
-                </div>
-                <p className="text-[16px] sm:text-[17px] text-[var(--ink-80)] leading-[1.65] font-sans max-w-2xl">
-                  {current.description}
-                </p>
-              </div>
-
-              {/* 2) Horizontal Workflow Diagram: 4 nodes joined by a line with traveling accent dot */}
-              <div className="my-8 pt-2 pb-4">
-                <div className="relative">
-                  {/* Connecting Line between nodes */}
-                  <div className="hidden sm:block absolute top-6 left-6 right-6 h-[2px] bg-[var(--ink-15)] z-0">
-                    {/* Traveling accent dot along the workflow line */}
-                    <div
-                      className="absolute -top-[3px] w-2 h-2 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)]"
-                      style={{
-                        animation: "dotTravel 4s cubic-bezier(0.4, 0, 0.2, 1) infinite",
-                      }}
-                    />
+            <div key={activeTab} className="tab-pane-transition flex flex-col justify-between flex-1">
+              <div>
+                {/* 1) Top: Description (max 3 lines) */}
+                <div className="mb-8">
+                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--ink-15)]">
+                    <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)]">
+                      Domain Architecture — {current.title}
+                    </span>
+                    <span className="font-mono text-[14px] text-[var(--ink-65)] uppercase tracking-wider border border-[var(--ink-15)] px-2 py-0.5 rounded-[4px]">
+                      Illustrative workflow
+                    </span>
                   </div>
-
-                  {/* 4 Nodes */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
-                    {current.workflow.map((node, nodeIdx) => {
-                      const IconComp = node.icon;
-                      return (
-                        <div
-                          key={nodeIdx}
-                          className="flex flex-col items-center text-center p-3 sm:p-2 rounded-[10px] bg-[var(--bg)] border sm:border-0 border-[var(--ink-12)]"
-                        >
-                          {/* 48px rounded square with icon */}
-                          <div className="w-12 h-12 rounded-[10px] bg-[var(--accent-14)] text-[var(--accent)] border border-[var(--ink-15)] flex items-center justify-center shrink-0 mb-3 shadow-sm">
-                            <IconComp className="w-5 h-5 stroke-[1.5]" />
-                          </div>
-
-                          <span className="font-sans text-[14px] font-semibold text-[var(--ink)] leading-snug">
-                            {node.label}
-                          </span>
-                          <span className="font-mono text-[14px] text-[var(--ink-65)] leading-tight mt-1">
-                            {node.sublabel}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <p className="text-[16px] sm:text-[17px] text-[var(--ink-80)] leading-[1.65] font-sans max-w-2xl">
+                    {current.description}
+                  </p>
                 </div>
-              </div>
 
-              {/* 3) The 3 included bullets as a 3-column row with check icons */}
-              <div className="pt-6 border-t border-[var(--ink-15)] mb-8">
-                <span className="font-mono text-[14px] font-semibold uppercase tracking-[0.08em] text-[var(--ink-65)] block mb-4">
-                  What&apos;s Included In The Pod
-                </span>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {current.bullets.map((bullet, bIdx) => (
-                    <div
-                      key={bIdx}
-                      className="flex items-start gap-2.5 text-[14px] leading-snug text-[var(--ink-80)] font-sans"
-                    >
-                      <Check
-                        className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5"
-                        strokeWidth={2.5}
+                {/* 2) Horizontal Workflow Diagram: 4 nodes joined by a line with traveling accent dot */}
+                <div className="my-8 pt-2 pb-4">
+                  <div className="relative">
+                    {/* Connecting Line between nodes */}
+                    <div className="hidden sm:block absolute top-6 left-6 right-6 h-[2px] bg-[var(--ink-15)] z-0 [container-type:inline-size]">
+                      {/* Traveling accent dot along the workflow line */}
+                      <div
+                        className="absolute -top-[3px] left-0 w-2 h-2 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)]"
+                        style={{
+                          animation: "dotTravel 4s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+                          willChange: "transform, opacity",
+                        }}
                       />
-                      <span>{bullet}</span>
                     </div>
-                  ))}
+
+                    {/* 4 Nodes */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
+                      {current.workflow.map((node, nodeIdx) => {
+                        const IconComp = node.icon;
+                        return (
+                          <div
+                            key={nodeIdx}
+                            className="flex flex-col items-center text-center p-3 sm:p-2 rounded-[10px] bg-[var(--bg)] border sm:border-0 border-[var(--ink-12)]"
+                          >
+                            {/* 48px rounded square with icon */}
+                            <div className="w-12 h-12 rounded-[10px] bg-[var(--accent-14)] text-[var(--accent)] border border-[var(--ink-15)] flex items-center justify-center shrink-0 mb-3 shadow-sm">
+                              <IconComp className="w-5 h-5 stroke-[1.5]" />
+                            </div>
+
+                            <span className="font-sans text-[14px] font-semibold text-[var(--ink)] leading-snug">
+                              {node.label}
+                            </span>
+                            <span className="font-mono text-[14px] text-[var(--ink-65)] leading-tight mt-1">
+                              {node.sublabel}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3) The 3 included bullets as a 3-column row with check icons */}
+                <div className="pt-6 border-t border-[var(--ink-15)] mb-8">
+                  <span className="font-mono text-[14px] font-semibold uppercase tracking-[0.08em] text-[var(--ink-65)] block mb-4">
+                    What&apos;s Included In The Pod
+                  </span>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {current.bullets.map((bullet, bIdx) => (
+                      <div
+                        key={bIdx}
+                        className="flex items-start gap-2.5 text-[14px] leading-snug text-[var(--ink-80)] font-sans"
+                      >
+                        <Check
+                          className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5"
+                          strokeWidth={2.5}
+                        />
+                        <span>{bullet}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* 4) Bottom: Link to sector pod (text changes with tab) */}
-            <div className="pt-4 border-t border-[var(--ink-15)] flex items-center justify-between">
-              <Link
-                href={current.path}
-                className="link-solvantra group text-[15px] inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
-              >
-                <span>{current.linkText}</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
+              {/* 4) Bottom: Link to sector pod (text changes with tab) */}
+              <div className="pt-4 border-t border-[var(--ink-15)] flex items-center justify-between">
+                <Link
+                  href={current.path}
+                  className="link-solvantra group text-[15px] inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[2px]"
+                >
+                  <span>{current.linkText}</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
 
-              <span className="font-mono text-[14px] text-[var(--ink-65)]">
-                Pod 0{activeTab + 1} / 03
-              </span>
+                <span className="font-mono text-[14px] text-[var(--ink-65)]">
+                  Pod 0{activeTab + 1} / 03
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -387,7 +404,7 @@ export default function IndustriesGrid() {
       <style jsx>{`
         @keyframes dotTravel {
           0% {
-            left: 0%;
+            transform: translateX(0);
             opacity: 0;
           }
           10% {
@@ -397,7 +414,7 @@ export default function IndustriesGrid() {
             opacity: 1;
           }
           100% {
-            left: 98%;
+            transform: translateX(calc(100cqi - 8px));
             opacity: 0;
           }
         }

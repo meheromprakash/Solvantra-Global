@@ -305,7 +305,7 @@ export default function WhySolvantraPage() {
       <section className="w-full bg-[var(--bg)] py-20 md:py-28 relative">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           {/* Section Header */}
-          <div className="max-w-3xl mb-12 lg:mb-16">
+          <div data-reveal className="max-w-3xl mb-12 lg:mb-16">
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)] font-semibold">
@@ -323,7 +323,7 @@ export default function WhySolvantraPage() {
           </div>
 
           {/* Desktop/Tablet Ruled Grid (768px and up) */}
-          <div className="hidden md:block border-t border-b border-[rgba(51,36,25,0.15)]">
+          <div data-reveal className="hidden md:block border-t border-b border-[rgba(51,36,25,0.15)]">
             <div className="grid grid-cols-2 lg:grid-cols-3">
               {differentiators.map((diff, index) => {
                 const IconComp = diff.icon;
@@ -363,7 +363,7 @@ export default function WhySolvantraPage() {
           </div>
 
           {/* Mobile Compact Accordion List (Under 768px) */}
-          <div className="md:hidden border-t border-b border-[rgba(51,36,25,0.15)] divide-y divide-[rgba(51,36,25,0.15)]">
+          <div data-reveal className="md:hidden border-t border-b border-[rgba(51,36,25,0.15)] divide-y divide-[rgba(51,36,25,0.15)]">
             {differentiators.map((diff, index) => {
               const IconComp = diff.icon;
               const isOpen = openDiffIndex === index;
@@ -394,11 +394,11 @@ export default function WhySolvantraPage() {
 
                   <div
                     id={`diff-content-${diff.id}`}
-                    className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
-                      isOpen ? "grid-rows-[1fr] opacity-100 pb-5" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none ${
+                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 pointer-events-none"
                     }`}
                   >
-                    <div className="overflow-hidden px-2">
+                    <div className="overflow-hidden px-2 pb-5">
                       <div className="flex items-start gap-3.5 pt-1">
                         <div className="w-10 h-10 rounded-[6px] bg-[rgba(185,138,62,0.14)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5">
                           <IconComp className="w-5 h-5 stroke-[1.75]" />
@@ -449,7 +449,7 @@ export default function WhySolvantraPage() {
 
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
           {/* Section Header */}
-          <div className="max-w-3xl mb-12 lg:mb-16">
+          <div data-reveal className="max-w-3xl mb-12 lg:mb-16">
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--bg-55)] font-semibold">
@@ -462,7 +462,7 @@ export default function WhySolvantraPage() {
           </div>
 
           {/* Desktop Styled 3-Column Comparison (12-Col Grid) */}
-          <div className="hidden md:grid grid-cols-12 gap-6 items-stretch">
+          <div data-reveal className="hidden md:grid grid-cols-12 gap-6 items-stretch">
             {/* Left 7 Columns (Dimension Labels: 3 cols, Traditional BPO: 4 cols) */}
             <div className="col-span-7 flex flex-col justify-between">
               {/* Header Row */}

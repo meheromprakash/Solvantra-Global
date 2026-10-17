@@ -1130,7 +1130,7 @@ function ContactContent() {
       >
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           {/* Section Header */}
-          <div className="mb-12 lg:mb-16">
+          <div data-reveal className="mb-12 lg:mb-16">
             <div className="flex items-center gap-2 mb-3">
               <span className="font-mono text-[14px] font-bold text-[var(--accent)]">02</span>
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)] font-semibold">
@@ -1211,7 +1211,7 @@ function ContactContent() {
           </div>
 
           {/* Desktop Three Ruled Columns (hairlines, no cards, hover fills ink with bg text) */}
-          <div className="hidden md:grid md:grid-cols-3 border border-[rgba(51,36,25,0.15)] rounded-[12px] overflow-hidden divide-y md:divide-y-0 md:divide-x divide-[rgba(51,36,25,0.15)]">
+          <div data-reveal className="hidden md:grid md:grid-cols-3 border border-[rgba(51,36,25,0.15)] rounded-[12px] overflow-hidden divide-y md:divide-y-0 md:divide-x divide-[rgba(51,36,25,0.15)]">
             {SECTORS_FIT.map((sector) => (
               <div
                 key={sector.title}
@@ -1259,7 +1259,7 @@ function ContactContent() {
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             {/* Left Header (Cols 1-4, Sticky on desktop) */}
-            <div className="lg:col-span-4 lg:sticky lg:top-28">
+            <div data-reveal className="lg:col-span-4 lg:sticky lg:top-28">
               <div className="flex items-center gap-2 mb-3">
                 <span className="font-mono text-[14px] font-bold text-[var(--accent)]">03</span>
                 <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)] font-semibold">
@@ -1275,7 +1275,7 @@ function ContactContent() {
             </div>
 
             {/* Right Accordion (Cols 5-12) */}
-            <div className="lg:col-span-8 divide-y divide-[var(--ink-15)] border-t border-b border-[var(--ink-15)]">
+            <div data-reveal className="lg:col-span-8 divide-y divide-[var(--ink-15)] border-t border-b border-[var(--ink-15)]">
               {FAQ_ITEMS.map((item, idx) => {
                 const isOpen = openFaqIndex === idx;
                 return (
@@ -1299,12 +1299,12 @@ function ContactContent() {
                     </button>
 
                     <div
-                      className={`grid transition-all duration-300 ease-in-out font-sans ${
-                        isOpen ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"
+                      className={`grid transition-[grid-template-rows,opacity] duration-250 ease-out font-sans ${
+                        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <p className="text-[15px] sm:text-[16px] text-[var(--ink-80)] leading-[1.65]">
+                        <p className="pt-4 text-[15px] sm:text-[16px] text-[var(--ink-80)] leading-[1.65]">
                           {item.answer}
                         </p>
                       </div>

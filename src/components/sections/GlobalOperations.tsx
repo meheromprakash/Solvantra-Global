@@ -71,6 +71,7 @@ export default function GlobalOperations() {
   const [stat2, setStat2] = useState("100%");
   const [stat3, setStat3] = useState("3");
 
+  const [isSectionInView, setIsSectionInView] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const animatedRef = useRef(false);
 
@@ -84,19 +85,22 @@ export default function GlobalOperations() {
 
     if (prefersReducedMotion) {
       setIsVisible(true);
+      setIsSectionInView(true);
       return;
     }
 
-    // Reset initial values for count-up on view
-    setStat1("");
-    setStat2("0%");
-    setStat3("0");
-
     const observer = new IntersectionObserver(
       ([entry]) => {
+        setIsSectionInView(entry.isIntersecting);
+
         if (entry.isIntersecting && !animatedRef.current) {
           animatedRef.current = true;
           setIsVisible(true);
+
+          // Reset start values for smooth count-up once element is visible
+          setStat1("");
+          setStat2("0%");
+          setStat3("0");
 
           // 1. Stat 1 ("24/7"): character by character typing
           const text1 = "24/7";
@@ -138,8 +142,6 @@ export default function GlobalOperations() {
             }
           };
           requestAnimationFrame(animateCount3);
-
-          observer.disconnect();
         }
       },
       { threshold: 0.15 }
@@ -256,8 +258,13 @@ export default function GlobalOperations() {
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[var(--ink)] to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[var(--ink)] to-transparent z-10" />
 
-          {/* Marquee Track (loops twice for seamless infinite scroll, pauses on hover) */}
-          <div className="animate-marquee-slow flex items-center">
+          {/* Marquee Track (loops twice for seamless infinite scroll, pauses on hover or offscreen) */}
+          <div
+            className="animate-marquee-slow flex items-center"
+            style={{
+              animationPlayState: isSectionInView ? "running" : "paused",
+            }}
+          >
             {[...SERVICE_NAMES, ...SERVICE_NAMES].map((name, i) => (
               <div key={i} className="inline-flex items-center shrink-0">
                 <span className="font-mono text-[14px] uppercase tracking-[0.12em] text-[var(--bg-50)] whitespace-nowrap font-medium">

@@ -1,0 +1,395 @@
+/* ==========================================================================
+   SOLVANTRA GLOBAL — CENTRALIZED MOTION SYSTEM
+   ========================================================================== */
+
+:root {
+  /* Animation Easings */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.5, 0, 0.75, 0);
+
+  /* Animation Durations */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 500ms;
+  --dur-page: 350ms;
+
+  /* Reveal Distances */
+  --reveal-distance: 16px;
+  --reveal-distance-mobile: 12px;
+  --modal-scale-start: 0.97;
+
+  /* Stagger Tokens */
+  --stagger-delay: 60ms;
+  --stagger-max-items: 6;
+
+  /* Zero / Instant */
+  --motion-instant: 0ms;
+}
+
+/* ==========================================================================
+   1. NATIVE SMOOTH SCROLLING & ANCHOR PADDING
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+/* Ensure any element with an ID accounts for the fixed 72px navbar */
+[id] {
+  scroll-margin-top: 88px;
+}
+
+/* Specific deep anchor targets */
+#operations,
+#enquiry-form,
+#home-care,
+#field-trades,
+#operating-loop,
+#healthcare,
+#real-estate,
+#home-services {
+  scroll-margin-top: 96px;
+}
+
+/* ==========================================================================
+   2. SCROLL-TRIGGERED REVEAL SYSTEM
+   Progressive enhancement: elements are fully visible by default.
+   The JS observer adds .reveal-init only to below-the-fold content.
+   ========================================================================== */
+
+.reveal-init {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  will-change: opacity, transform;
+}
+
+@media (max-width: 767px) {
+  .reveal-init {
+    transform: translateY(var(--reveal-distance-mobile));
+  }
+}
+
+.reveal-init.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger child items within a revealed group */
+.reveal-init [data-stagger-item="1"],
+.reveal-init[data-stagger-group] > *:nth-child(1) {
+  transition-delay: calc(1 * var(--stagger-delay));
+}
+.reveal-init [data-stagger-item="2"],
+.reveal-init[data-stagger-group] > *:nth-child(2) {
+  transition-delay: calc(2 * var(--stagger-delay));
+}
+.reveal-init [data-stagger-item="3"],
+.reveal-init[data-stagger-group] > *:nth-child(3) {
+  transition-delay: calc(3 * var(--stagger-delay));
+}
+.reveal-init [data-stagger-item="4"],
+.reveal-init[data-stagger-group] > *:nth-child(4) {
+  transition-delay: calc(4 * var(--stagger-delay));
+}
+.reveal-init [data-stagger-item="5"],
+.reveal-init[data-stagger-group] > *:nth-child(5) {
+  transition-delay: calc(5 * var(--stagger-delay));
+}
+.reveal-init [data-stagger-item="6"],
+.reveal-init[data-stagger-group] > *:nth-child(6) {
+  transition-delay: calc(6 * var(--stagger-delay));
+}
+
+@media (max-width: 767px) {
+  /* On mobile, cap stagger delay to max 3 items (180ms) */
+  .reveal-init [data-stagger-item="4"],
+  .reveal-init [data-stagger-item="5"],
+  .reveal-init [data-stagger-item="6"],
+  .reveal-init[data-stagger-group] > *:nth-child(4),
+  .reveal-init[data-stagger-group] > *:nth-child(5),
+  .reveal-init[data-stagger-group] > *:nth-child(6) {
+    transition-delay: calc(3 * var(--stagger-delay));
+  }
+}
+
+/* ==========================================================================
+   3. INTERACTIVE FEEDBACK (Hover, Active, Focus)
+   ========================================================================== */
+
+/* Buttons, links, and interactive elements */
+.btn-solvantra-primary,
+.btn-solvantra-secondary,
+.sector-btn-primary,
+.sector-btn-secondary,
+.sector-btn-on-dark,
+button:not([disabled]),
+[role="button"]:not([aria-disabled="true"]) {
+  transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+  transition-duration: var(--dur-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+/* Active feedback (scale 0.98, ~100ms) */
+button:active:not([disabled]),
+.btn-solvantra-primary:active:not([disabled]),
+.btn-solvantra-secondary:active:not([disabled]),
+.sector-btn-primary:active:not([disabled]),
+.sector-btn-secondary:active:not([disabled]),
+[role="button"]:active:not([aria-disabled="true"]) {
+  transform: scale(0.98);
+  transition-duration: 100ms;
+}
+
+/* Subtle arrow translation on hover */
+@media (hover: hover) {
+  .link-solvantra:hover svg,
+  .sector-link:hover svg,
+  .group:hover .group-hover-arrow {
+    transform: translateX(4px);
+  }
+}
+
+/* ==========================================================================
+   4. ACCORDIONS & EXPANDING PANELS
+   Smooth grid-template-rows 0fr -> 1fr with opacity cross-fade
+   ========================================================================== */
+
+.accordion-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+}
+
+.accordion-drawer.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.accordion-drawer-inner {
+  overflow: hidden;
+}
+
+/* Chevron rotation via transform */
+.chevron-indicator {
+  transition: transform var(--dur-base) var(--ease-out);
+  will-change: transform;
+}
+.chevron-indicator.is-open {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   5. ROUTE & TAB TRANSITIONS
+   ========================================================================== */
+
+.page-transition-enter {
+  animation: pageFadeIn var(--dur-page) var(--ease-out) forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-pane-transition {
+  animation: tabFadeIn var(--dur-base) var(--ease-out) forwards;
+}
+
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   6. CONSULTATION MODAL ANIMATIONS
+   ========================================================================== */
+
+.modal-backdrop-enter {
+  animation: backdropIn 200ms var(--ease-out) forwards;
+}
+.modal-backdrop-exit {
+  animation: backdropOut 180ms var(--ease-in) forwards;
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes backdropOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.modal-dialog-enter {
+  animation: dialogInDesktop var(--dur-base) var(--ease-out) forwards;
+}
+.modal-dialog-exit {
+  animation: dialogOutDesktop 180ms var(--ease-in) forwards;
+}
+
+@keyframes dialogInDesktop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(var(--modal-scale-start));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes dialogOutDesktop {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(var(--modal-scale-start));
+  }
+}
+
+@media (max-width: 639px) {
+  .modal-dialog-enter {
+    animation: dialogInMobile 320ms var(--ease-out) forwards;
+  }
+  .modal-dialog-exit {
+    animation: dialogOutMobile 220ms var(--ease-in) forwards;
+  }
+
+  @keyframes dialogInMobile {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes dialogOutMobile {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+}
+
+/* ==========================================================================
+   7. MOBILE NAVIGATION ANIMATION
+   ========================================================================== */
+
+.mobile-nav-enter {
+  animation: mobileNavIn var(--dur-base) var(--ease-out) forwards;
+}
+.mobile-nav-exit {
+  animation: mobileNavOut 180ms var(--ease-in) forwards;
+}
+
+@keyframes mobileNavIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes mobileNavOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* Stagger mobile nav items */
+.mobile-nav-item:nth-child(1) { transition-delay: 0ms; }
+.mobile-nav-item:nth-child(2) { transition-delay: 40ms; }
+.mobile-nav-item:nth-child(3) { transition-delay: 80ms; }
+.mobile-nav-item:nth-child(n+4) { transition-delay: 120ms; }
+
+/* ==========================================================================
+   8. VISIBILITY LIFECYCLE MANAGEMENT
+   Pauses looping animations when tab is hidden or backgrounded
+   ========================================================================== */
+
+.page-hidden *,
+.page-hidden *::before,
+.page-hidden *::after {
+  animation-play-state: paused !important;
+}
+
+/* ==========================================================================
+   9. COMPREHENSIVE REDUCED MOTION PREFERENCES
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .reveal-init [data-stagger-item],
+  .reveal-init[data-stagger-group] > * {
+    transition-delay: 0ms !important;
+  }
+
+  .page-transition-enter,
+  .tab-pane-transition,
+  .modal-backdrop-enter,
+  .modal-backdrop-exit,
+  .modal-dialog-enter,
+  .modal-dialog-exit,
+  .mobile-nav-enter,
+  .mobile-nav-exit {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .accordion-drawer {
+    transition: none !important;
+  }
+
+  .chevron-indicator {
+    transition: none !important;
+  }
+}

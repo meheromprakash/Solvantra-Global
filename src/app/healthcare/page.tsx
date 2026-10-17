@@ -44,10 +44,17 @@ export default function HealthcarePage() {
   const [showAllDentalItems, setShowAllDentalItems] = useState(false);
   const [showAllWhyRows, setShowAllWhyRows] = useState(false);
 
-  // Claim lifecycle ticker in Hero (cycles 0 to 4)
+  // Claim lifecycle ticker in Hero (cycles 0 to 4) - pauses when document is hidden or reduced motion
   useEffect(() => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     const timer = setInterval(() => {
-      setActiveLifecycleNode((prev) => (prev + 1) % 5);
+      if (!document.hidden) {
+        setActiveLifecycleNode((prev) => (prev + 1) % 5);
+      }
     }, 2800);
     return () => clearInterval(timer);
   }, []);
@@ -310,7 +317,7 @@ export default function HealthcarePage() {
           2. OPERATING PRINCIPLE ("01 / THE OPERATING PRINCIPLE") Light #F3F7FB
          ========================================================================= */}
       <section className="sector-light py-20 md:py-28 border-b border-[var(--primary-15)]">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+        <div data-reveal className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Left Sticky Header */}
             <div className="lg:col-span-5 lg:sticky lg:top-36 self-start space-y-4">
@@ -369,7 +376,7 @@ export default function HealthcarePage() {
           color: "var(--primary)",
         }}
       >
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+        <div data-reveal className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
           <div className="max-w-3xl mb-14">
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold text-[var(--primary-55)] block mb-3">
               02 / END-TO-END WORKFLOW
@@ -448,7 +455,7 @@ export default function HealthcarePage() {
           </div>
 
           {/* Detailed Context Panel Below for Selected Step */}
-          <div className="sector-card-light p-8 shadow-sm border border-[var(--primary-15)] bg-white">
+          <div key={selectedWorkflowStep} className="sector-card-light tab-pane-transition p-8 shadow-sm border border-[var(--primary-15)] bg-white">
             <div className="flex items-center gap-3 mb-3">
               <span className="px-2.5 py-0.5 rounded font-mono text-[11px] uppercase font-bold bg-[var(--primary)] text-white">
                 STEP {workflowSteps[selectedWorkflowStep].num}
@@ -468,7 +475,7 @@ export default function HealthcarePage() {
           4. MEDICAL & DENTAL RCM ("03 / RCM SUPPORT") Light #F3F7FB
          ========================================================================= */}
       <section className="sector-light py-20 md:py-28 border-b border-[var(--primary-15)]">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
+        <div data-reveal className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] font-semibold text-[var(--primary-55)] block mb-3">
@@ -517,7 +524,7 @@ export default function HealthcarePage() {
           </div>
 
           {/* Tab Content Panel (2x3 ruled grid with icons) */}
-          <div className="sector-card-light p-8 sm:p-10 shadow-sm border border-[var(--primary-15)] bg-white min-h-[380px] flex flex-col justify-between">
+          <div key={activeRcmTab} className="sector-card-light tab-pane-transition p-8 sm:p-10 shadow-sm border border-[var(--primary-15)] bg-white min-h-[380px] flex flex-col justify-between">
             {activeRcmTab === "medical" ? (
               <div id="panel-medical" role="tabpanel" aria-labelledby="tab-medical" className="space-y-8 animate-in fade-in duration-200">
                 <div>

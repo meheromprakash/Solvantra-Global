@@ -45,6 +45,9 @@ export default function ConsultationModal({
   defaultService = "General Inquiry",
 }: ConsultationModalProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -71,7 +74,45 @@ export default function ConsultationModal({
     }
   }, [defaultService]);
 
-  if (!isOpen) return null;
+  // Lock body scroll and save active focus on modal open
+  useEffect(() => {
+    if (isOpen) {
+      previousActiveElement.current = document.activeElement as HTMLElement;
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = "hidden";
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+      previousActiveElement.current?.focus();
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
+  }, [isOpen]);
+
+  const handleRequestClose = () => {
+    if (isClosing) return;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      onClose();
+      return;
+    }
+
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 180);
+  };
+
+  if (!isOpen && !isClosing) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,7 +121,7 @@ export default function ConsultationModal({
 
   const handleReset = () => {
     setSubmitted(false);
-    onClose();
+    handleRequestClose();
   };
 
   // Keyboard navigation for Service dropdown
@@ -170,12 +211,18 @@ export default function ConsultationModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="consultation-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[rgba(51,36,25,0.55)] backdrop-blur-sm animate-fadeIn"
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[rgba(51,36,25,0.55)] backdrop-blur-sm ${
+        isClosing ? "modal-backdrop-exit" : "modal-backdrop-enter"
+      }`}
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) handleRequestClose();
       }}
     >
-      <div className="relative w-full max-w-2xl bg-[var(--bg)] rounded-[16px] border border-[var(--ink-12)] shadow-[0_32px_80px_rgba(51,36,25,0.35)] overflow-hidden flex flex-col max-h-[calc(100vh-2rem)] animate-modal-in">
+      <div
+        className={`relative w-full max-w-2xl bg-[var(--bg)] rounded-[16px] border border-[var(--ink-12)] shadow-[0_32px_80px_rgba(51,36,25,0.35)] overflow-hidden flex flex-col max-h-[calc(100vh-2rem)] ${
+          isClosing ? "modal-dialog-exit" : "modal-dialog-enter"
+        }`}
+      >
         {/* Header */}
         <div className="bg-[var(--bg)] px-6 py-5 flex items-center justify-between gap-4 shrink-0 relative">
           <div className="flex items-center gap-3.5 min-w-0">
@@ -199,7 +246,7 @@ export default function ConsultationModal({
           {/* Close button with 40px tap target */}
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleRequestClose}
             className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[var(--ink-65)] hover:text-[var(--ink)] hover:bg-[var(--ink-6)] transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
             aria-label="Close modal"
           >
@@ -214,7 +261,7 @@ export default function ConsultationModal({
         <div className="p-6 md:p-8 overflow-y-auto font-sans flex-1">
           {submitted ? (
             /* SUCCESS STATE */
-            <div className="py-8 text-center flex flex-col items-center">
+            <div className="py-8 text-center flex flex-col items-center tab-pane-transition">
               <div className="w-14 h-14 rounded-full bg-[var(--accent-14)] flex items-center justify-center text-[var(--accent)] mb-4">
                 <Check className="w-8 h-8 stroke-[2.5]" />
               </div>
@@ -530,7 +577,7 @@ export default function ConsultationModal({
                 <div className="flex flex-col-reverse sm:flex-row items-center gap-3 w-full sm:w-auto shrink-0">
                   <button
                     type="button"
-                    onClick={onClose}
+                    onClick={handleRequestClose}
                     className="btn-solvantra-secondary w-full sm:w-auto h-[44px] px-5 text-[14px] cursor-pointer"
                   >
                     Cancel

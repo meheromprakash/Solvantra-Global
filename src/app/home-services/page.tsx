@@ -60,40 +60,58 @@ export default function HomeServicesPage() {
     return () => clearInterval(timer);
   }, []);
 
-  // Home Care Call-out step simulation cycle
+  // Home Care Call-out step simulation cycle (pauses when tab is hidden or reduced motion)
   useEffect(() => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) return;
+
     const timer = setInterval(() => {
+      if (document.hidden) return;
       setActiveCallOutStep((prev) => (prev + 1) % 6);
     }, 2800);
     return () => clearInterval(timer);
   }, []);
 
-  // Scroll listener for sticky segmented control active state
+  // Passive IntersectionObserver for sticky segmented control active state
   useEffect(() => {
-    const handleScroll = () => {
-      const homeCareEl = document.getElementById("home-care");
-      if (homeCareEl) {
-        const rect = homeCareEl.getBoundingClientRect();
-        // If the top of Home Care is within 250px of the viewport top, highlight Home Care
-        if (rect.top <= 250) {
+    const homeCareEl = document.getElementById("home-care");
+    if (!homeCareEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
           setActiveSegment("home-care");
         } else {
-          setActiveSegment("field-trades");
+          // If the element is above or below
+          const rect = homeCareEl.getBoundingClientRect();
+          if (rect.top <= 250) {
+            setActiveSegment("home-care");
+          } else {
+            setActiveSegment("field-trades");
+          }
         }
-      }
-    };
+      },
+      { rootMargin: "-180px 0px -50% 0px" }
+    );
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    observer.observe(homeCareEl);
+    return () => observer.disconnect();
   }, []);
 
   // Smooth scroll helper with header offset
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const yOffset = -120; // Accounts for navbar and sticky segmented control
-    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    el.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   };
 
   // Dispatch ticker rows for Hero

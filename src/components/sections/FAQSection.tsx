@@ -81,7 +81,7 @@ export default function FAQSection() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Header left: mono "05 / FAQ", H2 "Questions, answered." */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 self-start">
+          <div data-reveal className="lg:col-span-5 lg:sticky lg:top-28 self-start">
             <div className="flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)] mb-3">
               <span className="text-[var(--accent)] font-bold">05</span>
               <span>/ FAQ</span>
@@ -95,7 +95,7 @@ export default function FAQSection() {
           </div>
 
           {/* Right: accordion of 6 items */}
-          <div className="lg:col-span-7 border-t border-[var(--ink-15)]">
+          <div data-reveal className="lg:col-span-7 border-t border-[var(--ink-15)]">
             {FAQ_ITEMS.map((item, idx) => {
               const isOpen = openIndex === idx;
 
@@ -141,12 +141,14 @@ export default function FAQSection() {
                     id={`faq-answer-${idx}`}
                     role="region"
                     aria-labelledby={`faq-question-${idx}`}
-                    className={`grid transition-[grid-template-rows] duration-350 ease-out ${
+                    className={`grid transition-[grid-template-rows] duration-250 ease-out ${
                       isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <div className="pb-6 pr-4 sm:pr-8 text-[15px] sm:text-[16px] text-[var(--ink-80)] leading-[1.65] font-sans">
+                      <div className={`pb-6 pr-4 sm:pr-8 text-[15px] sm:text-[16px] text-[var(--ink-80)] leading-[1.65] font-sans transition-all duration-250 ease-out ${
+                        isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                      }`}>
                         {item.answer}
                       </div>
                     </div>

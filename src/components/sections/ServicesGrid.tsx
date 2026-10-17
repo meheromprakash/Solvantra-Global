@@ -1,14 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, User, ChevronDown } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
 
 export default function ServicesGrid() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isInView, setIsInView] = useState(true);
+
   // First row ("24/7 Call & Chat Support") open by default on mobile
   const [openRow, setOpenRow] = useState<string | null>("01");
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const toggleRow = (id: string) => {
     setOpenRow((prev) => (prev === id ? null : id));
@@ -22,7 +37,7 @@ export default function ServicesGrid() {
 
   return (
     <>
-      <section className="w-full py-14 md:py-24 bg-[var(--bg)] relative overflow-hidden">
+      <section ref={sectionRef} className="w-full py-14 md:py-24 bg-[var(--bg)] relative overflow-hidden">
         {/* 1. Faint dot-grid texture (ink at 5%, 24px spacing) masked to top-left corner only */}
         <div
           aria-hidden="true"
@@ -50,7 +65,7 @@ export default function ServicesGrid() {
 
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
           {/* Header: mono "02 / OPERATIONS", H2, subline */}
-          <div className="mb-8 md:mb-12 lg:mb-16">
+          <div data-reveal className="mb-8 md:mb-12 lg:mb-16">
             <div className="flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)] mb-2.5">
               <span className="text-[var(--accent)] font-bold">02</span>
               <span>/ OPERATIONS</span>
@@ -67,7 +82,7 @@ export default function ServicesGrid() {
               MOBILE COMPACT ACCORDION LIST (Under 768px: block md:hidden)
               8 compact rows with 1px hairlines, min 56px tap target, smooth height animation
              ========================================================================= */}
-          <div className="block md:hidden w-full">
+          <div data-reveal className="block md:hidden w-full">
             <div className="border-t border-[var(--ink-15)]">
               {/* ROW 01: 24/7 Call & Chat Support */}
               <div className="border-b border-[var(--ink-15)]">
@@ -129,6 +144,7 @@ export default function ServicesGrid() {
                                 style={{
                                   height: `${Math.round(height * 0.55)}px`,
                                   animation: `waveBar 1.2s ease-in-out infinite alternate ${(i * 0.05).toFixed(2)}s`,
+                                  animationPlayState: isInView ? "running" : "paused",
                                 }}
                               />
                             ))}
@@ -562,7 +578,7 @@ export default function ServicesGrid() {
               DESKTOP & TABLET BENTO GRID (768px and up: md:grid)
               Exact original 12-column bento layout preserved with 20px gap
              ========================================================================= */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-12 gap-5 auto-rows-auto lg:auto-rows-[240px]">
+          <div data-reveal data-stagger-group className="hidden md:grid md:grid-cols-2 lg:grid-cols-12 gap-5 auto-rows-auto lg:auto-rows-[240px]">
             {/* TILE 1: 24/7 Call & Chat Support (LARGE: span 6 cols, 2 rows) */}
             <div className="col-span-1 md:col-span-2 lg:col-span-6 lg:row-span-2 bg-[rgba(248,241,229,0.85)] backdrop-blur-sm border border-[var(--ink-12)] rounded-[16px] p-6 lg:p-[28px] flex flex-col justify-between shadow-[0_1px_2px_var(--ink-6)] relative overflow-hidden min-h-[380px] lg:min-h-0">
               <div>
@@ -606,6 +622,7 @@ export default function ServicesGrid() {
                             animation: `waveBar 1.2s ease-in-out infinite alternate ${
                               (i * 0.05).toFixed(2)
                             }s`,
+                            animationPlayState: isInView ? "running" : "paused",
                           }}
                         />
                       ))}

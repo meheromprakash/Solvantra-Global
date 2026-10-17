@@ -102,7 +102,7 @@ export default function HomePage() {
       >
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
           {/* Header: mono "03 / PROCESS", H2 "From first call to full coverage." (placeholder) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12 lg:mb-16">
+          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12 lg:mb-16">
             <div className="lg:col-span-3">
               <div className="flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)]">
                 <span className="text-[var(--accent)] font-bold">03</span>
@@ -235,7 +235,7 @@ export default function HomePage() {
           </div>
 
           {/* Bordered Full-Width Strip Below Steps */}
-          <div className="w-full mt-14 lg:mt-16 p-5 sm:p-6 rounded-[12px] border border-[rgba(185,138,62,0.25)] bg-[rgba(248,241,229,0.70)] backdrop-blur-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_1px_2px_var(--ink-6)]">
+          <div data-reveal className="w-full mt-14 lg:mt-16 p-5 sm:p-6 rounded-[12px] border border-[rgba(185,138,62,0.25)] bg-[rgba(248,241,229,0.70)] backdrop-blur-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_1px_2px_var(--ink-6)]">
             {/* TODO: confirm with client */}
             <p className="text-[15px] sm:text-[16px] text-[var(--ink-80)] font-sans">
               Every partnership begins with a comprehensive operational assessment and dedicated onboarding plan.
@@ -271,7 +271,7 @@ export default function HomePage() {
 
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
           {/* Header: mono "04 / ABOUT" in cols 1-3, huge statement H2 in cols 4-12 */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12 lg:mb-16">
+          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12 lg:mb-16">
             <div className="lg:col-span-3">
               <div className="flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--ink-65)]">
                 <span className="text-[var(--accent)] font-bold">04</span>
@@ -295,7 +295,7 @@ export default function HomePage() {
           </div>
 
           {/* Below H2: Two Columns */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             {/* LEFT Column: two paragraphs (17px, max 520px) and link */}
             <div className="lg:col-span-6 flex flex-col justify-between">
               <div className="max-w-[520px] space-y-5 mb-8">

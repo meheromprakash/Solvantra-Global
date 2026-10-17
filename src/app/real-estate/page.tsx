@@ -53,19 +53,33 @@ export default function RealEstatePage() {
   const [isRegOpen, setIsRegOpen] = useState(false);
   const [regTab, setRegTab] = useState<"england" | "us">("england");
 
-  // Hero ticker cycle
+  // Hero ticker cycle - pauses on tab hidden or reduced motion
   useEffect(() => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     const timer = setInterval(() => {
-      setActiveLogRow((prev) => (prev + 1) % 5);
+      if (!document.hidden) {
+        setActiveLogRow((prev) => (prev + 1) % 5);
+      }
     }, 3200);
     return () => clearInterval(timer);
   }, []);
 
-  // Audience explorer auto-advance every 8s until user interacts
+  // Audience explorer auto-advance every 8s until user interacts, pauses on tab hidden
   useEffect(() => {
     if (userInteractedAudience) return;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     const timer = setInterval(() => {
-      setSelectedAudienceIndex((prev) => (prev + 1) % 6);
+      if (!document.hidden) {
+        setSelectedAudienceIndex((prev) => (prev + 1) % 6);
+      }
     }, 8000);
     return () => clearInterval(timer);
   }, [userInteractedAudience]);
