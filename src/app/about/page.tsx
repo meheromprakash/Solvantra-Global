@@ -212,8 +212,8 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* RIGHT Column: Signature Venn Diagram (5 cols) */}
-            <div className="lg:col-span-5 w-full flex items-center justify-center">
+            {/* RIGHT Column: Signature Venn Diagram (5 cols, hidden on mobile resolution) */}
+            <div className="hidden lg:flex lg:col-span-5 w-full items-center justify-center">
               <div
                 aria-hidden="true"
                 className="relative w-full max-w-[420px] aspect-square flex items-center justify-center select-none animate-venn-drift"
