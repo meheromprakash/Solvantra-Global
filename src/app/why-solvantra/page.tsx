@@ -12,12 +12,16 @@ import {
   ArrowRight,
   Check,
   X,
+  ChevronDown,
 } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
 import FinalCTA from "@/components/sections/FinalCTA";
 
 export default function WhySolvantraPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // First differentiator open by default on mobile
+  const [openDiffIndex, setOpenDiffIndex] = useState<number | null>(0);
+  const [showComparisonDetails, setShowComparisonDetails] = useState<Record<number, boolean>>({});
 
   // 6 Key Differentiators with claims neutralized per Step 0
   const differentiators = [
@@ -108,6 +112,10 @@ export default function WhySolvantraPage() {
   ];
 
   const scrollToDifferentiator = (id: string) => {
+    const idx = differentiators.findIndex((d) => d.id === id);
+    if (idx !== -1) {
+      setOpenDiffIndex(idx);
+    }
     if (typeof window !== "undefined") {
       const el = document.getElementById(id);
       if (el) {
@@ -314,9 +322,9 @@ export default function WhySolvantraPage() {
             </p>
           </div>
 
-          {/* Ruled Grid: 3 columns x 2 rows, NO bordered cards, outer border top/bottom only */}
-          <div className="border-t border-b border-[rgba(51,36,25,0.15)]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {/* Desktop/Tablet Ruled Grid (768px and up) */}
+          <div className="hidden md:block border-t border-b border-[rgba(51,36,25,0.15)]">
+            <div className="grid grid-cols-2 lg:grid-cols-3">
               {differentiators.map((diff, index) => {
                 const IconComp = diff.icon;
                 const borderClasses = getRuledGridBorderClasses(index);
@@ -352,6 +360,58 @@ export default function WhySolvantraPage() {
                 );
               })}
             </div>
+          </div>
+
+          {/* Mobile Compact Accordion List (Under 768px) */}
+          <div className="md:hidden border-t border-b border-[rgba(51,36,25,0.15)] divide-y divide-[rgba(51,36,25,0.15)]">
+            {differentiators.map((diff, index) => {
+              const IconComp = diff.icon;
+              const isOpen = openDiffIndex === index;
+
+              return (
+                <div key={diff.id} id={diff.id} className="scroll-mt-24">
+                  <button
+                    type="button"
+                    onClick={() => setOpenDiffIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    aria-controls={`diff-content-${diff.id}`}
+                    className="w-full min-h-[64px] py-4 px-2 flex items-center justify-between text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    <div className="flex items-center gap-3 pr-2">
+                      <span className="font-mono text-[14px] font-semibold text-[var(--accent)] shrink-0 w-6">
+                        {diff.number}
+                      </span>
+                      <h3 className="font-serif text-[18px] sm:text-[20px] font-medium text-[var(--ink)] leading-snug">
+                        {diff.title}
+                      </h3>
+                    </div>
+                    <ChevronDown
+                      className={`w-5 h-5 text-[var(--ink-65)] shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
+                        isOpen ? "rotate-180 text-[var(--accent)]" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    id={`diff-content-${diff.id}`}
+                    className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      isOpen ? "grid-rows-[1fr] opacity-100 pb-5" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <div className="overflow-hidden px-2">
+                      <div className="flex items-start gap-3.5 pt-1">
+                        <div className="w-10 h-10 rounded-[6px] bg-[rgba(185,138,62,0.14)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5">
+                          <IconComp className="w-5 h-5 stroke-[1.75]" />
+                        </div>
+                        <p className="text-[15px] text-[rgba(51,36,25,0.85)] leading-[1.6] font-sans">
+                          {diff.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -455,42 +515,78 @@ export default function WhySolvantraPage() {
             </div>
           </div>
 
-          {/* Mobile Stacked Comparison (Under 768px) */}
-          <div className="md:hidden flex flex-col space-y-6">
-            {comparisonRows.map((row, index) => (
-              <div
-                key={index}
-                className="border-b border-[rgba(248,241,229,0.15)] pb-6 last:border-b-0"
-              >
-                <div className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--bg-75)] font-semibold mb-3">
-                  {row.dimension}
-                </div>
+          {/* Mobile Stacked Comparison (Under 768px): Progressive Disclosure Mini-blocks */}
+          <div className="md:hidden flex flex-col divide-y divide-[rgba(248,241,229,0.15)] border-t border-b border-[rgba(248,241,229,0.15)]">
+            {comparisonRows.map((row, index) => {
+              const isDetailsOpen = !!showComparisonDetails[index];
 
-                {/* Traditional Line (Muted) */}
-                <div className="bg-[rgba(248,241,229,0.06)] border border-[rgba(248,241,229,0.12)] rounded-lg p-3.5 mb-2.5 flex items-start gap-2.5 text-[14px] text-[var(--bg-55)] font-sans">
-                  <X className="w-4 h-4 text-[rgba(248,241,229,0.35)] shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-medium text-[var(--bg-55)] mr-1">
-                      Traditional BPO:
-                    </span>
-                    <span>{row.traditional}</span>
+              return (
+                <div key={index} className="py-4">
+                  {/* Dimension Tag */}
+                  <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--accent)] font-semibold mb-2">
+                    {row.dimension}
                   </div>
-                </div>
 
-                {/* Solvantra Line (Lifted Light Card) */}
-                <div className="bg-[var(--bg)] text-[var(--ink)] rounded-xl p-4 shadow-[0_12px_32px_rgba(51,36,25,0.30)] border border-[rgba(185,138,62,0.30)] flex items-start gap-3 text-[14px] font-sans font-medium">
-                  <div className="w-5 h-5 rounded-full bg-[rgba(185,138,62,0.15)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-[var(--accent)] stroke-[2.5]" />
+                  {/* Solvantra Line (Always Visible First) */}
+                  <div className="bg-[var(--bg)] text-[var(--ink)] rounded-lg p-3.5 shadow-sm border border-[rgba(185,138,62,0.25)] flex items-start gap-2.5">
+                    <div className="w-5 h-5 rounded-full bg-[rgba(185,138,62,0.15)] text-[var(--accent)] flex items-center justify-center shrink-0 mt-0.5">
+                      <Check className="w-3.5 h-3.5 text-[var(--accent)] stroke-[2.5]" />
+                    </div>
+                    <div>
+                      <span className="font-bold text-[var(--ink)] mr-1 text-[14px]">
+                        Solvantra:
+                      </span>
+                      <span className="text-[14px] font-medium text-[var(--ink)] leading-snug">
+                        {row.solvantra}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <span className="font-bold text-[var(--ink)] mr-1">
-                      Solvantra:
-                    </span>
-                    <span className="text-[var(--ink)]">{row.solvantra}</span>
+
+                  {/* Progressive Disclosure Toggle */}
+                  <div className="mt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowComparisonDetails((prev) => ({
+                          ...prev,
+                          [index]: !prev[index],
+                        }))
+                      }
+                      aria-expanded={isDetailsOpen}
+                      aria-controls={`comparison-details-${index}`}
+                      className="inline-flex items-center gap-1.5 py-1.5 px-2 text-[13px] font-mono text-[var(--bg-75)] hover:text-[var(--bg)] cursor-pointer"
+                    >
+                      <span>{isDetailsOpen ? "Hide traditional comparison" : "Compare vs Traditional BPO"}</span>
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 transition-transform duration-200 motion-reduce:transition-none ${
+                          isDetailsOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Collapsed Traditional Line */}
+                  <div
+                    id={`comparison-details-${index}`}
+                    className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      isDetailsOpen ? "grid-rows-[1fr] opacity-100 pt-2" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="bg-[rgba(248,241,229,0.06)] border border-[rgba(248,241,229,0.12)] rounded-lg p-3 flex items-start gap-2.5 text-[14px] text-[var(--bg-55)] font-sans">
+                        <X className="w-4 h-4 text-[rgba(248,241,229,0.35)] shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-medium text-[var(--bg-55)] mr-1">
+                            Traditional BPO:
+                          </span>
+                          <span>{row.traditional}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Footnote */}

@@ -121,6 +121,9 @@ function ContactContent() {
   // FAQ accordion state (first item open by default)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
+  // Sector fit accordion state for mobile
+  const [openSectorFitIndex, setOpenSectorFitIndex] = useState<number | null>(0);
+
   // Error summary ref for focus management
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
@@ -1142,8 +1145,73 @@ function ContactContent() {
             </p>
           </div>
 
-          {/* Three Ruled Columns (hairlines, no cards, hover fills ink with bg text) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 border border-[rgba(51,36,25,0.15)] rounded-[12px] overflow-hidden divide-y md:divide-y-0 md:divide-x divide-[rgba(51,36,25,0.15)]">
+          {/* Mobile Accordion View (Under 768px) */}
+          <div className="md:hidden border border-[rgba(51,36,25,0.15)] rounded-[12px] overflow-hidden divide-y divide-[rgba(51,36,25,0.15)] bg-[var(--bg)]">
+            {SECTORS_FIT.map((sector, sIdx) => {
+              const isOpen = openSectorFitIndex === sIdx;
+              return (
+                <div key={sector.title} className="transition-colors duration-200">
+                  <button
+                    type="button"
+                    onClick={() => setOpenSectorFitIndex(isOpen ? null : sIdx)}
+                    aria-expanded={isOpen}
+                    aria-controls={`sector-fit-mobile-${sIdx}`}
+                    className="w-full min-h-[56px] px-5 py-4 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[14px] font-bold text-[var(--accent)]">
+                        0{sIdx + 1}
+                      </span>
+                      <span className="font-serif text-[20px] font-medium text-[var(--ink)]">
+                        {sector.title}
+                      </span>
+                    </div>
+                    <span
+                      className={`w-7 h-7 rounded-full border border-[var(--ink-20)] flex items-center justify-center shrink-0 transition-transform duration-200 motion-reduce:transition-none text-[var(--ink)] ${
+                        isOpen ? "rotate-180 bg-[var(--ink)] text-[var(--bg)]" : ""
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <ChevronDown className="w-4 h-4 stroke-[2]" />
+                    </span>
+                  </button>
+
+                  <div
+                    id={`sector-fit-mobile-${sIdx}`}
+                    className={`grid transition-[grid-template-rows,opacity] duration-200 motion-reduce:transition-none ease-out ${
+                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden px-5 pb-5 pt-1 space-y-4">
+                      <p className="text-[14px] leading-[1.6] text-[var(--ink-80)] font-sans">
+                        {sector.audience}
+                      </p>
+                      <div className="flex flex-col gap-2.5 pt-2 border-t border-[rgba(51,36,25,0.12)]">
+                        <Link
+                          href={sector.href}
+                          className="inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--ink)] underline decoration-2 decoration-[var(--accent)] underline-offset-4"
+                        >
+                          <span>Learn more</span>
+                          <span aria-hidden="true">&rarr;</span>
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => handlePreselectSector(sector.categoryValue)}
+                          className="w-full h-[44px] rounded-[8px] border border-[rgba(51,36,25,0.25)] text-[14px] font-semibold text-[var(--ink)] bg-[rgba(51,36,25,0.04)] hover:bg-[rgba(51,36,25,0.08)] transition-all cursor-pointer inline-flex items-center justify-center gap-1.5"
+                        >
+                          <span>Preselect in form</span>
+                          <ChevronDown className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Desktop Three Ruled Columns (hairlines, no cards, hover fills ink with bg text) */}
+          <div className="hidden md:grid md:grid-cols-3 border border-[rgba(51,36,25,0.15)] rounded-[12px] overflow-hidden divide-y md:divide-y-0 md:divide-x divide-[rgba(51,36,25,0.15)]">
             {SECTORS_FIT.map((sector) => (
               <div
                 key={sector.title}

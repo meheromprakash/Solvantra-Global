@@ -232,18 +232,18 @@ export default function ServicesPage() {
            --------------------------------------------------------------------- */}
         <section
           id={SERVICES[0].slug}
-          className="w-full py-20 lg:py-28 bg-[var(--bg)] border-b border-[var(--ink-15)] relative min-h-[640px] flex items-center"
+          className="w-full py-12 md:py-20 lg:py-28 bg-[var(--bg)] border-b border-[var(--ink-15)] relative min-h-[600px] flex items-center"
         >
           <div className="max-w-[1200px] mx-auto px-6 lg:px-10 w-full">
             {/* Tag row at top: small chips from OPERATIONS list (>= 14px) */}
-            <div className="flex flex-wrap items-center gap-2.5 mb-10 pb-4 border-b border-[var(--ink-12)]">
-              <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--ink-65)] mr-2">
+            <div className="flex items-center gap-2 mb-6 md:mb-10 pb-3 md:pb-4 border-b border-[var(--ink-12)] overflow-x-auto no-scrollbar md:flex-wrap md:overflow-visible">
+              <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--ink-65)] mr-2 shrink-0">
                 Operations Involved:
               </span>
               {SERVICES[0].operationsTags.map((tag) => (
                 <span
                   key={tag}
-                  className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--ink-20)] bg-[var(--ink-6)] text-[var(--ink-80)]"
+                  className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--ink-20)] bg-[var(--ink-6)] text-[var(--ink-80)] shrink-0 whitespace-nowrap"
                 >
                   {tag}
                 </span>
@@ -370,21 +370,21 @@ export default function ServicesPage() {
            --------------------------------------------------------------------- */}
         <section
           id={SERVICES[1].slug}
-          className="w-full py-20 lg:py-28 border-b border-[var(--ink-15)] relative min-h-[640px] flex items-center"
+          className="w-full py-12 md:py-20 lg:py-28 border-b border-[var(--ink-15)] relative min-h-[600px] flex items-center"
           style={{
             backgroundColor: "color-mix(in srgb, var(--accent) 8%, var(--bg))",
           }}
         >
           <div className="max-w-[1200px] mx-auto px-6 lg:px-10 w-full">
             {/* Tag row at top */}
-            <div className="flex flex-wrap items-center gap-2.5 mb-10 pb-4 border-b border-[rgba(51,36,25,0.15)]">
-              <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--ink-65)] mr-2">
+            <div className="flex items-center gap-2 mb-6 md:mb-10 pb-3 md:pb-4 border-b border-[rgba(51,36,25,0.15)] overflow-x-auto no-scrollbar md:flex-wrap md:overflow-visible">
+              <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--ink-65)] mr-2 shrink-0">
                 Operations Involved:
               </span>
               {SERVICES[1].operationsTags.map((tag) => (
                 <span
                   key={tag}
-                  className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--ink-20)] bg-[rgba(248,241,229,0.7)] text-[var(--ink-80)]"
+                  className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--ink-20)] bg-[rgba(248,241,229,0.7)] text-[var(--ink-80)] shrink-0 whitespace-nowrap"
                 >
                   {tag}
                 </span>
@@ -508,18 +508,18 @@ export default function ServicesPage() {
            --------------------------------------------------------------------- */}
         <section
           id={SERVICES[2].slug}
-          className="w-full py-20 lg:py-28 bg-[var(--ink)] text-[var(--bg)] border-b border-[rgba(185,138,62,0.25)] relative min-h-[640px] flex items-center"
+          className="w-full py-12 md:py-20 lg:py-28 bg-[var(--ink)] text-[var(--bg)] border-b border-[rgba(185,138,62,0.25)] relative min-h-[600px] flex items-center"
         >
           <div className="max-w-[1200px] mx-auto px-6 lg:px-10 w-full">
             {/* Tag row at top */}
-            <div className="flex flex-wrap items-center gap-2.5 mb-10 pb-4 border-b border-[var(--bg-12)]">
-              <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--bg-60)] mr-2">
+            <div className="flex items-center gap-2 mb-6 md:mb-10 pb-3 md:pb-4 border-b border-[var(--bg-12)] overflow-x-auto no-scrollbar md:flex-wrap md:overflow-visible">
+              <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--bg-60)] mr-2 shrink-0">
                 Operations Involved:
               </span>
               {SERVICES[2].operationsTags.map((tag) => (
                 <span
                   key={tag}
-                  className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--bg-15)] bg-[var(--bg-8)] text-[var(--bg-75)]"
+                  className="font-mono text-[14px] px-3.5 py-1 rounded-full border border-[var(--bg-15)] bg-[var(--bg-8)] text-[var(--bg-75)] shrink-0 whitespace-nowrap"
                 >
                   {tag}
                 </span>
@@ -702,7 +702,7 @@ export default function ServicesPage() {
                         </h3>
                       </div>
                       <p
-                        className={`text-[14px] sm:text-[15px] leading-[1.5] font-sans transition-colors ${
+                        className={`hidden md:block text-[14px] sm:text-[15px] leading-[1.5] font-sans transition-colors ${
                           isOpen
                             ? "text-[var(--bg-75)]"
                             : "text-[var(--ink-80)] group-hover:text-[var(--bg-75)]"
@@ -727,6 +727,9 @@ export default function ServicesPage() {
                   {/* Expandable Deliverables Checklist */}
                   {isOpen && (
                     <div className="px-3 pb-5 pt-1 border-t border-[var(--bg-12)] animate-fadeIn">
+                      <p className="block md:hidden text-[14px] leading-[1.5] font-sans text-[var(--bg-75)] mb-3">
+                        {op.description}
+                      </p>
                       <span className="font-mono text-[14px] uppercase tracking-wider text-[var(--bg-60)] font-semibold block mb-3">
                         Key Deliverables Included:
                       </span>

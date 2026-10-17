@@ -16,6 +16,7 @@ import {
   Users,
   GitBranch,
   Cpu,
+  ChevronDown,
 } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -23,6 +24,7 @@ import FinalCTA from "@/components/sections/FinalCTA";
 export default function AboutPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeValueIndex, setActiveValueIndex] = useState<number | null>(null);
+  const [openMobileValueIndex, setOpenMobileValueIndex] = useState<number | null>(0);
 
   const coreValues = [
     {
@@ -557,8 +559,8 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Right Column: 5 Numbered Rows (cols 6-12) */}
-            <div className="lg:col-start-6 lg:col-span-7 flex flex-col border-b border-[var(--ink-15)]">
+            {/* Right Column: 5 Numbered Rows (Desktop/Tablet 768px and up) */}
+            <div className="hidden md:flex lg:col-start-6 lg:col-span-7 flex-col border-b border-[var(--ink-15)]">
               {coreValues.map((val, idx) => {
                 const IconComp = val.icon;
                 const isHovered = activeValueIndex === idx;
@@ -614,6 +616,59 @@ export default function AboutPage() {
 
                     <div className="w-10 h-10 rounded-full border border-[var(--ink-15)] group-hover:border-[var(--bg-20)] flex items-center justify-center shrink-0 text-[var(--accent)] mt-1 transition-colors">
                       <IconComp className="w-5 h-5 stroke-[1.8]" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Mobile Compact Accordion for Core Values (Under 768px) */}
+            <div className="md:hidden border-t border-b border-[var(--ink-15)] divide-y divide-[var(--ink-15)]">
+              {coreValues.map((val, idx) => {
+                const IconComp = val.icon;
+                const isOpen = openMobileValueIndex === idx;
+
+                return (
+                  <div key={val.num}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenMobileValueIndex(isOpen ? null : idx)}
+                      aria-expanded={isOpen}
+                      aria-controls={`value-content-${val.num}`}
+                      className="w-full min-h-[60px] py-4 px-2 flex items-center justify-between text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                    >
+                      <div className="flex items-center gap-3 pr-2">
+                        <span className="font-mono text-[14px] font-semibold text-[var(--accent)] shrink-0 w-6">
+                          {val.num}
+                        </span>
+                        <h3 className="font-serif text-[18px] sm:text-[20px] font-medium text-[var(--ink)] leading-snug">
+                          {val.title}
+                        </h3>
+                      </div>
+                      <ChevronDown
+                        className={`w-5 h-5 text-[var(--ink-65)] shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
+                          isOpen ? "rotate-180 text-[var(--accent)]" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <div
+                      id={`value-content-${val.num}`}
+                      className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                        isOpen ? "grid-rows-[1fr] opacity-100 pb-5" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                      }`}
+                    >
+                      <div className="overflow-hidden px-2 pt-1 space-y-2">
+                        <div className="flex items-center gap-2.5 text-[var(--accent)]">
+                          <IconComp className="w-4 h-4 stroke-[2]" />
+                          <p className="text-[14px] font-semibold font-sans text-[var(--ink)]">
+                            {val.tagline}
+                          </p>
+                        </div>
+                        <p className="text-[14px] text-[var(--ink-80)] font-sans leading-relaxed">
+                          {val.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );

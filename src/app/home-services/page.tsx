@@ -47,6 +47,11 @@ export default function HomeServicesPage() {
   // Home Care Call-Out simulation loop state (0-5)
   const [activeCallOutStep, setActiveCallOutStep] = useState(0);
 
+  // Mobile Progressive Disclosure States (< 768px)
+  const [openHomeCareServiceIndex, setOpenHomeCareServiceIndex] = useState<number | null>(0);
+  const [openHomeCareStageIndex, setOpenHomeCareStageIndex] = useState<number | null>(0);
+  const [openOperatingLoopIndex, setOpenOperatingLoopIndex] = useState<number | null>(0);
+
   // Hero dispatch ticker cycle
   useEffect(() => {
     const timer = setInterval(() => {
@@ -900,8 +905,8 @@ export default function HomeServicesPage() {
                 </p>
               </div>
 
-              {/* Right: 7 Big Numbered Rows */}
-              <div className="lg:col-span-7 space-y-8 relative">
+              {/* Right: 7 Big Numbered Rows (Desktop/Tablet 768px and up) */}
+              <div className="hidden md:block lg:col-span-7 space-y-8 relative">
                 {/* Connecting track line */}
                 <div className="absolute left-[27px] top-6 bottom-6 w-[2px] bg-[var(--on-dark-12)] pointer-events-none" />
 
@@ -918,6 +923,32 @@ export default function HomeServicesPage() {
                         STEP 0{idx + 1}
                       </span>
                       <p className="font-sans text-[16px] sm:text-[18px] text-[var(--on-dark)] font-medium leading-snug">
+                        {step}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mobile Compact Vertical Timeline (Under 768px) */}
+              <div className="md:hidden relative pl-8 space-y-5">
+                {/* Connecting track line */}
+                <div className="absolute left-[13px] top-3 bottom-3 w-[2px] bg-[var(--on-dark-12)] pointer-events-none" />
+
+                {operatingLoopSteps.map((step, idx) => (
+                  <div key={idx} className="relative flex items-start gap-3.5">
+                    {/* Node Dot */}
+                    <div className="absolute -left-[32px] top-0.5 w-[28px] h-[28px] rounded-full bg-[var(--primary)] border-2 border-[var(--accent)] flex items-center justify-center shrink-0 z-10">
+                      <span className="font-mono text-[11px] font-bold text-[var(--accent)]">
+                        {idx + 1}
+                      </span>
+                    </div>
+
+                    <div className="p-3.5 rounded-lg bg-[rgba(255,255,255,0.04)] border border-[var(--on-dark-12)] w-full">
+                      <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--highlight)] block mb-1 font-semibold">
+                        STEP 0{idx + 1}
+                      </span>
+                      <p className="font-sans text-[14px] text-[var(--on-dark)] font-medium leading-snug">
                         {step}
                       </p>
                     </div>
@@ -1216,7 +1247,8 @@ export default function HomeServicesPage() {
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Desktop/Tablet 3x3 Grid (768px and up) */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {homeCareServices.map((svc) => {
                   const IconComp = svc.icon;
                   return (
@@ -1237,6 +1269,56 @@ export default function HomeServicesPage() {
                         <p className="font-sans text-[14px] leading-relaxed text-[var(--primary-80)] group-hover:text-[var(--on-dark-80)]">
                           {svc.text}
                         </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Mobile Compact Accordion for Nine Services (Under 768px) */}
+              <div className="md:hidden border-t border-b border-[var(--primary-15)] divide-y divide-[var(--primary-15)]">
+                {homeCareServices.map((svc, idx) => {
+                  const IconComp = svc.icon;
+                  const isOpen = openHomeCareServiceIndex === idx;
+
+                  return (
+                    <div key={svc.num}>
+                      <button
+                        type="button"
+                        onClick={() => setOpenHomeCareServiceIndex(isOpen ? null : idx)}
+                        aria-expanded={isOpen}
+                        aria-controls={`homecare-svc-${svc.num}`}
+                        className="w-full min-h-[58px] py-3.5 px-2 flex items-center justify-between text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                      >
+                        <div className="flex items-center gap-3 pr-2">
+                          <span className="font-mono text-[13px] font-semibold text-[var(--accent)] shrink-0 w-6">
+                            {svc.num}
+                          </span>
+                          <h3 className="font-serif text-[17px] font-medium text-[var(--primary)] leading-snug">
+                            {svc.title}
+                          </h3>
+                        </div>
+                        <ChevronDown
+                          className={`w-4 h-4 text-[var(--primary-55)] shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
+                            isOpen ? "rotate-180 text-[var(--accent)]" : ""
+                          }`}
+                        />
+                      </button>
+
+                      <div
+                        id={`homecare-svc-${svc.num}`}
+                        className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                          isOpen ? "grid-rows-[1fr] opacity-100 pb-4" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                        }`}
+                      >
+                        <div className="overflow-hidden px-2 pt-1 flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-md bg-[var(--accent)]/15 text-[var(--primary)] flex items-center justify-center shrink-0 mt-0.5">
+                            <IconComp className="w-4 h-4 text-[var(--accent)]" />
+                          </div>
+                          <p className="font-sans text-[14px] leading-relaxed text-[var(--primary-80)]">
+                            {svc.text}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   );
@@ -1410,7 +1492,8 @@ export default function HomeServicesPage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+            {/* Desktop/Tablet 5 Columns (768px and up) */}
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
               <div className="sector-card-light p-6">
                 <span className="font-mono text-[11px] uppercase text-[var(--primary-45)] block mb-2">
                   STAGE 01
@@ -1470,6 +1553,57 @@ export default function HomeServicesPage() {
                   Concerns followed up; open administrative items recorded.
                 </p>
               </div>
+            </div>
+
+            {/* Mobile Compact Accordion for Stages (Under 768px) */}
+            <div className="md:hidden border-t border-b border-[var(--primary-15)] divide-y divide-[var(--primary-15)] mb-8">
+              {[
+                { num: "01", title: "Intake", desc: "Warm reply and next steps; full record passed directly to your team." },
+                { num: "02", title: "Booking", desc: "Confirmation of date, time and who is arriving for the visit." },
+                { num: "03", title: "Before & Day of Visit", desc: "Reminders, arrival changes and immediate late alerts." },
+                { num: "04", title: "Call-outs", desc: "Prompt notice of new caregiver and revised arrival time." },
+                { num: "05", title: "After Visit", desc: "Concerns followed up; open administrative items recorded." },
+              ].map((stage, idx) => {
+                const isOpen = openHomeCareStageIndex === idx;
+                return (
+                  <div key={stage.num}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenHomeCareStageIndex(isOpen ? null : idx)}
+                      aria-expanded={isOpen}
+                      aria-controls={`stage-info-${stage.num}`}
+                      className="w-full min-h-[58px] py-3.5 px-2 flex items-center justify-between text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                    >
+                      <div className="flex items-center gap-3 pr-2">
+                        <span className="font-mono text-[13px] font-semibold text-[var(--accent)] shrink-0 w-6">
+                          {stage.num}
+                        </span>
+                        <h3 className="font-serif text-[17px] font-medium text-[var(--primary)] leading-snug">
+                          {stage.title}
+                        </h3>
+                      </div>
+                      <ChevronDown
+                        className={`w-4 h-4 text-[var(--primary-55)] shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
+                          isOpen ? "rotate-180 text-[var(--accent)]" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <div
+                      id={`stage-info-${stage.num}`}
+                      className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                        isOpen ? "grid-rows-[1fr] opacity-100 pb-4" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                      }`}
+                    >
+                      <div className="overflow-hidden px-2 pt-1">
+                        <p className="font-sans text-[14px] leading-relaxed text-[var(--primary-80)]">
+                          {stage.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             <p className="font-mono text-[13px] text-[var(--primary-65)] text-center">

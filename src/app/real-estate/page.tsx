@@ -41,6 +41,14 @@ export default function RealEstatePage() {
   const [openCol1Index, setOpenCol1Index] = useState<number | null>(null);
   const [openCol2Index, setOpenCol2Index] = useState<number | null>(null);
 
+  // Mobile Progressive Disclosure States (< 768px)
+  const [openPillarIndex, setOpenPillarIndex] = useState<number | null>(0);
+  const [openMobileHandleIndex, setOpenMobileHandleIndex] = useState<number | null>(0);
+  const [showWithoutCoverage, setShowWithoutCoverage] = useState<Record<number, boolean>>({});
+  const [showInformedDetails, setShowInformedDetails] = useState<Record<number, boolean>>({});
+  const [openHabitIndex, setOpenHabitIndex] = useState<number | null>(0);
+  const [openOnboardingIndex, setOpenOnboardingIndex] = useState<number | null>(0);
+
   // Regulatory reference tab & collapse state (Section 10)
   const [isRegOpen, setIsRegOpen] = useState(false);
   const [regTab, setRegTab] = useState<"england" | "us">("england");
@@ -690,8 +698,8 @@ export default function RealEstatePage() {
             </p>
           </div>
 
-          {/* 4 Columns separated by vertical hairlines (no cards) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-y border-[var(--primary-15)] divide-y md:divide-y-0 md:divide-x divide-[var(--primary-15)]">
+          {/* Desktop/Tablet 4 Columns (768px and up) */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 border-y border-[var(--primary-15)] divide-y md:divide-y-0 md:divide-x divide-[var(--primary-15)]">
             {fourPillars.map((pillar) => (
               <div key={pillar.num} className="p-8 lg:p-9 flex flex-col justify-between">
                 <div>
@@ -715,6 +723,56 @@ export default function RealEstatePage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mobile Compact Accordion List (Under 768px) */}
+          <div className="md:hidden border-y border-[var(--primary-15)] divide-y divide-[var(--primary-15)]">
+            {fourPillars.map((pillar, index) => {
+              const isOpen = openPillarIndex === index;
+              return (
+                <div key={pillar.num}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenPillarIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    aria-controls={`pillar-content-${pillar.num}`}
+                    className="w-full min-h-[60px] py-4 px-2 flex items-center justify-between text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    <div className="flex items-center gap-3 pr-2">
+                      <span className="font-mono text-[14px] font-semibold text-[var(--secondary)] shrink-0 w-6">
+                        {pillar.num}
+                      </span>
+                      <h3 className="font-serif text-[18px] font-medium text-[var(--primary)] leading-snug">
+                        {pillar.title}
+                      </h3>
+                    </div>
+                    <ChevronDown
+                      className={`w-5 h-5 text-[var(--primary-65)] shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
+                        isOpen ? "rotate-180 text-[var(--secondary)]" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    id={`pillar-content-${pillar.num}`}
+                    className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      isOpen ? "grid-rows-[1fr] opacity-100 pb-5" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <div className="overflow-hidden px-2 pt-1">
+                      <ul className="space-y-2.5 font-sans text-[14px] leading-relaxed text-[var(--primary-80)]">
+                        {pillar.points.map((pt, i) => (
+                          <li key={i} className="flex items-start gap-2.5">
+                            <span className="font-bold text-[var(--secondary)] mt-0.5">•</span>
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1088,32 +1146,67 @@ export default function RealEstatePage() {
             </div>
           </div>
 
-          {/* Mobile Stacked Cards */}
-          <div className="md:hidden flex flex-col space-y-6">
-            {why247Rows.map((row, idx) => (
-              <div
-                key={idx}
-                className="border-b border-[var(--on-dark-15)] pb-6 last:border-b-0 space-y-2.5"
-              >
-                <div className="font-serif text-[20px] font-medium text-[var(--accent)]">
-                  {row.time}
-                </div>
-                <div className="p-3.5 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-2.5 text-[14px] text-[var(--on-dark-75)]">
-                  <X className="w-4 h-4 text-[var(--on-dark-35)] shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold mr-1">Without:</span>
-                    {row.without}
+          {/* Mobile Stacked Mini-blocks with Progressive Disclosure (Under 768px) */}
+          <div className="md:hidden flex flex-col divide-y divide-[var(--on-dark-15)] border-t border-b border-[var(--on-dark-15)]">
+            {why247Rows.map((row, idx) => {
+              const isDetailsOpen = !!showWithoutCoverage[idx];
+              return (
+                <div key={idx} className="py-4">
+                  <div className="font-serif text-[18px] font-medium text-[var(--accent)] mb-2">
+                    {row.time}
+                  </div>
+                  {/* With Solvantra (Always Visible First) */}
+                  <div className="p-3.5 rounded-lg bg-[var(--light)] text-[var(--primary)] shadow-sm flex items-start gap-2.5 text-[14px] font-medium">
+                    <Check className="w-4 h-4 text-[var(--secondary)] shrink-0 mt-0.5 stroke-[2.5]" />
+                    <div>
+                      <span className="font-bold mr-1">With Solvantra:</span>
+                      <span>{row.withSolvantra}</span>
+                    </div>
+                  </div>
+
+                  {/* Toggle Button */}
+                  <div className="mt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowWithoutCoverage((prev) => ({
+                          ...prev,
+                          [idx]: !prev[idx],
+                        }))
+                      }
+                      aria-expanded={isDetailsOpen}
+                      aria-controls={`coverage-details-${idx}`}
+                      className="inline-flex items-center gap-1.5 py-1.5 px-2 text-[13px] font-mono text-[var(--on-dark-75)] hover:text-[var(--on-dark)] cursor-pointer"
+                    >
+                      <span>{isDetailsOpen ? "Hide comparison" : "Compare without coverage"}</span>
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 transition-transform duration-200 motion-reduce:transition-none ${
+                          isDetailsOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Collapsed Without Coverage */}
+                  <div
+                    id={`coverage-details-${idx}`}
+                    className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      isDetailsOpen ? "grid-rows-[1fr] opacity-100 pt-2" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="p-3 rounded-lg bg-[rgba(248,245,236,0.04)] border border-[var(--on-dark-15)] flex items-start gap-2 text-[14px] text-[var(--on-dark-75)]">
+                        <X className="w-4 h-4 text-[var(--on-dark-35)] shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-semibold mr-1">Without:</span>
+                          <span>{row.without}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="p-4 rounded-xl bg-[var(--light)] text-[var(--primary)] shadow-md flex items-start gap-3 text-[14px] font-medium">
-                  <Check className="w-4 h-4 text-[var(--secondary)] shrink-0 mt-0.5 stroke-[2.5]" />
-                  <div>
-                    <span className="font-bold mr-1">With Solvantra:</span>
-                    {row.withSolvantra}
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1240,7 +1333,8 @@ export default function RealEstatePage() {
               <span className="font-mono text-[14px] uppercase tracking-[0.08em] text-[var(--primary-65)] font-semibold block mb-4">
                 EVERYONE INFORMED AT EVERY STEP
               </span>
-              <div className="overflow-x-auto sector-card-light">
+              {/* Desktop/Tablet Table (768px and up) */}
+              <div className="hidden md:block overflow-x-auto sector-card-light">
                 <table className="w-full text-left border-collapse text-[14px] font-sans">
                   <thead>
                     <tr className="bg-[var(--primary-6)] border-b border-[var(--primary-15)] font-mono text-[13px] uppercase tracking-wider text-[var(--primary)]">
@@ -1265,6 +1359,72 @@ export default function RealEstatePage() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile Stacked Mini-blocks with Progressive Disclosure (Under 768px) */}
+              <div className="md:hidden flex flex-col divide-y divide-[var(--primary-15)] border-t border-b border-[var(--primary-15)]">
+                {informedMatrix.map((m, i) => {
+                  const isDetailsOpen = !!showInformedDetails[i];
+                  return (
+                    <div key={i} className="py-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-serif text-[17px] font-semibold text-[var(--primary)]">
+                          {m.stage}
+                        </h4>
+                        <span className="font-mono text-[12px] text-[var(--primary-65)]">
+                          0{i + 1}
+                        </span>
+                      </div>
+                      {/* Your Team (Key Action Line - Always Visible) */}
+                      <div className="p-3 rounded-lg bg-[var(--primary-6)] border border-[var(--primary-12)] text-[14px] font-sans mb-2">
+                        <span className="font-semibold text-[var(--primary)] mr-1">Your Team:</span>
+                        <span className="text-[var(--primary-80)]">{m.team}</span>
+                      </div>
+
+                      {/* Progressive Disclosure Toggle */}
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setShowInformedDetails((prev) => ({
+                              ...prev,
+                              [i]: !prev[i],
+                            }))
+                          }
+                          aria-expanded={isDetailsOpen}
+                          aria-controls={`informed-details-${i}`}
+                          className="inline-flex items-center gap-1.5 py-1 px-1.5 text-[13px] font-mono text-[var(--secondary)] hover:text-[var(--primary)] cursor-pointer"
+                        >
+                          <span>{isDetailsOpen ? "Hide details" : "Show all updates"}</span>
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 transition-transform duration-200 motion-reduce:transition-none ${
+                              isDetailsOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
+
+                      {/* Collapsed Applicant & Landlord details */}
+                      <div
+                        id={`informed-details-${i}`}
+                        className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                          isDetailsOpen ? "grid-rows-[1fr] opacity-100 pt-2" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                        }`}
+                      >
+                        <div className="overflow-hidden space-y-2">
+                          <div className="p-2.5 rounded bg-[var(--light)] border border-[var(--primary-12)] text-[13px] font-sans text-[var(--primary-80)]">
+                            <span className="font-semibold text-[var(--primary)] mr-1">Applicant / Tenant:</span>
+                            <span>{m.applicant}</span>
+                          </div>
+                          <div className="p-2.5 rounded bg-[var(--light)] border border-[var(--primary-12)] text-[13px] font-sans text-[var(--primary-80)]">
+                            <span className="font-semibold text-[var(--primary)] mr-1">Landlord / Vendor:</span>
+                            <span>{m.landlord}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -1375,9 +1535,9 @@ export default function RealEstatePage() {
             </p>
           </div>
 
-          {/* Eight Habits in 4x2 Ruled Grid (Hairlines, No Cards) */}
-          <div className="border-t border-b border-[var(--on-dark-15)] mb-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[var(--on-dark-15)]">
+          {/* Eight Habits in 4x2 Ruled Grid (Desktop/Tablet 768px and up) */}
+          <div className="hidden md:block border-t border-b border-[var(--on-dark-15)] mb-12">
+            <div className="grid grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[var(--on-dark-15)]">
               {regulatoryHabits.slice(0, 4).map((h, i) => (
                 <div key={i} className="p-6 sm:p-7 flex flex-col justify-between">
                   <div>
@@ -1391,7 +1551,7 @@ export default function RealEstatePage() {
                 </div>
               ))}
             </div>
-            <div className="border-t border-[var(--on-dark-15)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[var(--on-dark-15)]">
+            <div className="border-t border-[var(--on-dark-15)] grid grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[var(--on-dark-15)]">
               {regulatoryHabits.slice(4).map((h, i) => (
                 <div key={i} className="p-6 sm:p-7 flex flex-col justify-between">
                   <div>
@@ -1405,6 +1565,51 @@ export default function RealEstatePage() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Mobile Compact Accordion for 8 Habits (Under 768px) */}
+          <div className="md:hidden border-t border-b border-[var(--on-dark-15)] divide-y divide-[var(--on-dark-15)] mb-10">
+            {regulatoryHabits.map((h, i) => {
+              const isOpen = openHabitIndex === i;
+              return (
+                <div key={i}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenHabitIndex(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    aria-controls={`habit-content-${i}`}
+                    className="w-full min-h-[58px] py-3.5 px-2 flex items-center justify-between text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    <div className="flex items-center gap-3 pr-2">
+                      <span className="font-mono text-[13px] font-semibold text-[var(--highlight)] shrink-0 w-6">
+                        0{i + 1}
+                      </span>
+                      <h3 className="font-serif text-[17px] font-medium text-[var(--accent)] leading-snug">
+                        {h.title}
+                      </h3>
+                    </div>
+                    <ChevronDown
+                      className={`w-4 h-4 text-[var(--on-dark-65)] shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
+                        isOpen ? "rotate-180 text-[var(--accent)]" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    id={`habit-content-${i}`}
+                    className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      isOpen ? "grid-rows-[1fr] opacity-100 pb-4" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <div className="overflow-hidden px-2 pt-1">
+                      <p className="text-[14px] font-sans text-[var(--on-dark-75)] leading-relaxed">
+                        {h.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* Highlighted Callout (--accent at 14% fill) */}
@@ -1551,8 +1756,8 @@ export default function RealEstatePage() {
             </p>
           </div>
 
-          {/* 4 Steps */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {/* Desktop/Tablet 4 Steps (768px and up) */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             <div className="sector-card-light p-7 flex flex-col justify-between">
               <div>
                 <span className="font-mono text-[32px] font-light leading-none text-[var(--primary-35)] block mb-4 select-none">
@@ -1612,6 +1817,72 @@ export default function RealEstatePage() {
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* Mobile Compact Accordion for 4 Steps (Under 768px) */}
+          <div className="md:hidden border-t border-b border-[var(--primary-15)] divide-y divide-[var(--primary-15)] mb-12">
+            {[
+              {
+                num: "01",
+                title: "Discovery & Compliance Mapping",
+                desc: "We learn your services, markets, fee schedule, policies and the regulations you operate under.",
+              },
+              {
+                num: "02",
+                title: "Scripts & Escalation Rules",
+                desc: "We build approved scripts, FAQs, prohibited-topic lists and emergency escalation contacts with you.",
+              },
+              {
+                num: "03",
+                title: "Connect Your Tools",
+                desc: "Call forwarding, CRM, diary and maintenance software are linked so records land directly where you need them.",
+              },
+              {
+                num: "04",
+                title: "Pilot & Go Live",
+                desc: "A short pilot phase, followed by a collaborative call-quality review with your team, then full live launch.",
+              },
+            ].map((step, idx) => {
+              const isOpen = openOnboardingIndex === idx;
+              return (
+                <div key={step.num}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenOnboardingIndex(isOpen ? null : idx)}
+                    aria-expanded={isOpen}
+                    aria-controls={`onboarding-step-${step.num}`}
+                    className="w-full min-h-[58px] py-3.5 px-2 flex items-center justify-between text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    <div className="flex items-center gap-3 pr-2">
+                      <span className="font-mono text-[13px] font-semibold text-[var(--secondary)] shrink-0 w-6">
+                        {step.num}
+                      </span>
+                      <h3 className="font-serif text-[17px] font-medium text-[var(--primary)] leading-snug">
+                        {step.title}
+                      </h3>
+                    </div>
+                    <ChevronDown
+                      className={`w-4 h-4 text-[var(--primary-65)] shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
+                        isOpen ? "rotate-180 text-[var(--secondary)]" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    id={`onboarding-step-${step.num}`}
+                    className={`grid transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      isOpen ? "grid-rows-[1fr] opacity-100 pb-4" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <div className="overflow-hidden px-2 pt-1">
+                      <p className="text-[14px] leading-relaxed text-[var(--primary-80)] font-sans">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* Quality Assurance Strip */}

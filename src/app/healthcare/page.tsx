@@ -22,6 +22,7 @@ import {
   Building2,
   Stethoscope,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -37,6 +38,11 @@ export default function HealthcarePage() {
 
   // Tab state for Medical & Dental RCM ("medical" | "dental")
   const [activeRcmTab, setActiveRcmTab] = useState<"medical" | "dental">("medical");
+
+  // Mobile progressive disclosure toggles (< 768px)
+  const [showAllMedicalItems, setShowAllMedicalItems] = useState(false);
+  const [showAllDentalItems, setShowAllDentalItems] = useState(false);
+  const [showAllWhyRows, setShowAllWhyRows] = useState(false);
 
   // Claim lifecycle ticker in Hero (cycles 0 to 4)
   useEffect(() => {
@@ -376,8 +382,8 @@ export default function HealthcarePage() {
             </p>
           </div>
 
-          {/* Stepper Navigation: Horizontal on Desktop, Vertical on Mobile */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+          {/* Desktop/Tablet 5-Column Stepper (768px and up) */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
             {workflowSteps.map((st, idx) => {
               const isSelected = selectedWorkflowStep === idx;
               return (
@@ -414,6 +420,28 @@ export default function HealthcarePage() {
                       {st.summary}
                     </p>
                   </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mobile Horizontal Scrollable Pill Row (Under 768px) */}
+          <div className="md:hidden flex overflow-x-auto gap-2 pb-3 mb-5 no-scrollbar">
+            {workflowSteps.map((st, idx) => {
+              const isSelected = selectedWorkflowStep === idx;
+              return (
+                <button
+                  key={st.num}
+                  type="button"
+                  onClick={() => setSelectedWorkflowStep(idx)}
+                  className={`px-4 py-2.5 rounded-full font-mono text-[13px] whitespace-nowrap shrink-0 transition-colors cursor-pointer border ${
+                    isSelected
+                      ? "bg-[var(--primary)] text-[var(--on-dark)] font-bold border-[var(--accent)] shadow-sm"
+                      : "bg-white text-[var(--primary)] border-[var(--primary-15)]"
+                  }`}
+                >
+                  <span className="opacity-70 mr-1.5">0{idx + 1}</span>
+                  <span>{st.title}</span>
                 </button>
               );
             })}
@@ -505,7 +533,9 @@ export default function HealthcarePage() {
                   {medicalItems.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] flex items-start gap-3"
+                      className={`p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] items-start gap-3 ${
+                        idx >= 3 && !showAllMedicalItems ? "hidden md:flex" : "flex"
+                      }`}
                     >
                       <CheckCircle2 className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
                       <span className="text-[14px] text-[var(--primary-85)] font-medium leading-snug">
@@ -513,6 +543,22 @@ export default function HealthcarePage() {
                       </span>
                     </div>
                   ))}
+                </div>
+
+                {/* Mobile Toggle for Medical Items */}
+                <div className="md:hidden flex justify-end pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllMedicalItems(!showAllMedicalItems)}
+                    className="inline-flex items-center gap-1.5 py-1.5 px-2 text-[13px] font-mono text-[var(--secondary)] hover:text-[var(--primary)] cursor-pointer"
+                  >
+                    <span>{showAllMedicalItems ? "Show fewer services" : "Show 3 more services"}</span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 motion-reduce:transition-none ${
+                        showAllMedicalItems ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
                 </div>
               </div>
             ) : (
@@ -530,7 +576,9 @@ export default function HealthcarePage() {
                   {dentalItems.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] flex items-start gap-3"
+                      className={`p-4 rounded-[8px] border border-[var(--primary-10)] bg-[var(--light)] items-start gap-3 ${
+                        idx >= 3 && !showAllDentalItems ? "hidden md:flex" : "flex"
+                      }`}
                     >
                       <CheckCircle2 className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
                       <span className="text-[14px] text-[var(--primary-85)] font-medium leading-snug">
@@ -538,6 +586,22 @@ export default function HealthcarePage() {
                       </span>
                     </div>
                   ))}
+                </div>
+
+                {/* Mobile Toggle for Dental Items */}
+                <div className="md:hidden flex justify-end pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllDentalItems(!showAllDentalItems)}
+                    className="inline-flex items-center gap-1.5 py-1.5 px-2 text-[13px] font-mono text-[var(--secondary)] hover:text-[var(--primary)] cursor-pointer"
+                  >
+                    <span>{showAllDentalItems ? "Show fewer services" : "Show 3 more services"}</span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 motion-reduce:transition-none ${
+                        showAllDentalItems ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
                 </div>
               </div>
             )}
@@ -683,7 +747,9 @@ export default function HealthcarePage() {
               {whySolvantraRows.map((text, idx) => (
                 <div
                   key={idx}
-                  className="p-5 rounded-[10px] border border-[var(--primary-15)] bg-white hover:bg-[var(--primary)] hover:text-[var(--on-dark)] transition-all duration-200 group flex items-center justify-between"
+                  className={`p-5 rounded-[10px] border border-[var(--primary-15)] bg-white hover:bg-[var(--primary)] hover:text-[var(--on-dark)] transition-all duration-200 group items-center justify-between ${
+                    idx >= 4 && !showAllWhyRows ? "hidden md:flex" : "flex"
+                  }`}
                 >
                   <div className="flex items-center gap-4">
                     <span className="font-mono text-[13px] font-bold text-[var(--primary-45)] group-hover:text-[var(--highlight)]">
@@ -696,6 +762,22 @@ export default function HealthcarePage() {
                   <Check className="w-4 h-4 text-transparent group-hover:text-[var(--highlight)] transition-colors" />
                 </div>
               ))}
+
+              {/* Mobile Toggle */}
+              <div className="md:hidden flex justify-end pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAllWhyRows(!showAllWhyRows)}
+                  className="inline-flex items-center gap-1.5 py-1.5 px-2 text-[13px] font-mono text-[var(--secondary)] hover:text-[var(--primary)] cursor-pointer"
+                >
+                  <span>{showAllWhyRows ? "Show fewer reasons" : "Show 3 more reasons"}</span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-200 motion-reduce:transition-none ${
+                      showAllWhyRows ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>
