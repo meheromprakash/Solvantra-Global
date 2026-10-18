@@ -147,11 +147,9 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* Giant H1 clearly identifying Solvantra Global and business positioning */}
+              {/* Giant H1: clamp(56px, 8vw, 104px), line-height 1.02, tracking -0.03em */}
+              {/* Gold text ONLY for 24px+ (the italic 'Soulfully.') */}
               <h1 className="text-[52px] sm:text-[68px] md:text-[80px] lg:text-[88px] xl:text-[96px] font-serif font-medium leading-[1.02] tracking-[-0.03em] text-[var(--ink)] mb-6">
-                <span className="block text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-mono uppercase tracking-[0.12em] text-[var(--accent)] font-bold mb-3">
-                  Solvantra Global
-                </span>
                 Driving Business,{" "}
                 <span className="italic text-[var(--accent)] font-normal">
                   Soulfully.

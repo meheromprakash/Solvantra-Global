@@ -116,14 +116,6 @@ export const GLOBAL_STATS = [
 
 export const WHO_WE_HELP_LIST = [
   {
-    id: "healthcare",
-    title: "Healthcare",
-    path: "/healthcare",
-    description: "Dental and medical revenue cycle management, clean claims processing, eligibility verification, and disciplined denial resolution.",
-    metrics: "Revenue Operations & RCM Management",
-    image: "/images/industry_healthcare.jpg",
-  },
-  {
     id: "real-estate",
     title: "Real Estate",
     path: "/real-estate",
@@ -138,6 +130,14 @@ export const WHO_WE_HELP_LIST = [
     description: "24/7 enquiry handling, appointment scheduling, technician coordination, emergency dispatch support, follow-ups, and customer communication.",
     metrics: "Coverage. Coordination. Follow-through.",
     image: "/images/industry_home_services.jpg",
+  },
+  {
+    id: "healthcare",
+    title: "Healthcare",
+    path: "/healthcare",
+    description: "Dental and medical revenue cycle management, clean claims processing, eligibility verification, and disciplined denial resolution.",
+    metrics: "Revenue Operations & RCM Management",
+    image: "/images/industry_healthcare.jpg",
   },
 ];
 

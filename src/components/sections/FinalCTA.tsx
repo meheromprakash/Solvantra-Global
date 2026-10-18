@@ -110,14 +110,16 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
 
     // Default pages: Home, Services, About, Why Solvantra, Contact
     return {
-      eyebrow: "LET'S DISCUSS YOUR BUSINESS",
-      h2: "Let's Discuss Your Business",
+      // TODO: confirm with client
+      eyebrow: "LET'S BUILD WHAT'S NEXT",
+      h2: "Ready to streamline your operations?",
       subline:
-        "Tell us about your business and the challenges you want to solve. Our team will review your inquiry and get in touch.",
+        "Tell us what you'd like to hand off and we'll show you how Solvantra can help.",
       points: [
-        "Solutions built around your operational workflows",
-        "Dedicated people who take ownership of the work",
-        "Transparent SLAs and continuous communication",
+        // TODO: confirm with client
+        "Solutions built around your workflows",
+        "People who take ownership of the work",
+        "Technology with purpose",
       ],
       disclaimer: undefined,
       defaultSector: "",
@@ -496,29 +498,6 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
                   </span>
                 </div>
               ))}
-            </div>
-
-            {/* Official Contact Email & Full Contact Page Link */}
-            <div className="mt-6 pt-6 border-t border-[color-mix(in_srgb,var(--cta-ink)_15%,transparent)] w-full max-w-[520px]">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <span className="font-mono text-[12px] uppercase tracking-wider block opacity-75 mb-0.5 text-[var(--cta-ink)]">
-                    Official Contact Email
-                  </span>
-                  <a
-                    href={`mailto:${SITE_CONTACT.email}`}
-                    className="text-[16px] font-semibold underline underline-offset-4 text-[var(--cta-ink)] hover:opacity-80 transition-opacity"
-                  >
-                    {SITE_CONTACT.email}
-                  </a>
-                </div>
-                <Link
-                  href="/contact"
-                  className="text-[14px] font-semibold text-[var(--cta-ink)] underline underline-offset-4 hover:opacity-80 shrink-0"
-                >
-                  Full Contact Page &rarr;
-                </Link>
-              </div>
             </div>
 
             {/* Optional contact details if provided */}
