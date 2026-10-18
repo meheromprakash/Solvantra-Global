@@ -825,10 +825,10 @@ export default function HealthcarePage() {
                 Direct Operations Email
               </span>
               <a
-                href="mailto:solutions@solvantra.com"
+                href="mailto:info@solvantra.global"
                 className="font-semibold underline-offset-2 hover:underline"
               >
-                solutions@solvantra.com
+                info@solvantra.global
               </a>
             </div>
             <div>

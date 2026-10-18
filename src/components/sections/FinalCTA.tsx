@@ -3,8 +3,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Check, Send, Loader2, ChevronDown } from "lucide-react";
+import { Check, Send, Loader2, ChevronDown, Mail } from "lucide-react";
 import { getSectorFromPath } from "@/components/layout/SectorLayoutWrapper";
+import { submitToWeb3Forms } from "@/lib/web3forms";
+import { SITE_CONTACT } from "@/lib/site";
 
 export const SECTOR_OPTIONS = [
   "Real Estate",
@@ -108,16 +110,14 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
 
     // Default pages: Home, Services, About, Why Solvantra, Contact
     return {
-      // TODO: confirm with client
-      eyebrow: "LET'S BUILD WHAT'S NEXT",
-      h2: "Ready to streamline your operations?",
+      eyebrow: "LET'S DISCUSS YOUR BUSINESS",
+      h2: "Let's Discuss Your Business",
       subline:
-        "Tell us what you'd like to hand off and we'll show you how Solvantra can help.",
+        "Tell us about your business and the challenges you want to solve. Our team will review your inquiry and get in touch.",
       points: [
-        // TODO: confirm with client
-        "Solutions built around your workflows",
-        "People who take ownership of the work",
-        "Technology with purpose",
+        "Solutions built around your operational workflows",
+        "Dedicated people who take ownership of the work",
+        "Transparent SLAs and continuous communication",
       ],
       disclaimer: undefined,
       defaultSector: "",
@@ -146,6 +146,11 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
     website: "", // Honeypot field
   });
 
+  const [submittedData, setSubmittedData] = useState<{
+    name: string;
+    email: string;
+  }>({ name: "", email: "" });
+
   const [errors, setErrors] = useState<{
     name?: string;
     email?: string;
@@ -162,6 +167,7 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   // Listbox states
   const [isSectorOpen, setIsSectorOpen] = useState(false);
@@ -286,6 +292,7 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasSubmitted(true);
+    setApiError(null);
     setTouched({ name: true, email: true, sector: true });
 
     if (!validateAll()) {
@@ -295,27 +302,64 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/consultation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          sector: formData.sector,
-          handoffMessage: formData.handoffMessage,
-          website: formData.website, // Honeypot
-        }),
+      let subject = "New Website Inquiry — Solvantra Global";
+      const sectorLower = (formData.sector || "").toLowerCase();
+      if (
+        sectorType === "health" ||
+        sectorLower.includes("healthcare") ||
+        sectorLower.includes("dental") ||
+        sectorLower.includes("medical")
+      ) {
+        subject = "New Healthcare Inquiry — Solvantra Global";
+      } else if (
+        sectorType === "property" ||
+        sectorLower.includes("real estate") ||
+        sectorLower.includes("property")
+      ) {
+        subject = "New Real Estate Inquiry — Solvantra Global";
+      } else if (
+        sectorType === "home" ||
+        sectorLower.includes("home services") ||
+        sectorLower.includes("trades") ||
+        sectorLower.includes("care")
+      ) {
+        subject = "New Home Services Inquiry — Solvantra Global";
+      }
+
+      const result = await submitToWeb3Forms({
+        name: formData.name,
+        email: formData.email,
+        service: formData.sector,
+        message: formData.handoffMessage,
+        subject,
+        sourcePage: pathname || "Homepage / Shared CTA",
+        botcheck: formData.website,
       });
 
-      if (response.ok) {
+      if (result.success) {
+        setSubmittedData({
+          name: formData.name,
+          email: formData.email,
+        });
         setIsSuccess(true);
+        // Clear form only after confirmed success
+        setFormData({
+          name: "",
+          email: "",
+          sector: config.defaultSector,
+          handoffMessage: "",
+          website: "",
+        });
+        setTouched({});
+        setErrors({});
       } else {
-        throw new Error("Submission failed");
+        setApiError(result.message);
       }
     } catch (err) {
       console.error("Consultation form submission error:", err);
-      // Fallback display success for client reassurance
-      setIsSuccess(true);
+      setApiError(
+        "A network error occurred while submitting your inquiry. Please try again or email us directly at info@solvantra.global."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -333,6 +377,7 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
     setTouched({});
     setHasSubmitted(false);
     setIsSuccess(false);
+    setApiError(null);
   };
 
   // Keyboard navigation for accessible sector listbox
@@ -453,6 +498,29 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
               ))}
             </div>
 
+            {/* Official Contact Email & Full Contact Page Link */}
+            <div className="mt-6 pt-6 border-t border-[color-mix(in_srgb,var(--cta-ink)_15%,transparent)] w-full max-w-[520px]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span className="font-mono text-[12px] uppercase tracking-wider block opacity-75 mb-0.5 text-[var(--cta-ink)]">
+                    Official Contact Email
+                  </span>
+                  <a
+                    href={`mailto:${SITE_CONTACT.email}`}
+                    className="text-[16px] font-semibold underline underline-offset-4 text-[var(--cta-ink)] hover:opacity-80 transition-opacity"
+                  >
+                    {SITE_CONTACT.email}
+                  </a>
+                </div>
+                <Link
+                  href="/contact"
+                  className="text-[14px] font-semibold text-[var(--cta-ink)] underline underline-offset-4 hover:opacity-80 shrink-0"
+                >
+                  Full Contact Page &rarr;
+                </Link>
+              </div>
+            </div>
+
             {/* Optional contact details if provided */}
             {props.contactDetails && (
               <div className="mt-2 mb-6 pt-6 border-t border-[color-mix(in_srgb,var(--cta-ink)_15%,transparent)] w-full max-w-[520px]">
@@ -482,10 +550,9 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
                   <h3 className="text-[26px] font-serif font-medium text-[var(--cta-ink)] mb-2.5">
                     Enquiry Received
                   </h3>
-                  {/* TODO: confirm with client */}
                   <p className="text-[15px] text-[color-mix(in_srgb,var(--cta-ink)_80%,transparent)] leading-[1.65] font-sans mb-6">
-                    Thank you, {formData.name || "there"}. We have received your
-                    enquiry and will reply to {formData.email} shortly to discuss
+                    Thank you, {submittedData.name || "there"}. We have received your
+                    enquiry and will reply to {submittedData.email} shortly to discuss
                     your operational requirements.
                   </p>
                   <button
@@ -508,6 +575,27 @@ export default function FinalCTA(props: FinalCTAProps = {}) {
                       className="p-3 bg-[color-mix(in_srgb,var(--cta-ink)_6%,transparent)] border-l-[3px] border-[var(--accent)] text-[13px] font-sans text-[var(--cta-ink)] rounded-r focus:outline-none"
                     >
                       Please complete all required fields correctly before submitting.
+                    </div>
+                  )}
+
+                  {/* API Error Alert */}
+                  {apiError && (
+                    <div
+                      role="alert"
+                      className="p-3.5 bg-red-500/10 border-l-[3px] border-red-500 text-[13px] font-sans text-[var(--cta-ink)] rounded-r space-y-1"
+                    >
+                      <p className="font-semibold">Submission Failed</p>
+                      <p>{apiError}</p>
+                      <p className="text-[12px] opacity-90">
+                        You can email us directly at{" "}
+                        <a
+                          href={`mailto:${SITE_CONTACT.email}`}
+                          className="underline font-semibold"
+                        >
+                          {SITE_CONTACT.email}
+                        </a>
+                        .
+                      </p>
                     </div>
                   )}
 

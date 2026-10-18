@@ -48,15 +48,32 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: connect to email/CRM (e.g. HubSpot, Salesforce, SendGrid, Resend, or custom webhook)
-    console.log("[ENQUIRY_OR_CONSULTATION_SUBMISSION]", {
-      timestamp: new Date().toISOString(),
-      name: resolvedName,
-      email: resolvedEmail,
-      company: resolvedCompany,
-      serviceCategory: resolvedService,
-      message: resolvedMessage,
-    });
+    // Forward to Web3Forms if configured
+    const accessKey =
+      process.env.WEB3FORMS_ACCESS_KEY ||
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+    if (accessKey && accessKey !== "your_web3forms_access_key_here") {
+      try {
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: accessKey,
+            from_name: "Solvantra Global Website",
+            subject: `New Inquiry — Solvantra Global (${resolvedService || "General"})`,
+            name: resolvedName,
+            email: resolvedEmail,
+            company: resolvedCompany,
+            service: resolvedService,
+            message: resolvedMessage,
+            botcheck: website || hp || "",
+          }),
+        });
+      } catch (forwardErr) {
+        console.error("[WEB3FORMS_FORWARDING_ERROR]", forwardErr);
+      }
+    }
 
     return NextResponse.json({
       success: true,

@@ -2,8 +2,7 @@
 // Single source of truth shared between Contact page, Footer, and Header
 
 export const SITE_CONTACT = {
-  // TODO: confirm email (solutions@solvantra.com vs info@solvantra.global) and confirm the phone number is real
-  email: "solutions@solvantra.com",
+  email: "info@solvantra.global",
   emailAlt: "info@solvantra.global",
   
   // TODO: confirm the phone number is real

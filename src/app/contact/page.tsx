@@ -19,6 +19,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { SITE_CONTACT } from "@/lib/site";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 import ConsultationModal from "@/components/ConsultationModal";
 
 // Options for the custom accessible Service Category listbox
@@ -107,6 +108,7 @@ function ContactContent() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
   const [submittedData, setSubmittedData] = useState<{ name: string; email: string }>({
     name: "",
     email: "",
@@ -238,6 +240,7 @@ function ContactContent() {
   // Form submit handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setApiError(null);
 
     // Mark all as touched
     setTouched({
@@ -260,21 +263,24 @@ function ContactContent() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/consultation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          company: formData.company,
-          serviceCategory: formData.serviceCategory,
-          message: formData.message,
-          website: formData.website, // Honeypot
-        }),
+      const subject = formData.serviceCategory
+        ? `New ${formData.serviceCategory} Inquiry — Solvantra Global`
+        : "New Website Inquiry — Solvantra Global";
+
+      const res = await submitToWeb3Forms({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        service: formData.serviceCategory,
+        message: formData.message,
+        subject,
+        sourcePage: "Contact Page (/contact)",
+        botcheck: formData.website,
       });
 
-      if (!res.ok) {
-        throw new Error("Submission failed");
+      if (!res.success) {
+        setApiError(res.message);
+        return;
       }
 
       setSubmittedData({
@@ -282,14 +288,22 @@ function ContactContent() {
         email: formData.email,
       });
       setIsSubmitted(true);
-    } catch (err) {
-      console.error(err);
-      // Fallback clean display
-      setSubmittedData({
-        name: formData.name,
-        email: formData.email,
+      // Clear form only on confirmed success
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        serviceCategory: "",
+        message: "",
+        website: "",
       });
-      setIsSubmitted(true);
+      setTouched({});
+      setErrors({});
+    } catch (err) {
+      console.error("Contact form submission error:", err);
+      setApiError(
+        "A network error occurred while submitting your message. Please try again or email us directly at info@solvantra.global."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -308,6 +322,7 @@ function ContactContent() {
     setTouched({});
     setErrors({});
     setIsSubmitted(false);
+    setApiError(null);
   };
 
   // Accessible keyboard navigation for custom listbox
@@ -686,6 +701,24 @@ function ContactContent() {
                       onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                     />
                   </div>
+
+                  {/* API Error Alert */}
+                  {apiError && (
+                    <div
+                      role="alert"
+                      className="p-4 bg-red-500/10 border-l-[3px] border-red-500 text-[14px] font-sans text-[var(--ink)] rounded-r space-y-1"
+                    >
+                      <p className="font-semibold text-red-800">Submission Failed</p>
+                      <p className="text-red-700">{apiError}</p>
+                      <p className="text-[13px] text-red-700/90">
+                        You can also email us directly at{" "}
+                        <a href={`mailto:${SITE_CONTACT.email}`} className="underline font-semibold">
+                          {SITE_CONTACT.email}
+                        </a>
+                        .
+                      </p>
+                    </div>
+                  )}
 
                   {/* 1. Full Name */}
                   <div>

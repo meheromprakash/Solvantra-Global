@@ -38,13 +38,34 @@ interface SectorData {
 const SECTORS: SectorData[] = [
   {
     num: "01",
+    id: "healthcare",
+    title: "Healthcare",
+    subtitle: "Dental & medical clinics",
+    description:
+      "Dental and medical revenue cycle management, clean claims processing, status tracking, and disciplined denial and accounts receivable resolution.",
+    path: "/healthcare",
+    linkText: "Explore Healthcare Solutions",
+    workflow: [
+      { label: "Intake", sublabel: "Patient registration", icon: UserCheck },
+      { label: "Verify Eligibility", sublabel: "Payer confirmed", icon: ShieldCheck },
+      { label: "Claim", sublabel: "Clean electronic submission", icon: FileCheck },
+      { label: "Resolution", sublabel: "AR closed & reconciled", icon: CheckCircle2 },
+    ],
+    bullets: [
+      "Eligibility & Benefits Verification",
+      "Claim Preparation & Submission",
+      "Denial & AR Follow-up",
+    ],
+  },
+  {
+    num: "02",
     id: "real-estate",
     title: "Real Estate",
     subtitle: "Estate Agents & Property Managers",
     description:
       "24/7 enquiry handling, lettings support, viewing bookings, tenant communication, and compliance administration configured specifically for agency operations.",
     path: "/real-estate",
-    linkText: "Explore Real Estate Pod",
+    linkText: "Explore Real Estate Solutions",
     workflow: [
       { label: "Enquiry", sublabel: "Omnichannel inbound", icon: Headphones },
       { label: "Qualify", sublabel: "Criteria verified", icon: UserCheck },
@@ -58,14 +79,14 @@ const SECTORS: SectorData[] = [
     ],
   },
   {
-    num: "02",
+    num: "03",
     id: "home-services",
     title: "Home Services",
     subtitle: "HVAC, plumbing, electrical, field trades and home care agencies",
     description:
       "24/7 customer front desk, appointment scheduling, technician coordination, emergency dispatch, and customer follow-ups that keep trucks rolling.",
     path: "/home-services",
-    linkText: "Explore Home Services Pod",
+    linkText: "Explore Home Services Solutions",
     workflow: [
       { label: "Call", sublabel: "Immediate response", icon: PhoneCall },
       { label: "Schedule", sublabel: "Calendar slot optimization", icon: Calendar },
@@ -76,27 +97,6 @@ const SECTORS: SectorData[] = [
       "24/7 Live Inbound Front Desk",
       "Calendar & Software Scheduling",
       "Home Care & Nursing Scheduling",
-    ],
-  },
-  {
-    num: "03",
-    id: "healthcare",
-    title: "Healthcare",
-    subtitle: "Dental & medical clinics",
-    description:
-      "Dental and medical revenue cycle management, clean claims processing, status tracking, and disciplined denial and accounts receivable resolution.",
-    path: "/healthcare",
-    linkText: "Explore Healthcare Pod",
-    workflow: [
-      { label: "Intake", sublabel: "Patient registration", icon: UserCheck },
-      { label: "Verify Eligibility", sublabel: "Payer confirmed", icon: ShieldCheck },
-      { label: "Claim", sublabel: "Clean electronic submission", icon: FileCheck },
-      { label: "Resolution", sublabel: "AR closed & reconciled", icon: CheckCircle2 },
-    ],
-    bullets: [
-      "Eligibility & Benefits Verification",
-      "Claim Preparation & Submission",
-      "Denial & AR Follow-up",
     ],
   },
 ];

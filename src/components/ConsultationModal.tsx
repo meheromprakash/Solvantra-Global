@@ -11,7 +11,10 @@ import {
   Phone,
   Building2,
   ChevronDown,
+  Loader2,
 } from "lucide-react";
+import { submitToWeb3Forms } from "@/lib/web3forms";
+import { SITE_CONTACT } from "@/lib/site";
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -46,6 +49,13 @@ export default function ConsultationModal({
 }: ConsultationModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [botcheck, setBotcheck] = useState("");
+  const [submittedData, setSubmittedData] = useState({
+    fullName: "",
+    email: "",
+  });
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
   const [formData, setFormData] = useState({
@@ -114,13 +124,70 @@ export default function ConsultationModal({
 
   if (!isOpen && !isClosing) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setApiError(null);
+
+    if (!formData.fullName.trim()) {
+      setApiError("Please enter your full name.");
+      return;
+    }
+
+    if (
+      !formData.email.trim() ||
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email.trim())
+    ) {
+      setApiError("Please enter a valid work email address.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const result = await submitToWeb3Forms({
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        service: `${formData.serviceNeeded} — Timeline: ${formData.timeline}`,
+        message: formData.notes,
+        subject: `New Consultation Request — Solvantra Global (${formData.serviceNeeded})`,
+        sourcePage: "Consultation Modal",
+        botcheck,
+      });
+
+      if (result.success) {
+        setSubmittedData({
+          fullName: formData.fullName,
+          email: formData.email,
+        });
+        setSubmitted(true);
+        // Clear form only after confirmed success
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          company: "",
+          serviceNeeded: defaultService,
+          timeline: "Immediate (Within 30 Days)",
+          notes: "",
+        });
+        setBotcheck("");
+      } else {
+        setApiError(result.message);
+      }
+    } catch (err) {
+      console.error("ConsultationModal submit error:", err);
+      setApiError(
+        "A network error occurred while submitting your consultation request. Please try again or email info@solvantra.global."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setSubmitted(false);
+    setApiError(null);
     handleRequestClose();
   };
 
@@ -269,10 +336,9 @@ export default function ConsultationModal({
                 Consultation Request Confirmed
               </h4>
               <p className="text-[15px] text-[var(--ink-80)] max-w-md mb-6 leading-relaxed">
-                Thank you, <span className="font-semibold text-[var(--ink)]">{formData.fullName || "valued client"}</span>. Our operations team is reviewing your requirements and will reach out to confirm your session.
+                Thank you, <span className="font-semibold text-[var(--ink)]">{submittedData.fullName || "valued client"}</span>. Our operations team is reviewing your requirements and will reach out to {submittedData.email ? <span className="font-semibold">{submittedData.email}</span> : "you"} to confirm your session.
               </p>
               {/* Neutral privacy note replacing unverified NDA/protocol badge */}
-              {/* TODO: confirm with client */}
               <div className="p-4 bg-[var(--bg)] rounded-[8px] text-left w-full max-w-md mb-6 border border-[var(--ink-12)] space-y-1.5">
                 <p className="text-[14px] font-medium text-[var(--ink)]">
                   Privacy &amp; Data Protection
@@ -296,6 +362,36 @@ export default function ConsultationModal({
           ) : (
             /* CONSULTATION FORM */
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Honeypot field for anti-spam */}
+              <input
+                type="text"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                value={botcheck}
+                onChange={(e) => setBotcheck(e.target.value)}
+                className="hidden"
+                aria-hidden="true"
+              />
+
+              {/* API Error Alert */}
+              {apiError && (
+                <div
+                  role="alert"
+                  className="p-3.5 bg-red-500/10 border-l-[3px] border-red-500 text-[13px] font-sans text-[var(--ink)] rounded-r space-y-1"
+                >
+                  <p className="font-semibold text-red-800">Submission Failed</p>
+                  <p className="text-red-700">{apiError}</p>
+                  <p className="text-[12px] text-red-700/90">
+                    You can also email us directly at{" "}
+                    <a href={`mailto:${SITE_CONTACT.email}`} className="underline font-semibold">
+                      {SITE_CONTACT.email}
+                    </a>
+                    .
+                  </p>
+                </div>
+              )}
+
               {/* Contact Information Group */}
               <div className="space-y-4">
                 <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--ink-65)] font-semibold block">
@@ -584,9 +680,17 @@ export default function ConsultationModal({
                   </button>
                   <button
                     type="submit"
-                    className="btn-solvantra-primary w-full sm:w-auto h-[44px] px-6 text-[14px] font-semibold cursor-pointer inline-flex items-center justify-center"
+                    disabled={isSubmitting}
+                    className="btn-solvantra-primary w-full sm:w-auto h-[44px] px-6 text-[14px] font-semibold cursor-pointer inline-flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Request Consultation
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin shrink-0" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <span>Request Consultation</span>
+                    )}
                   </button>
                 </div>
               </div>
