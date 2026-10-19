@@ -17,7 +17,7 @@ export default function TechnologySecurityPage() {
   const securityPillars = [
     {
       icon: Server,
-      title: "ISO 27001 Information Security",
+      title: "Information Security",
       description: "Comprehensive risk management framework, continuous vulnerability scanning, and multi-factor authentication across all endpoints.",
     },
     {
